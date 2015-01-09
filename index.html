@@ -8,8 +8,11 @@
 </head>
 
 <body ng-controller="ScrapeCtrl">
+Last Run: <b>{{updated.lastRun}}</b><br>
+Total Sites: <b>{{updated.sites}}</b><br>
+Total Listings: <b>{{updated.listings}}</b><br>
 
-<div ng-repeat="(key, data) in sync">
+<div ng-repeat="(key, data) in data">
 <h3>{{key}}</h3>
 <li ng-repeat="entry in data">
 <a href="{{entry.url}}" target="_blank">{{entry.name}}</a> <br> {{entry.location}} <br> {{entry.role}}
