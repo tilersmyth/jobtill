@@ -9,3 +9,4 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
 });
+
