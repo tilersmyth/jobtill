@@ -9,15 +9,16 @@ var iL = 0;
 var totalJobs = 0;
 var totalSites = 0;
 var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
+cRef = ref.child("/listings");
+cRef.remove();
+
 console.log("\nGathering Data...\n");
 
 function scrapeAll() {
     if (iL < sV.length) {
         request(sV[iL].siteurl, function (error, response, html) {
-            if (!error && response.statusCode == 200) {
-                cRef = ref.child("/listings/" + sV[iL].site);
-                if (sV[iL].clean === "1") {
-                    cRef.remove();
+            if (!error && response.statusCode == 200) {                
+                if (sV[iL].clean === "1") {                    
                     totalSites++;
                 };
                 var $ = cheerio.load(html);
@@ -29,7 +30,7 @@ function scrapeAll() {
                     eval(sV[iL].sitevars);
                     var metadata = {
                         name: name,
-                        role: role,
+                        site: sV[iL].site,
                         url: url,
                         location: location
                     };
@@ -45,7 +46,7 @@ function scrapeAll() {
     } else {
         cRef = ref.child("LastScraped");
         cRef.set({
-            lastRun: Date(),
+            lastRun: new Date().getTime(),
             sites: totalSites,
             listings: totalJobs
         });

@@ -1,56 +1,42 @@
 <html ng-app="Scrape">
 <head>
-
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
 <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
 <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
-
 </head>
 
 <body ng-controller="ScrapeCtrl">
-
-
-
-
 <div class="container">
-
-      <div class="jumbotron">
-        <h1 >I want a job located in <u tooltip="{{comingSoon}}">Boston</u> doing <input type="search" class="adlib" ng-model="q" />.</h1>
-        
-        
-        <div class="row pull-details">
-        <div class="col-lg-4">updated: {{updated.lastRun}}</div>
-        <div class="col-lg-4">companies: {{updated.sites}}</div>
-        <div class="col-lg-4">jobs: {{updated.listings}}</div>
-        </div>	
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-12">
-          <table class="table table-striped" ng-repeat="(key, data) in data">
-          	<thead><tr>{{key}}</tr></thead>
-	          	<tbody>
-          		<tr ng-repeat="entry in data | filter: q">
-          		<td><a href="{{entry.url}}" target="_blank">{{entry.name}}</a></td><td>{{entry.location}}</td><td>{{entry.role}}</td>
-          		</tr>
-          	</tbody>	
-          </table>
-
-        </div>
-       
-      </div>
-
-      <footer class="footer">
-        <p>© Company 2014</p>
-      </footer>
-
+  <div class="jumbotron">
+    <h1 >I want a job located in <u tooltip="{{comingSoon}}">Boston</u> doing
+      <input type="search" class="adlib" ng-model="q" />
+      .</h1>
+    <div class="row pull-details">
+      <div class="col-lg-4">updated: {{updated.lastRun | date:'yyyy-MM-dd HH:mm:ss Z'}}</div>
+      <div class="col-lg-4">companies: {{updated.sites}}</div>
+      <div class="col-lg-4">jobs: {{updated.listings}}</div>
     </div>
-
-
+  </div>
+  <div class="row marketing">
+    <div class="col-lg-12">
+      <table class="table table-striped">
+        <tbody>
+          <tr ng-repeat="entry in data | filter:q">
+            <td><a href="{{entry.url}}" target="_blank">{{entry.name}}</a></td>
+            <td>{{entry.location}}</td>
+            <td>{{entry.site}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>© Company 2014</p>
+  </footer>
+</div>
 </body>
 </html>

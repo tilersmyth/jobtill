@@ -4,7 +4,7 @@ var app = angular.module("Scrape", ["firebase", "ui.bootstrap"]);
 app.controller("ScrapeCtrl", function($scope, $firebase) {
   var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
   var data = $firebase(ref.child('listings'));
-  $scope.data = data.$asObject();
+  $scope.data = data.$asArray();
   var updated = $firebase(ref.child('LastScraped'));
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
