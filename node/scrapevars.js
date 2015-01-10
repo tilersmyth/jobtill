@@ -75,6 +75,13 @@ siteurl: "http://www.wordstream.com/jobs",
 clean: "1",
 sVar: "$('a[href*=\"/jobs/\"]')",
 sitevars: 'var a=$(this).parent().prevUntil("h2").prev("h2").text();if(a===""){a=$(this).parent().prev("h2").text()}var role=a;var name=$(this).text();var location="Boston, MA";var url=$(this).attr("href");'
+},
+{
+site: "Nanigans",
+    siteurl: "http://www.nanigans.com/jobs/",
+    clean: "1",
+    sVar: "$('a.mbutton[href*=\"/jobs/\"]')",
+    sitevars: 'var role="";var name=$(this).prev().prev().prev().text();var location=$(this).prev().prev().text().slice(10);var url=$(this).attr("href");'
 }
 ];
 

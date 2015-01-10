@@ -1,4 +1,4 @@
-var app = angular.module("Scrape", ["firebase"]);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap"]);
 
 //Firebase Link
 app.controller("ScrapeCtrl", function($scope, $firebase) {
@@ -7,5 +7,5 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   $scope.data = data.$asObject();
   var updated = $firebase(ref.child('LastScraped'));
   $scope.updated = updated.$asObject();
+  $scope.comingSoon = 'Adding more cities soon';
 });
-

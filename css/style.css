@@ -1,0 +1,66 @@
+/*Bootstrap-angular fix*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+
+
+/*Bootstrap breakpoints*/
+@media (min-width: 1200px) {
+  
+  .container {
+    max-width: 970px;
+  }
+
+}
+
+@media (min-width: 992px) {
+  
+  .jumbotron {
+    margin-top: 30px;
+  }
+
+}
+
+
+@media (min-width: 768px) {
+  
+  .jumbotron {
+    margin-top: 30px;
+  }
+
+  .adlib{
+ 	height:70px;
+	width: 47%;
+	border-bottom: 3px solid #000;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+  
+    .adlib{
+  	height:40px;
+	width: 60%;
+	border-bottom: 1px solid #000;
+  }
+  
+}
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+.pull-details{
+	margin-top: 40px;
+	text-align: center;
+}
+
+.adlib{
+	background: none !important;
+	outline: none !important;
+	border-left:0;
+	border-right:0;
+	border-top:0;
+	padding:0px !important;
+}
