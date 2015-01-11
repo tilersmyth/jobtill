@@ -60,7 +60,7 @@ function scrapeAll() {
                 console.log(sV[iL].site + " scraped: " + listCount + " entries");
                 iL++;
                 scrapeAll();
-            };
+            }else {console.log(sV[iL].site + " is down. Moving on... "); iL++; scrapeAll();};
         });
     } else {
         cRef = ref.child("LastScraped");
