@@ -23,9 +23,9 @@ input {
 Company Name: <input id="site" placeholder="Abc Co" /><br/><br/>
 Company Job Link: <input id="siteurl" placeholder="comp.com/jobs" /><br/><br/>
 Selector Var (for each loop): <input id="svar" placeholder='$("a.job")' /><br/><br/>
-Selector For Job Name: <input id="name" placeholder="$(this).text();" /><br/><br/>
-Selector For Job Location: <input id="location" placeholder="$(this).prev().text();" /><br/><br/>
-Selector For Job URL: <input id="url" placeholder='$(this).attr("href");' /><br/><br/>
+Selector For Job Name: <input id="name" placeholder="var name = $(this).text();" /><br/><br/>
+Selector For Job Location: <input id="location" placeholder="var location = $(this).prev().text();" /><br/><br/>
+Selector For Job URL: <input id="url" placeholder='var url = $(this).attr("href");' /><br/><br/>
 Page Number (if multi page. default is 1): <input id="clean" value="1" /><br/><br/>
 <button type="button" class="btn btn-info" onclick="cleanUp()">Clear Inputs</button> <button type="button" class="btn btn-info pull-right" onClick="runIt()">Upload</button>
   </div>
