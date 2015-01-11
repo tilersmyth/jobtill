@@ -8,5 +8,18 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   var updated = $firebase(ref.child('LastScraped'));
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
+
+
+  $scope.timeFunction = function(vartopass) {
+   		var today = new Date();
+   		var lastRun = new Date(vartopass);
+
+   		if ((today.getDate()) == lastRun.getDate())
+		return "today"
+
+		if ((today.getDate()-1) == lastRun.getDate())
+		return "yesterday"
+
+  };
 });
 

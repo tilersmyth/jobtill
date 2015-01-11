@@ -12,27 +12,29 @@
 <body ng-controller="ScrapeCtrl">
 <div class="container">
   <div class="jumbotron">
-    <h1 >I want a job located in <u tooltip="{{comingSoon}}">Boston</u> doing
-      <input type="search" autofocus class="adlib" ng-model="q" />
-      .</h1>
-   
-    <p class="lead pull-details">Omg, we pulled {{updated.listings}} jobs from {{updated.sites}} companies at {{updated.lastRun | date:"h:mma 'on' MM/dd/yy"}}</p>
+    <h1 >I want a job located in <u ng-model="locale" tooltip="{{comingSoon}}">Boston</u> doing
+      <input type="search" autofocus class="adlib" ng-model="search" />.</h1>
+
+    <p class="lead pull-details">Omg, we pulled {{updated.listings}} jobs from {{updated.sites}} companies at {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) : updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' == 'new'"></span></p>
   </div>
+
   <div class="row marketing">
     <div class="col-lg-12">
-      <table class="table table-striped"  ng-show="q" >
+      <table class="table table-striped"   ><!-- ng-show="search" -->
       <thead>
         <tr>
           <th>Title</th>
           <th>Location</th>
           <th>Company</th>
+          <th>Added</th>
         </tr>
       </thead>
         <tbody>
-          <tr ng-repeat="entry in data | filter:q">
-            <td><a href="{{entry.url}}" target="_blank">{{entry.name}}</a></td>
+          <tr ng-repeat="entry in data | filter:{name: search,location:'Boston'}">
+            <td><a href="{{entry.url}}" target="_blank">{{entry.name}}</a> <span tooltip="Just Added" class="glyphicon glyphicon-exclamation-sign just-added" ng-if="entry.status == 'new'"></span></td>
             <td>{{entry.location}}</td>
             <td>{{entry.site}}</td>
+            <td>{{entry.created | date:"MM/dd/yy"}}</td>
           </tr>
         </tbody>
       </table>
