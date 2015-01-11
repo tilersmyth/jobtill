@@ -1,3 +1,3 @@
 # scrapesite
 
-Sami is a homosexual
+Sami is a awesome
