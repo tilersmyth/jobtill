@@ -8,8 +8,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   var updated = $firebase(ref.child('LastScraped'));
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
+  $scope.search_loc = 'Boston';
 
-
+//date friendly view
   $scope.timeFunction = function(vartopass) {
    		var today = new Date();
    		var lastRun = new Date(vartopass);

@@ -4,46 +4,73 @@
 
 
 /*Bootstrap breakpoints*/
-@media (min-width: 1200px) {
-  
-  .container {
-    max-width: 970px;
-  }
 
-}
+@media(max-width:767px){
 
-@media (min-width: 992px) {
-  
   .jumbotron {
-    margin-top: 30px;
+  margin-top: 10px;
   }
+    
+  .adlib{
+  height:40px;
+  width: 40%;
+  border-bottom: 1px solid #000;
+  }
+
+  .adlibloc{
+  width: 30%;
+  height:40px;
+  border-bottom: 1px solid #000;
+  }
+
 
 }
 
+@media(min-width:768px){
 
-@media (min-width: 768px) {
-  
   .jumbotron {
     margin-top: 30px;
   }
 
   .adlib{
- 	height:70px;
-	width: 45%;
-	border-bottom: 3px solid #000;
+  height:70px;
+  width: 60%;
+  border-bottom: 3px solid #000;
   }
+
+  .adlibloc{
+  width: 40%;
+  height:70px;
+  border-bottom: 3px solid #000;
+  }
+
+}
+@media(min-width:992px){
+
+
+  .adlib{
+  height:70px;
+  width: 43%;
+  border-bottom: 3px solid #000;
+  }
+
+  .adlibloc{
+  width: 30%;
+  height:70px;
+  border-bottom: 3px solid #000;
+  }
+
+
 
 }
 
 
-@media (max-width: 768px) {
-  
-    .adlib{
-  	height:40px;
-	width: 60%;
-	border-bottom: 1px solid #000;
+@media(min-width:1200px){
+
+  .container {
+    max-width: 970px;
   }
-  
+
 }
 
 .jumbotron {
@@ -66,6 +93,16 @@
 	border-top:0;
 	padding:0px !important;
 }
+
+.adlibloc{
+  text-align: center;
+  background: none !important;
+  outline: none !important;
+  border-left:0;
+  border-right:0;
+  border-top:0;
+  padding:0px !important;
+  }
 
 .just-added{
   color:#E9573f;
