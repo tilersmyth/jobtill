@@ -1,7 +1,7 @@
 /*Bootstrap-angular fix*/
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
-
+#you-got-this-travis{text-align: center;}
 
 /*Bootstrap breakpoints*/
 
