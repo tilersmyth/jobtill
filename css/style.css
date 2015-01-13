@@ -1,10 +1,6 @@
 /*Bootstrap-angular fix*/
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
-.ph_hide{
-  color: #cf4858;
-}
-
 /*Bootstrap breakpoints*/
 
 @media(max-width:767px){

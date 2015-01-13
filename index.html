@@ -64,7 +64,7 @@
 <!-- START SCRAPE CONTROL -->
 <div class="container" ng-controller="ScrapeCtrl">
   <div class="jumbotron">
-    <h1 ><span class="ph_hide">I want a job located in</span> <input type="text" class="adlibloc" ng-model="search_loc" /> doing
+    <h1 >I want a job located in <input type="text" class="adlibloc" ng-model="search_loc" /> doing
       <input type="search" autofocus class="adlib" ng-model="search" />.</h1>
 
     <p class="lead pull-details">Omg, we pulled {{updated.listings}} jobs from {{updated.sites}} companies at {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) : updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' == 'new'"></span></p>
