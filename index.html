@@ -10,7 +10,34 @@
 </head>
 
 <body ng-controller="ScrapeCtrl">
+
 <div class="container">
+<!--Start Crap Links -->
+<center><a href="#" ng-click="signupbox=true">Sign Up</a> - <a href="#" ng-click="loginbox=true">Login</a></center>
+<!--End Crap Links -->
+
+<!--Start Crap Forms -->
+<div id="signup-form" ng-show="signupbox" class="panel panel-default">
+  <div class="panel-heading">Sign Up! - <a href="#" ng-click="signupbox=false">Close</a></div>
+  <div class="panel-body">
+    Email: <input ng-model="signupMail"/> <br/>
+    Password: <input ng-model="signupPass"/> <br/>
+    <button ng-click="processUser('signup',signupMail,signupPass)">Signup</button>
+    <span ng-bind="loginmsg"></span>
+  </div>
+</div>
+<div id="login-form" ng-show="loginbox" class="panel panel-default">
+  <div class="panel-heading">Login! - <a href="#" ng-click="loginbox=false">Close</a></div>
+  <div class="panel-body">
+    Email: <input ng-model="loginMail"/> <br/>
+    Password: <input ng-model="loginPass"/> <br/>
+    <button ng-click="processUser('login',loginMail,loginPass)">Login</button>
+    <span ng-bind="loginmsg"></span>
+  </div>
+</div>
+<!--End Crap Forms -->
+
+
   <div class="jumbotron">
     <h1 >I want a job located in <input type="text" class="adlibloc" ng-model="search_loc" /> doing
       <input type="search" autofocus class="adlib" ng-model="search" />.</h1>
@@ -46,5 +73,8 @@
   <footer class="footer">
   </footer>
 </div>
+
+
+
 </body>
 </html>

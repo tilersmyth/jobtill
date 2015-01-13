@@ -22,5 +22,48 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
 		return "yesterday"
 
   };
+  
+  //Login-Signup
+
+$scope.processUser = function (a, b, c) {
+    if (b !== undefined && c !== undefined) {
+        if (a === "signup") {
+            ref.createUser({
+                email: b,
+                password: c
+            }, function (error) {
+                if (error === null) {
+                    $scope.$apply(function () {
+                        $scope.loginmsg = "Account Created!";
+                    });
+                } else {
+                    console.log("Error creating user:", error);
+                    $scope.$apply(function () {
+                        $scope.loginmsg = "Error";
+                    });
+                }
+            });
+        } else {
+            ref.authWithPassword({
+                email: b,
+                password: c
+            }, function (error, authData) {
+                if (error) {
+                    $scope.$apply(function () {
+                        $scope.loginmsg = "Incorrect user/pass";
+                    });
+                } else {
+                    $scope.$apply(function () {
+                        $scope.loginmsg = "You have been logged in!";
+                    });
+                }
+            });
+        };
+
+    } else {
+        $scope.loginmsg = "Enter something dummy"
+    };
+};
+
 });
 
