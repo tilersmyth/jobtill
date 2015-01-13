@@ -25,8 +25,8 @@
           <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
             <li class="dropdown" dropdown on-toggle="toggled(open)">
               <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
-              <a ng-show="authData" href="#" role="button" ng-click="logout()">Logout</a>
-              <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation();signupmsg=''">
+              <a ng-show="authData" href="#" role="button" ng-click="logout();signupmsg=''"">Logout</a>
+              <ul class="dropdown-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
                 
                   <!-- !!!!!!!!!! SHIT NEEDS TO GO HERE!!!!!!!! -->
                 <!--End Crap Links -->
@@ -44,7 +44,7 @@
                   <div class="panel-body" ng-show="!signupbox">
                     Email: <input ng-model="loginMail"/> <br/>
                     Password: <input ng-model="loginPass"/> <br/>
-                    <button ng-bind="userButtonText" ng-click="logIn(loginMail,loginPass)">Login</button>
+                    <button ng-click="logIn(loginMail,loginPass)">Login</button>
                     <span ng-bind="loginmsg"></span>
                     <a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a>
                   </div>
