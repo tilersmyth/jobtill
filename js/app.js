@@ -24,7 +24,6 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   };
   
   //Login-Signup
-
 $scope.processUser = function (a, b, c) {
     if (b !== undefined && c !== undefined) {
         if (a === "signup") {
@@ -37,11 +36,10 @@ $scope.processUser = function (a, b, c) {
                         $scope.loginmsg = "Account Created!";
                     });
                 } else {
-                    console.log("Error creating user:", error);
                     $scope.$apply(function () {
-                        $scope.loginmsg = "Error";
+                        $scope.loginmsg = error.message;
                     });
-                }
+                };
             });
         } else {
             ref.authWithPassword({
@@ -49,20 +47,28 @@ $scope.processUser = function (a, b, c) {
                 password: c
             }, function (error, authData) {
                 if (error) {
-                    $scope.$apply(function () {
-                        $scope.loginmsg = "Incorrect user/pass";
-                    });
+                    var d = error.message;
+                    var e = false;
+
                 } else {
-                    $scope.$apply(function () {
-                        $scope.loginmsg = "You have been logged in!";
-                    });
+                    var d = "You have been logged in!";
+                    var e = true;
                 }
+                $scope.$apply(function () {
+                    $scope.loginmsg = d;
+                    $scope.loggedIn = e;
+                });
             });
         };
 
     } else {
         $scope.loginmsg = "Enter something dummy"
     };
+};
+//Logout
+$scope.logOut = function () {
+    ref.unauth();
+    $scope.loggedIn = false;
 };
 
 });
