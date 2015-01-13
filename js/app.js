@@ -22,54 +22,50 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
 		return "yesterday"
 
   };
-  
-  //Login-Signup
-$scope.processUser = function (a, b, c) {
-    if (b !== undefined && c !== undefined) {
-        if (a === "signup") {
-            ref.createUser({
-                email: b,
-                password: c
-            }, function (error) {
-                if (error === null) {
-                    $scope.$apply(function () {
-                        $scope.loginmsg = "Account Created!";
-                    });
-                } else {
-                    $scope.$apply(function () {
-                        $scope.loginmsg = error.message;
-                    });
-                };
-            });
-        } else {
-            ref.authWithPassword({
-                email: b,
-                password: c
-            }, function (error, authData) {
-                if (error) {
-                    var d = error.message;
-                    var e = false;
-
-                } else {
-                    var d = "You have been logged in!";
-                    var e = true;
-                }
-                $scope.$apply(function () {
-                    $scope.loginmsg = d;
-                    $scope.loggedIn = e;
-                });
-            });
-        };
-
-    } else {
-        $scope.loginmsg = "Enter something dummy"
-    };
-};
-//Logout
-$scope.logOut = function () {
-    ref.unauth();
-    $scope.loggedIn = false;
-};
 
 });
+
+app.controller("UserCtrl", ["$scope", "$firebaseAuth",
+  function($scope, $firebaseAuth) {
+    var userref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
+    $scope.authObj = $firebaseAuth(userref);
+	$scope.userButtonText = "Sign in";
+//Sign up
+$scope.signUp = function (a, b) {
+    if (a !== undefined && b !== undefined) {
+        $scope.authObj.$createUser(a, b).then(function (userData) {
+            $scope.logIn(a, b);
+        }).then(function (authData) {
+            $scope.signupmsg = "Account created successfully, you are now logged in!";
+        }).catch(function (error) {
+            $scope.signupmsg = error.message;
+        });
+    } else {
+        $scope.signupmsg = "Please enter your user name and password.";
+    };
+};
+//Log in	
+$scope.logIn = function (a, b) {
+    if (a !== undefined && b !== undefined) {
+        $scope.authObj.$authWithPassword({
+            email: a,
+            password: b
+        }).then(function (authData) {
+            $scope.authData = $scope.authObj.$getAuth();
+            $scope.loginmsg = "Login Success!"
+        }).catch(function (error) {
+            $scope.loginmsg = error.message;
+        });
+    } else {
+        $scope.loginmsg = "Please enter your user name and password.";
+    };
+};
+	//Log out
+		$scope.logout = function() {
+			$scope.authObj.$unauth();
+			$scope.authData = $scope.authObj.$getAuth();
+		};
+	//Close Controller
+  }
+]);
 

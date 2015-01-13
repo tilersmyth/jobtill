@@ -9,13 +9,14 @@
 <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 </head>
 
-<body ng-controller="ScrapeCtrl">
-
-<div class="container">
+<body>
+<!-- USER CONTROL -->
+<div ng-controller="UserCtrl">
 <!--Start Crap Links -->
 <center>
-<div ng-show="!loggedIn"><a href="#" ng-click="signupbox=true">Sign Up</a> - <a href="#" ng-click="loginbox=true">Login</a></div>
-<div ng-show="loggedIn">Logged In - <a href="#" ng-click="logOut()">Sign Out</a></div>
+<span ng-show="!authData"><a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a> - <a href="#" ng-click="loginbox=true;loginmsg=''">Login</a></span>
+
+<span ng-show="authData">  Logged In | <a href="#" ng-click="logout()">Logout</a></span>
 </center>
 <!--End Crap Links -->
 
@@ -25,8 +26,8 @@
   <div class="panel-body">
     Email: <input ng-model="signupMail"/> <br/>
     Password: <input ng-model="signupPass"/> <br/>
-    <button ng-click="processUser('signup',signupMail,signupPass)">Signup</button>
-    <span ng-bind="loginmsg"></span>
+    <button ng-click="signUp(signupMail,signupPass)">Signup</button>
+    <span ng-bind="signupmsg"></span>
   </div>
 </div>
 <div id="login-form" ng-show="loginbox" class="panel panel-default">
@@ -34,13 +35,16 @@
   <div class="panel-body">
     Email: <input ng-model="loginMail"/> <br/>
     Password: <input ng-model="loginPass"/> <br/>
-    <button ng-click="processUser('login',loginMail,loginPass)">Login</button>
+    <button ng-bind="userButtonText" ng-click="logIn(loginMail,loginPass)">Login</button>
     <span ng-bind="loginmsg"></span>
   </div>
 </div>
 <!--End Crap Forms -->
+</div>
+<!-- END USER CONTROL -->
 
-
+<!-- START SCRAPE CONTROL -->
+<div class="container" ng-controller="ScrapeCtrl">
   <div class="jumbotron">
     <h1 >I want a job located in <input type="text" class="adlibloc" ng-model="search_loc" /> doing
       <input type="search" autofocus class="adlib" ng-model="search" />.</h1>
@@ -76,7 +80,7 @@
   <footer class="footer">
   </footer>
 </div>
-
+<!-- END SCRAPE CONTROL -->
 
 
 </body>
