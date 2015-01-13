@@ -24,36 +24,31 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
             <li class="dropdown" dropdown on-toggle="toggled(open)">
-              <a href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
+              <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
+              <a ng-show="authData" href="#" role="button" ng-click="logout()">Logout</a>
+              <ul class="dropdown-menu" role="menu" ng-click="$event.stopPropagation();signupmsg=''">
                 
                   <!-- !!!!!!!!!! SHIT NEEDS TO GO HERE!!!!!!!! -->
-                  <center>
-                <span ng-show="!authData"><a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a> - <a href="#" ng-click="loginbox=true;loginmsg=''">Login</a></span>
-
-                <span ng-show="authData">  Logged In | <a href="#" ng-click="logout()">Logout</a></span>
-                </center>
                 <!--End Crap Links -->
 
                 <!--Start Crap Forms -->
-                <div id="signup-form" ng-show="signupbox" class="panel panel-default">
-                  <div class="panel-heading">Sign Up! - <a href="#" ng-click="signupbox=false">Close</a></div>
-                  <div class="panel-body">
+               
+                  <div ng-show="signupbox" class="panel-body">
                     Email: <input ng-model="signupMail"/> <br/>
                     Password: <input ng-model="signupPass"/> <br/>
-                    <button ng-click="signUp(signupMail,signupPass)">Signup</button>
-                    <span ng-bind="signupmsg"></span>
+                    <button ng-click="signUp(signupMail,signupPass)">Sign up</button>
+                    <span ng-bind="signupmsg"></span>                    
                   </div>
-                </div>
-                <div id="login-form" ng-show="loginbox" class="panel panel-default">
-                  <div class="panel-heading">Login! - <a href="#" ng-click="loginbox=false">Close</a></div>
-                  <div class="panel-body">
+               
+          
+                  <div class="panel-body" ng-show="!signupbox">
                     Email: <input ng-model="loginMail"/> <br/>
                     Password: <input ng-model="loginPass"/> <br/>
                     <button ng-bind="userButtonText" ng-click="logIn(loginMail,loginPass)">Login</button>
                     <span ng-bind="loginmsg"></span>
+                    <a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a>
                   </div>
-                </div>
+               
                 <!--End Crap Forms -->
                 </div>
 
