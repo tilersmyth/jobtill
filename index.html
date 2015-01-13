@@ -10,38 +10,61 @@
 </head>
 
 <body>
-<!-- USER CONTROL -->
-<div ng-controller="UserCtrl">
-<!--Start Crap Links -->
-<center>
-<span ng-show="!authData"><a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a> - <a href="#" ng-click="loginbox=true;loginmsg=''">Login</a></span>
+<nav class="navbar navbar-default navbar-scrape navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Job Scrape</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+            <li class="dropdown" dropdown on-toggle="toggled(open)">
+              <a href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                  <!-- !!!!!!!!!! SHIT NEEDS TO GO HERE!!!!!!!! -->
+                  <center>
+                <span ng-show="!authData"><a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a> - <a href="#" ng-click="loginbox=true;loginmsg=''">Login</a></span>
 
-<span ng-show="authData">  Logged In | <a href="#" ng-click="logout()">Logout</a></span>
-</center>
-<!--End Crap Links -->
+                <span ng-show="authData">  Logged In | <a href="#" ng-click="logout()">Logout</a></span>
+                </center>
+                <!--End Crap Links -->
 
-<!--Start Crap Forms -->
-<div id="signup-form" ng-show="signupbox" class="panel panel-default">
-  <div class="panel-heading">Sign Up! - <a href="#" ng-click="signupbox=false">Close</a></div>
-  <div class="panel-body">
-    Email: <input ng-model="signupMail"/> <br/>
-    Password: <input ng-model="signupPass"/> <br/>
-    <button ng-click="signUp(signupMail,signupPass)">Signup</button>
-    <span ng-bind="signupmsg"></span>
-  </div>
-</div>
-<div id="login-form" ng-show="loginbox" class="panel panel-default">
-  <div class="panel-heading">Login! - <a href="#" ng-click="loginbox=false">Close</a></div>
-  <div class="panel-body">
-    Email: <input ng-model="loginMail"/> <br/>
-    Password: <input ng-model="loginPass"/> <br/>
-    <button ng-bind="userButtonText" ng-click="logIn(loginMail,loginPass)">Login</button>
-    <span ng-bind="loginmsg"></span>
-  </div>
-</div>
-<!--End Crap Forms -->
-</div>
-<!-- END USER CONTROL -->
+                <!--Start Crap Forms -->
+                <div id="signup-form" ng-show="signupbox" class="panel panel-default">
+                  <div class="panel-heading">Sign Up! - <a href="#" ng-click="signupbox=false">Close</a></div>
+                  <div class="panel-body">
+                    Email: <input ng-model="signupMail"/> <br/>
+                    Password: <input ng-model="signupPass"/> <br/>
+                    <button ng-click="signUp(signupMail,signupPass)">Signup</button>
+                    <span ng-bind="signupmsg"></span>
+                  </div>
+                </div>
+                <div id="login-form" ng-show="loginbox" class="panel panel-default">
+                  <div class="panel-heading">Login! - <a href="#" ng-click="loginbox=false">Close</a></div>
+                  <div class="panel-body">
+                    Email: <input ng-model="loginMail"/> <br/>
+                    Password: <input ng-model="loginPass"/> <br/>
+                    <button ng-bind="userButtonText" ng-click="logIn(loginMail,loginPass)">Login</button>
+                    <span ng-bind="loginmsg"></span>
+                  </div>
+                </div>
+                <!--End Crap Forms -->
+                </div>
+
+                  <!-- !!!!!!!!!! STOP SHITTTING !!!!!!!! -->
+
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
 <!-- START SCRAPE CONTROL -->
 <div class="container" ng-controller="ScrapeCtrl">
@@ -54,9 +77,6 @@
 
   <div class="row marketing">
     <div class="col-lg-12">
-      <div id="you-got-this-travis"  ng-hide="search">
-<iframe class="vine-embed" src="https://vine.co/v/O6gHdtYPqij/embed/simple?audio=1" width="320" height="320" frameborder="0"></iframe><script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>
-      </div>
       <table ng-show="search" class="table table-striped">
       <thead>
         <tr>
@@ -81,7 +101,6 @@
   </footer>
 </div>
 <!-- END SCRAPE CONTROL -->
-
 
 </body>
 </html>

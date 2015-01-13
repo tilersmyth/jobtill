@@ -1,8 +1,6 @@
 /*Bootstrap-angular fix*/
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
-#you-got-this-travis{text-align: center;}
-
 /*Bootstrap breakpoints*/
 
 @media(max-width:767px){
@@ -14,13 +12,13 @@
   .adlib{
   height:40px;
   width: 40%;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ffffff;
   }
 
   .adlibloc{
   width: 30%;
   height:40px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ffffff;
   }
 
 
@@ -35,13 +33,13 @@
   .adlib{
   height:70px;
   width: 60%;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #ffffff;
   }
 
   .adlibloc{
   width: 40%;
   height:70px;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #ffffff;
   }
 
 }
@@ -51,13 +49,13 @@
   .adlib{
   height:70px;
   width: 43%;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #ffffff;
   }
 
   .adlibloc{
   width: 30%;
   height:70px;
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #ffffff;
   }
 
 
@@ -73,16 +71,36 @@
 
 }
 
+body{
+  background-color: #3e4049;
+  padding-top: 70px;
+}
+
+.navbar-scrape{
+  background-color: #303239;
+  border: 0px !important;
+}
+
+.navbar-scrape a:hover{
+  color: #666 !important;
+}
+
+.navbar-scrape .navbar-nav>.open>a{
+  background-color:#a5a7ac !important;
+}
+
 .jumbotron {
     padding-top: 30px;
     padding-bottom: 30px;
+    background-color: #cf4858;
+    color: #ffffff;
   }
 
 .pull-details{
 	margin-top: 40px;
 	text-align: center;
   font-size: 16px !important;
-  text-shadow: 1px 1px 1px #fff
+  text-shadow: 1px 1px 1px #ce6774
 }
 
 .adlib{
