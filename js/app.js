@@ -30,7 +30,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth",
     var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
 	var usersRef = ref2.child("users");
     $scope.authObj = $firebaseAuth(ref2);
-	$scope.userButtonText = "Sign in";
+	$scope.authData = $scope.authObj.$getAuth();
 //Sign up
 $scope.signUp = function (a, b) {
     if (a !== undefined && b !== undefined) {
