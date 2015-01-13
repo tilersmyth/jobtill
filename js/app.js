@@ -27,8 +27,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
 
 app.controller("UserCtrl", ["$scope", "$firebaseAuth",
   function($scope, $firebaseAuth) {
-    var userref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
-    $scope.authObj = $firebaseAuth(userref);
+    var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
+	var usersRef = ref2.child("users");
+    $scope.authObj = $firebaseAuth(ref2);
 	$scope.userButtonText = "Sign in";
 //Sign up
 $scope.signUp = function (a, b) {
@@ -36,6 +37,14 @@ $scope.signUp = function (a, b) {
         $scope.authObj.$createUser(a, b).then(function (userData) {
             $scope.logIn(a, b);
         }).then(function (authData) {
+            var usertoPush = $scope.authObj.$getAuth();
+            usersRef.child(usertoPush.uid).set({
+				email: usertoPush.password.email,
+                provider: usertoPush.provider,
+                joined: new Date().getTime(),
+				search_tokens: "0",
+				search_terms: ""
+            });
             $scope.signupmsg = "Account created successfully, you are now logged in!";
         }).catch(function (error) {
             $scope.signupmsg = error.message;
@@ -52,7 +61,7 @@ $scope.logIn = function (a, b) {
             password: b
         }).then(function (authData) {
             $scope.authData = $scope.authObj.$getAuth();
-            $scope.loginmsg = "Login Success!"
+            $scope.loginmsg = "Login Success!";
         }).catch(function (error) {
             $scope.loginmsg = error.message;
         });
