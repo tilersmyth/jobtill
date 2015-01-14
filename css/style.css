@@ -79,18 +79,6 @@ body{
 .custom-brand{
   font-family: 'Fredoka One', cursive !important;
   font-size: 28px;
-  position: relative;
-}
-
-.custom-tagline{
-  font-family: 'Open Sans Condensed', sans-serif !important;
-  color: #999999;
-  font-size: 20px;
-  position: absolute;
-  width: 300px;
-  left:110;
-  top:15;
-
 }
 
 .navbar-scrape{
