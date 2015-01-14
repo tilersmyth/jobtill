@@ -9,7 +9,6 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
   $scope.search_loc = 'Boston';
-
 //date friendly view
   $scope.timeFunction = function(vartopass) {
    		var today = new Date();
@@ -78,3 +77,23 @@ $scope.logIn = function (a, b) {
   }
 ]);
 
+//window resize for bg
+function tellAngular() {
+    var domElt = document.getElementById('city_skyline');
+    scope = angular.element(domElt).scope();
+    var distance = domElt.getBoundingClientRect().top;
+    var fucker = window.innerHeight;
+    
+    var city_height = fucker - distance;
+    console.log(city_height);
+
+    scope.$apply(function() {
+        domElt.style.height = city_height+"px";
+    });
+
+}
+
+document.addEventListener("DOMContentLoaded", tellAngular, false);
+
+//calling tellAngular on resize event
+window.onresize = tellAngular;
