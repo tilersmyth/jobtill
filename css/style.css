@@ -131,3 +131,19 @@ body{
   background: url("../img/city.png") no-repeat;
   background-size: 970px 467px;
 }
+
+.table-custom{
+  color: #999999 !important;
+}
+
+.table-custom a{
+  color: #ffffff !important;
+}
+
+.table-custom td{
+  border-color:#303236 !important;
+}
+
+.table-custom>tbody>tr:nth-child(odd){
+  background-color: #303239;
+}
