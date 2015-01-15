@@ -30,6 +30,13 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth",
 	var usersRef = ref2.child("users");
     $scope.authObj = $firebaseAuth(ref2);
 	$scope.authData = $scope.authObj.$getAuth();
+
+    //clear validation text on dropdown close
+   $scope.toggled = function(open) {
+    if(open === false)
+    $scope.loginmsg = "";
+  };
+
 //Sign up
 $scope.signUp = function (a, b) {
     if (a !== undefined && b !== undefined) {
@@ -49,7 +56,7 @@ $scope.signUp = function (a, b) {
             $scope.signupmsg = error.message;
         });
     } else {
-        $scope.signupmsg = "Please enter your user name and password.";
+        $scope.signupmsg = "Please enter username and password.";
     };
 };
 //Log in	
@@ -65,7 +72,7 @@ $scope.logIn = function (a, b) {
             $scope.loginmsg = error.message;
         });
     } else {
-        $scope.loginmsg = "Please enter your user name and password.";
+        $scope.loginmsg = "Please enter username and password.";
     };
 };
 	//Log out
@@ -83,9 +90,7 @@ function tellAngular() {
     scope = angular.element(domElt).scope();
     var distance = domElt.getBoundingClientRect().top;
     var fucker = window.innerHeight;
-    
     var city_height = fucker - distance;
-    console.log(city_height);
 
     scope.$apply(function() {
         domElt.style.height = city_height+"px";

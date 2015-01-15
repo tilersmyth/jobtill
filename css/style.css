@@ -86,12 +86,53 @@ body{
   border: 0px !important;
 }
 
-.navbar-scrape a:hover{
+.navbar-scrape a:hover, .nav>li>a:focus{
   color: #666 !important;
 }
 
 .navbar-scrape .navbar-nav>.open>a{
-  background-color:#a5a7ac !important;
+  background-color:#4d505b !important;
+  color:#cccccc !important;
+}
+
+.custom-menu{
+  background-color: #4d505b !important;
+  border:0 !important;
+  min-width: 240px;
+}
+
+.btn-custom{
+  width: 100% !important;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+ 
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+ 
+.btn-primary {
+    background: #16a79d;
+    color: #ffffff;
+}
+ 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #19a8ac;
+}
+ 
+.btn-primary:active, .btn-primary.active {
+    background: #149396;
+    box-shadow: none;
+}
+
+.btn.sharp {
+  border-radius:0;
 }
 
 .jumbotron {
@@ -100,6 +141,7 @@ body{
     background-color: #cf4858;
     color: #ffffff;
   }
+
 
 .pull-details{
 	margin-top: 40px;
@@ -151,4 +193,25 @@ body{
 
 .table-custom>tbody>tr:nth-child(odd){
   background-color: #303239;
+}
+
+a.signupLink{
+  color: #eeeeee;
+  text-align: center;
+  width: 100% !important;
+  margin-top: 5px !important;
+  display: block;
+}
+
+a.signupLink:hover{
+  color: #cccccc !important;
+}
+
+.signin-val{
+  color:#f4ac42;
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin-bottom: 8px;
+  line-height: 1em;
 }

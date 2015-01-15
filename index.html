@@ -1,9 +1,11 @@
 <html ng-app="Scrape">
 <head>
+<title>Jobtill | High-growth Companies</title>
+<link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
+
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
 <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
@@ -29,33 +31,40 @@
             <li class="dropdown" dropdown on-toggle="toggled(open)">
               <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
               <a ng-show="authData" href="#" role="button" ng-click="logout();signupmsg=''">Logout</a>
-              <ul class="dropdown-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
+              <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
                 
-                  <!-- !!!!!!!!!! SHIT NEEDS TO GO HERE!!!!!!!! -->
-                <!--End Crap Links -->
 
                 <!--Start Crap Forms -->
                
                   <div ng-show="signupbox" class="panel-body">
-                    Email: <input ng-model="signupMail"/> <br/>
-                    Password: <input ng-model="signupPass"/> <br/>
-                    <button ng-click="signUp(signupMail,signupPass)">Sign up</button>
+
+                    <div class="form-group">
+                      <input type="email" ng-model="signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" ng-model="signupPass" class="form-control" id="signupPass" placeholder="Enter Password">
+                    </div>
+
+                    <button  class="btn btn-default" ng-click="signUp(signupMail,signupPass)">Sign up</button>
                     <span ng-bind="signupmsg"></span>                    
                   </div>
                
           
                   <div class="panel-body" ng-show="!signupbox">
-                    Email: <input ng-model="loginMail"/> <br/>
-                    Password: <input ng-model="loginPass"/> <br/>
-                    <button ng-click="logIn(loginMail,loginPass)">Login</button>
-                    <span ng-bind="loginmsg"></span>
-                    <a href="#" ng-click="signupbox=true;signupmsg=''">Sign Up</a>
+                  <span ng-bind="loginmsg" class="signin-val"></span>
+                    <div class="form-group">
+                      <input type="email" ng-model="loginMail" class="form-control" placeholder="Enter E-mail">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" ng-model="loginPass" class="form-control" placeholder="Enter Password">
+                    </div>
+                    <button class="btn-custom btn btn-primary sharp" ng-click="logIn(loginMail,loginPass)">Login</button>
+
+                    <a href="#" class="signupLink" ng-click="signupbox=true;signupmsg=''">Click here to sign up</a>
                   </div>
                
                 <!--End Crap Forms -->
                 </div>
-
-                  <!-- !!!!!!!!!! STOP SHITTTING !!!!!!!! -->
 
               </ul>
             </li>
