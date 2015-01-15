@@ -1,0 +1,170 @@
+{
+  "-JfMDNVY91r4pPuyuOUt" : {
+    "clean" : "1",
+    "sVar" : "$('a[href*=#]')",
+    "site" : "Apperian",
+    "siteurl" : "http://www.apperian.com/mobile-application-management-company/apperian-jobs/",
+    "sitevars" : "var name = $(this).text(); var location = \"Boston, MA\"; var role = \"\"; var url = \"http://www.apperian.com/mobile-application-management-company/apperian-jobs/\"+ $(this).attr(\"href\");"
+  },
+  "-JfMDNVZGnWXmTFlMNQ6" : {
+    "clean" : "1",
+    "sVar" : "$('.resumator-job-title')",
+    "site" : "Buildium",
+    "siteurl" : "http://buildium.theresumator.com/",
+    "sitevars" : " var a = $(this).next().children().remove().end().text();var b = a.trim().split(\"\\n\");if (typeof b[1] !== \"undefined\") {var role = b[1].trim();} else role = \"\"; var name = $(this).children(\"a\").text(); var location = b[0].trim();var url = $(this).children(\"a\").attr(\"href\");"
+  },
+  "-JfMDNVZGnWXmTFlMNQ7" : {
+    "clean" : "1",
+    "sVar" : "$('.careers div')",
+    "site" : "EverTrue",
+    "siteurl" : "http://www.evertrue.com/about-us/#career",
+    "sitevars" : "var role = \"\";var name = $(this).children(\"h3\").text();var location = \"Boston, MA\";var url = $(this).children(\"p\").children(\"a\").attr(\"href\");"
+  },
+  "-JfMDNV_9Mj4rF65xRWG" : {
+    "clean" : "1",
+    "sVar" : "$('.job-record')",
+    "site" : "Bullhorn",
+    "siteurl" : "http://www.bullhornreach.com/sites/bullhorn/?page=1",
+    "sitevars" : "var role = \"\";var name = $(this).children(\".title\").text().trim();var location = $(this).parent().parent().next().children(\".joblocation\").text();var url = \"http://www.bullhornreach.com/\" + $(this).parent().attr(\"href\");"
+  },
+  "-JfMDNV_9Mj4rF65xRWH" : {
+    "clean" : "0",
+    "sVar" : "$('.job-record')",
+    "site" : "Bullhorn",
+    "siteurl" : "http://www.bullhornreach.com/sites/bullhorn/?page=2",
+    "sitevars" : "var role = \"\";var name = $(this).children(\".title\").text().trim();var location = $(this).parent().parent().next().children(\".joblocation\").text();var url = \"http://www.bullhornreach.com/\" + $(this).parent().attr(\"href\");"
+  },
+  "-JfMDNV_9Mj4rF65xRWI" : {
+    "clean" : "0",
+    "sVar" : "$('.job-record')",
+    "site" : "Bullhorn",
+    "siteurl" : "http://www.bullhornreach.com/sites/bullhorn/?page=3",
+    "sitevars" : "var role = \"\";var name = $(this).children(\".title\").text().trim();var location = $(this).parent().parent().next().children(\".joblocation\").text();var url = \"http://www.bullhornreach.com/\" + $(this).parent().attr(\"href\");"
+  },
+  "-JfMDNV_9Mj4rF65xRWJ" : {
+    "clean" : "1",
+    "sVar" : "$('.joblist li')",
+    "site" : "Localytics",
+    "siteurl" : "http://hire.jobvite.com/CompanyJobs/Careers.aspx?k=JobListing&c=qEO9Vfwg&v=1",
+    "sitevars" : "var a=$(this).children(\"a\").text();var jlink=$(this).children(\"a\");var b=jlink.attr(\"onclick\");var c=b.split(\"'\");var role=$(this).parent().prev(\"h3\").text();var name=a.trim();var location=$(this).children(\".joblocation\").text();var url=\"http://hire.jobvite.com/CompanyJobs/Careers.aspx?c=qEO9Vfwg&v=1&page=Job%20Description&j=\"+c[5];"
+  },
+  "-JfMDNVaWwE74F_SZYEV" : {
+    "clean" : "1",
+    "sVar" : "$('.reqResult div div a')",
+    "site" : "Optaros",
+    "siteurl" : "http://optaros.hrmdirect.com/employment/search.php?sort=da&search=true",
+    "sitevars" : "var role=$(this).parent().parent().prevUntil(\".reqhead\").prev().closest(\".reqhead\").text();var name=$(this).text();var location=$(this).parent().next(\"div\").text();var url=\"http://optaros.hrmdirect.com/employment/\"+$(this).attr(\"href\").slice(0,-6)+\"&#job\";"
+  },
+  "-JfMDNVaWwE74F_SZYEW" : {
+    "clean" : "1",
+    "sVar" : "$('.job-list li')",
+    "site" : "SessionM",
+    "siteurl" : "http://www.sessionm.com/about-us/jobs/",
+    "sitevars" : "var split=$(this).text().split(\"(\");var role=split[0].slice(0,-4);var name=$(this).text();var location=split[1].slice(0,-2);var url=$(this).children(\"a\").attr(\"href\");"
+  },
+  "-JfMDNVbvJxdwYlyHR64" : {
+    "clean" : "1",
+    "sVar" : "$('.open-position')",
+    "site" : "Skillz",
+    "siteurl" : "http://skillz.com/jobs",
+    "sitevars" : "var a=$(this).text();var b=a.split(\"\\n\");var role=b[3].slice(26);var name=b[1].trim();var location=b[2].slice(24);var url=$(this).children(\"a\").attr(\"href\");"
+  },
+  "-JfMDNVbvJxdwYlyHR65" : {
+    "clean" : "1",
+    "sVar" : "$('a[href*=\"/jobs/\"]')",
+    "site" : "WordStream",
+    "siteurl" : "http://www.wordstream.com/jobs",
+    "sitevars" : "var a=$(this).parent().prevUntil(\"h2\").prev(\"h2\").text();if(a===\"\"){a=$(this).parent().prev(\"h2\").text()}var role=a;var name=$(this).text();var location=\"Boston, MA\";var url=$(this).attr(\"href\");"
+  },
+  "-JfMDNVbvJxdwYlyHR66" : {
+    "clean" : "1",
+    "sVar" : "$('a.mbutton[href*=\"/jobs/\"]')",
+    "site" : "Nanigans",
+    "siteurl" : "http://www.nanigans.com/jobs/",
+    "sitevars" : "var role=\"\";var name=$(this).prev().prev().prev().text();var location=$(this).prev().prev().text().slice(10);var url=$(this).attr(\"href\");"
+  },
+  "-JfMJRAZuLg0j0iVKhKo" : {
+    "clean" : "1",
+    "sVar" : "$(\".jvjoblink\")",
+    "site" : "peerTransfer",
+    "siteurl" : "https://hire.jobvite.com/CompanyJobs/Careers.aspx?k=JobListing&c=qV79VfwQ",
+    "sitevars" : "var name = $(this).text();var location = $(this).parent().next().text();var url = $(this).attr(\"href\");"
+  },
+  "-JfMPr7pUPsRZZLIEhe2" : {
+    "clean" : "1",
+    "sVar" : "$(\"h6\").prevUntil(\"ul\").prev().children(\"li\")",
+    "site" : "Kyruus",
+    "siteurl" : "http://kyruus.com/careers/",
+    "sitevars" : "var name = $(this).text();var location = \"Boston, MA\";var url = \"http://kyruus.com/careers/\" + $(this).children().attr(\"href\");"
+  },
+  "-JfMRlM9CZuhQP9w9foz" : {
+    "clean" : "0",
+    "sVar" : "$(\".blog-main .post header h2 a\")",
+    "site" : "Rethink Robotics",
+    "siteurl" : "http://www.rethinkrobotics.com/careers/page/1/",
+    "sitevars" : "var name = $(this).text();var location = \"Boston, MA\";var url = \"http://www.rethinkrobotics.com\" + $(this).attr(\"href\");"
+  },
+  "-JfMS1ctbohE50hfsCdE" : {
+    "clean" : "1",
+    "sVar" : "$(\".blog-main .post header h2 a\")",
+    "site" : "Rethink Robotics",
+    "siteurl" : "http://www.rethinkrobotics.com/careers/page/2/",
+    "sitevars" : "var name = $(this).text();var location = \"Boston, MA\";var url = \"http://www.rethinkrobotics.com\" + $(this).attr(\"href\");"
+  },
+  "-JfMTBJM48qOJB4gGWny" : {
+    "clean" : "1",
+    "sVar" : "$(\".js-job-listing td a\")",
+    "site" : "Dailybreak",
+    "siteurl" : "https://www.jobscore.com/jobs2/dailybreak",
+    "sitevars" : "var name = $(this).text();var location = \"Boston, MA\";var url = $(this).attr(\"href\");"
+  },
+  "-JfMUJzST-d1r1zpBKO2" : {
+    "clean" : "1",
+    "sVar" : "$(\".job-summary ul li a\")",
+    "site" : "Shareaholic",
+    "siteurl" : "https://shareaholic.com/careers/",
+    "sitevars" : "var name = $(this).text(); var location = \"Boston, MA\";var url = \"https://shareaholic.com/careers/\"+ $(this).attr(\"href\");"
+  },
+  "-JfMXW3a3WS6jyqKgUXJ" : {
+    "clean" : "1",
+    "sVar" : "$(\".joblist li a\")",
+    "site" : "ChoiceStream",
+    "siteurl" : "http://hire.jobvite.com/CompanyJobs/Careers.aspx?k=JobListing&c=qlM9VfwV",
+    "sitevars" : "var name = $(this).text().trim();var location = $(this).next().text();var a = $(this).attr(\"onclick\").split(\"'\"); var url = \"http://hire.jobvite.com/CompanyJobs/Careers.aspx?c=qlM9VfwV&page=Job%20Description&j=\" + a[5];"
+  },
+  "-JfMYoJwSU4V9SqHZ6V7" : {
+    "clean" : "1",
+    "sVar" : "$(\".js-job-listing td a\")",
+    "site" : "Jana",
+    "siteurl" : "https://www.jobscore.com/jobs2/jana",
+    "sitevars" : "var name = $(this).text();var location = $(this).parent().next().text().trim();var url = $(this).attr(\"href\");"
+  },
+  "-JfM_9Kw4C2SUrRkip2K" : {
+    "clean" : "1",
+    "sVar" : "$(\".opening\")",
+    "site" : "Cohealo",
+    "siteurl" : "https://app.greenhouse.io/embed/job_board?for=cohealo&b=http://cohealo.com/company/careers/",
+    "sitevars" : "var name = $(this).children(\"a\").text();var location = $(this).children(\"span\").text();var url = $(this).children(\"a\").attr(\"href\");"
+  },
+  "-JfMdC0VwfQek1tRXzI8" : {
+    "clean" : "1",
+    "sVar" : "$(\".careers-available__block-title\")",
+    "site" : "Boundless",
+    "siteurl" : "https://www.boundless.com/careers/",
+    "sitevars" : "var name = $(this).text().trim();var location = \"Boston, MA\";var url = \"https://www.boundless.com/careers/\"+$(this).parent().parent().attr(\"href\").slice(1);"
+  },
+  "-JfMgeD92zeiVc7zf97-" : {
+    "clean" : "1",
+    "sVar" : "$(\".avia_textblock a\")",
+    "site" : "Cogito",
+    "siteurl" : "http://www.cogitocorp.com/careers/",
+    "sitevars" : "var name = $(this).text();var location = \"Boston, MA\";var a = $(this).attr(\"href\"); if (!a.indexOf(\"..\")) {a = \"http://www.cogitocorp.com\"+a.slice(2); };var url = a;"
+  },
+  "-JfMicHWek92HucpXSoy" : {
+    "clean" : "1",
+    "sVar" : "$(\"u:contains(\\\"United\\\")\").parent().siblings(\"a\")",
+    "site" : "Anaqua",
+    "siteurl" : "http://www.anaqua.com/about-anaqua/careers.html",
+    "sitevars" : "var name = $(this).text().slice(2);var location = \"Boston, MA\";var url = \"http://www.anaqua.com/about-anaqua/\"+ $(this).attr(\"href\");"
+  }
+}
