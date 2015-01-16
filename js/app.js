@@ -38,27 +38,37 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth",
   };
 
 //Sign up
-$scope.signUp = function (a, b) {
+$scope.signUp = function (a, b, c, d) {
     if (a !== undefined && b !== undefined) {
-        $scope.authObj.$createUser(a, b).then(function (userData) {
-            $scope.logIn(a, b);
+        $scope.authObj.$createUser({
+            email: a,
+            password: b
+        }).then(function (userData) {
+            return $scope.authObj.$authWithPassword({
+                email: a,
+                password: b
+            });
         }).then(function (authData) {
+            $scope.authData = $scope.authObj.$getAuth();
             var usertoPush = $scope.authObj.$getAuth();
             usersRef.child(usertoPush.uid).set({
-				email: usertoPush.password.email,
+                firstName: c,
+                lastName: d,
+                email: usertoPush.password.email,
                 provider: usertoPush.provider,
                 joined: new Date().getTime(),
-				search_tokens: "0",
-				search_terms: ""
+                search_tokens: "0",
+                search_terms: ""
             });
-            $scope.signupmsg = "Account created successfully, you are now logged in!";
+            $scope.status.isopen = !$scope.status.isopen;
         }).catch(function (error) {
-            $scope.signupmsg = error.message;
+            console.error("Error: ", error);
         });
     } else {
         $scope.signupmsg = "Please enter username and password.";
     };
-};
+};      
+
 //Log in	
 $scope.logIn = function (a, b) {
     if (a !== undefined && b !== undefined) {
@@ -67,7 +77,8 @@ $scope.logIn = function (a, b) {
             password: b
         }).then(function (authData) {
             $scope.authData = $scope.authObj.$getAuth();
-            $scope.loginmsg = "Login Success!";
+            $scope.loginmsg = "Login Success!";		
+			$scope.status.isopen = !$scope.status.isopen;	
         }).catch(function (error) {
             $scope.loginmsg = error.message;
         });
