@@ -26,7 +26,9 @@ Selector Var (for each loop): <input id="svar" placeholder='$("a.job")' /><br/><
 Selector For Job Name: <input id="name" placeholder="var name = $(this).text();" /><br/><br/>
 Selector For Job Location: <input id="location" placeholder="var location = $(this).prev().text();" /><br/><br/>
 Selector For Job URL: <input id="url" placeholder='var url = $(this).attr("href");' /><br/><br/>
-Page Number (if multi page. default is 1): <input id="clean" value="1" /><br/><br/>
+Multi-page? (true or false): <input id="mp" value="false" /><br/><br/>
+Multi Selector Var?(pagination): <input id="mpvar" value="none" /><br/><br/>
+Multi-page Lead URL (if needed default none): <input id="mplead" value="none" /><br/><br/>
 <button type="button" class="btn btn-info" onclick="cleanUp()">Clear Inputs</button> <button type="button" class="btn btn-info pull-right" onClick="runIt()">Upload</button>
   </div>
 </div>
@@ -34,22 +36,31 @@ Page Number (if multi page. default is 1): <input id="clean" value="1" /><br/><b
 <script>
 var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com/scrape-vars/");
 function cleanUp() {
-	$("input").val("");
-	$("#clean").val("1");
+	$("#site").val("");
+	$("#siteurl").val("");
+	$("#svar").val("");
+	$("#name").val("");
+	$("#location").val("");
+	$("#url").val("");
+
 };
 function runIt() {
 	var hasdata = true;
 	var site = $("#site").val(); 
 	var siteurl = $("#siteurl").val(); 
 	var sVar = $("#svar").val(); 
-	var clean = $("#clean").val(); 
+	var multi = $("#mp").val(); 
+	var msVar = $("#mpvar").val(); 
+	var msLead = $("#mplead").val(); 
 	var name = $("#name").val(); 
 	var location = $("#location").val(); 
 	var url = $("#url").val();
 	var metadata = {
                         site: site,
                         siteurl: siteurl,
-						clean: clean,
+						multi: eval(multi),
+						msLead: msLead,
+						msVar: msVar,
 						sVar: sVar,
 						sitevars: name + location + url
                     };
@@ -61,7 +72,8 @@ function runIt() {
 	
 	if (hasdata) {
 		ref.push(metadata);
-	$("#alert h3").text("Upload Success! Make sure to run jobscrape.js to check for errors")
+	$("#alert h3").text("Upload Success! Make sure to run jobscrape.js to check for errors");
+	cleanUp();
 	} else {$("#alert h3").text("Make sure you fill out the whole form. You trying to break the script or somethin'?")}
 };
 </script>
