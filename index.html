@@ -34,18 +34,26 @@
               <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
                 
 
-                <!--Start Crap Forms -->
+                   <!--Start Crap Forms -->
                
                   <div ng-show="signupbox" class="panel-body">
-
+                    <div class="form-group">
+                      <input type="text" ng-model="firstName" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" ng-model="lastName" class="form-control" placeholder="Last Name">
+                    </div>
                     <div class="form-group">
                       <input type="email" ng-model="signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail">
                     </div>
                     <div class="form-group">
-                      <input type="password" ng-model="signupPass" class="form-control" id="signupPass" placeholder="Enter Password">
+                      <input type="password" ng-model="signupPass" class="form-control" placeholder="Enter Password">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" ng-model="signupPass2" class="form-control" placeholder="Confirm Password">
                     </div>
 
-                    <button  class="btn btn-default" ng-click="signUp(signupMail,signupPass)">Sign up</button>
+                    <button  class="btn-custom btn btn-primary sharp" ng-click="signUp(signupMail,signupPass)">Sign up</button>
                     <span ng-bind="signupmsg"></span>                    
                   </div>
                
