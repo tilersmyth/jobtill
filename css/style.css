@@ -74,6 +74,7 @@
 body{
   background-color: #3e4049;
   padding-top: 70px;
+  position:relative;
 }
 
 .custom-brand{
