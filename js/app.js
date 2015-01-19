@@ -1,7 +1,10 @@
 var app = angular.module("Scrape", ["firebase", "ui.bootstrap"]);
-
+//Global for body style
+app.run(function($rootScope) {
+    $rootScope.bodyStyle = {overflow: "hidden"};
+})
 //Firebase Link
-app.controller("ScrapeCtrl", function($scope, $firebase) {
+app.controller("ScrapeCtrl", function($scope,$rootScope, $firebase) {
   var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
   var data = $firebase(ref.child('listings'));
   $scope.data = data.$asArray();
@@ -9,6 +12,10 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
   $scope.updated = updated.$asObject();
   $scope.comingSoon = 'Adding more cities soon';
   $scope.search_loc = 'Boston';
+ //Set body style 
+  $scope.checkPut = function() {	  
+	  $rootScope.bodyStyle = ($scope.search.length > 0) ? {overflow: "auto"}:{overflow: "hidden"};
+  };
 //date friendly view
   $scope.timeFunction = function(vartopass) {
    		var today = new Date();
@@ -101,22 +108,3 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase",
         //Close Controller
   }
 ]);
-
-//window resize for bg
-function tellAngular() {
-    var domElt = document.getElementById('city_skyline');
-    scope = angular.element(domElt).scope();
-    var distance = domElt.getBoundingClientRect().top;
-    var fucker = window.innerHeight;
-    var city_height = fucker - distance;
-
-    scope.$apply(function() {
-        domElt.style.height = city_height+"px";
-    });
-
-}
-
-document.addEventListener("DOMContentLoaded", tellAngular, false);
-
-//calling tellAngular on resize event
-window.onresize = tellAngular;
