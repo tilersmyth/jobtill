@@ -30,7 +30,7 @@
           <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
             <li class="dropdown" dropdown on-toggle="toggled(open)" is-open="status.isopen">
               <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
-              <a ng-show="authData" href="#" role="button" ng-click="logout();signupmsg=''">Logout</a>
+              <a ng-show="authData" href="#" role="button" ng-click="logout();signupmsg=''">{{userData.firstName}} Logout</a>
               <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
                 
 
