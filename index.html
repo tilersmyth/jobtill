@@ -28,48 +28,56 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+
+          <!-- if logged in -->
+            <li ng-show="authData" dropdown>
+              <a ng-show="authData" href="#" dropdown-toggle>{{userData.firstName}} <span class="caret"></span></a>
+              <ul class="dropdown-menu custom-menu" role="menu">
+                <div class="panel-body"><button  class="btn-custom btn btn-primary sharp" ng-click="logout();signupmsg=''">Logout</button></div> 
+              </ul>  
+            </li>
+           <!-- end if logged in --> 
+
             <li class="dropdown" dropdown on-toggle="toggled(open)" is-open="status.isopen">
-              <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="true">Sign in <span class="caret"></span></a>
-              <a ng-show="authData" href="#" role="button" ng-click="logout();signupmsg=''">{{userData.firstName}} Logout</a>
-              <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">
-                
+              <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown">Sign in <span class="caret"></span></a>
+              <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">      
 
-                   <!--Start Crap Forms -->
+                   <!--Start Crap Forms -->          
                
-                  <div ng-show="signupbox" class="panel-body">
+                  <form ng-show="signupbox" name="signupFormCont" class="panel-body">
                     <div class="form-group">
-                      <input type="text" ng-model="firstName" class="form-control" placeholder="First Name">
+                      <input type="text" ng-model="signupForm.firstName" class="form-control" placeholder="First Name">
                     </div>
                     <div class="form-group">
-                      <input type="text" ng-model="lastName" class="form-control" placeholder="Last Name">
+                      <input type="text" ng-model="signupForm.lastName" class="form-control" placeholder="Last Name">
                     </div>
                     <div class="form-group">
-                      <input type="email" ng-model="signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail">
+                      <input type="email" ng-model="signupForm.signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail">
                     </div>
                     <div class="form-group">
-                      <input type="password" ng-model="signupPass" class="form-control" placeholder="Enter Password">
+                      <input type="password" ng-model="signupForm.signupPass" class="form-control" placeholder="Enter Password">
                     </div>
                     <div class="form-group">
-                      <input type="password" ng-model="signupPass2" class="form-control" placeholder="Confirm Password">
+                      <input type="password" ng-model="signupForm.signupPass2" class="form-control" placeholder="Confirm Password">
                     </div>
 
-                    <button  class="btn-custom btn btn-primary sharp" ng-click="signUp(signupMail,signupPass,firstName,lastName)">Sign up</button>
+                    <button  class="btn-custom btn btn-primary sharp" ng-click="signUp(signupForm.signupMail,signupForm.signupPass,signupForm.firstName,signupForm.lastName)">Sign up</button>
                     <span ng-bind="signupmsg"></span>                    
-                  </div>
+                  </form>
                
           
-                  <div class="panel-body" ng-show="!signupbox">
-                  <span ng-bind="loginmsg" class="signin-val"></span>
+                  <form class="panel-body" name="loginFormCont" ng-show="!signupbox">
+                    <span ng-bind="loginmsg" class="signin-val"></span>
                     <div class="form-group">
-                      <input type="email" ng-model="loginMail" class="form-control" placeholder="Enter E-mail">
+                      <input type="email" ng-model="loginForm.loginMail" class="form-control" placeholder="Enter E-mail">
                     </div>
                     <div class="form-group">
-                      <input type="password" ng-model="loginPass" class="form-control" placeholder="Enter Password">
+                      <input type="password" ng-model="loginForm.loginPass" class="form-control" placeholder="Enter Password">
                     </div>
-                    <button class="btn-custom btn btn-primary sharp" ng-click="logIn(loginMail,loginPass)">Login</button>
+                    <button class="btn-custom btn btn-primary sharp" ng-click="logIn(loginForm.loginMail,loginForm.loginPass)">Login</button>
 
                     <a href="#" class="signupLink" ng-click="signupbox=true;signupmsg=''">Click here to sign up</a>
-                  </div>
+                  </form>
                
                 <!--End Crap Forms -->
                 </div>

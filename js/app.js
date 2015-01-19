@@ -43,8 +43,18 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase",
         };
         //clear validation text on dropdown close
         $scope.toggled = function (open) {
-            if (open === false)
+            if(open === false){
+                $scope.signupmsg = "";
                 $scope.loginmsg = "";
+
+                var defaultLogin = {loginMail : "", loginPass : ""};
+                $scope.loginForm = defaultLogin;
+                $scope.loginFormCont.$setPristine();
+                 
+                var defaultSignup = {firstName : "", lastName : "", signupMail : "", signupPass : "", signupPass2 : ""};
+                $scope.signupForm = defaultSignup;
+                $scope.signupFormCont.$setPristine();
+            }
         };
 
         //Sign up

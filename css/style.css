@@ -200,7 +200,7 @@ a.signupLink{
   color: #eeeeee;
   text-align: center;
   width: 100% !important;
-  margin-top: 5px !important;
+  margin-top: 10px !important;
   display: block;
 }
 
@@ -216,3 +216,9 @@ a.signupLink:hover{
   margin-bottom: 8px;
   line-height: 1em;
 }
+
+
+.panel-body{
+  padding-bottom: 0px !important;
+}
+
