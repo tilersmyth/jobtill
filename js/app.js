@@ -43,7 +43,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase",
         };
         //clear validation text on dropdown close
         $scope.toggled = function (open) {
-            if(open === false){
+            if(!open){
                 $scope.signupmsg = "";
                 $scope.loginmsg = "";
 
