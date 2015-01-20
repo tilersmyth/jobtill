@@ -93,14 +93,6 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
             }
         };
         //Sign up
-        $scope.signupForm = {
-            firstName: "",
-            lastName: "",
-            signupMail: "",
-            signupPass: "",
-            signupPass2: ""
-        };
-        $scope.signupFormErrors = ["enter your first name.", "enter your last name.", "enter your email.", "enter your password.", "confirm your password."];
         $scope.signUp = function(a) {
             for (var i = 0; i < setEmails.length; i++) {
                 if (a.signupMail === setEmails[i]) {
