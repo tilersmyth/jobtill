@@ -45,24 +45,25 @@
                    <!--Start Crap Forms -->          
                
                   <form ng-show="signupbox" name="signupFormCont" class="panel-body">
-                    <div class="form-group">
-                      <input type="text" ng-model="signupForm.firstName" class="form-control" placeholder="First Name">
+                  <span ng-bind="signmsg" class="signin-val"></span> 
+                    <div class="form-group" ng-hide="pendingSignup">
+                      <input type="text" ng-model="signupForm.firstName" class="form-control" placeholder="First Name" required>
                     </div>
-                    <div class="form-group">
-                      <input type="text" ng-model="signupForm.lastName" class="form-control" placeholder="Last Name">
+                    <div class="form-group" ng-hide="pendingSignup">
+                      <input type="text" ng-model="signupForm.lastName" class="form-control" placeholder="Last Name" required>
                     </div>
-                    <div class="form-group">
-                      <input type="email" ng-model="signupForm.signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail">
+                    <div class="form-group" ng-hide="pendingSignup">
+                      <input type="email" ng-model="signupForm.signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail" required>
                     </div>
-                    <div class="form-group">
-                      <input type="password" ng-model="signupForm.signupPass" class="form-control" placeholder="Enter Password">
+                    <div class="form-group" ng-hide="pendingSignup">
+                      <input type="password" ng-model="signupForm.signupPass" class="form-control" placeholder="Enter Password" required>
                     </div>
-                    <div class="form-group">
-                      <input type="password" ng-model="signupForm.signupPass2" class="form-control" placeholder="Confirm Password">
+                    <div class="form-group" ng-hide="pendingSignup">
+                      <input type="password" ng-model="signupForm.signupPass2" class="form-control" placeholder="Confirm Password" required>
                     </div>
 
-                    <button  class="btn-custom btn btn-primary sharp" ng-click="signUp(signupForm.signupMail,signupForm.signupPass,signupForm.firstName,signupForm.lastName)">Sign up</button>
-                    <span ng-bind="signupmsg"></span>                    
+                    <button  class="btn-custom btn btn-primary sharp" type="submit" ng-disabled="signupFormCont.$invalid" ng-click="signUp(signupForm)" ng-hide="pendingSignup">Sign up</button>
+                                       
                   </form>
                
           
