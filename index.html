@@ -1,128 +1,156 @@
 <html ng-app="Scrape">
 <head>
-<title>Jobtill | High-growth Companies</title>
-<link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
+    <title>Jobtill | High-growth Companies</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
 
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
-<script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
-<script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 </head>
 
 <body ng-style="bodyStyle">
 <nav class="navbar navbar-default navbar-scrape navbar-fixed-top">
-      <div class="container">
+    <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand custom-brand" href="#">Jobtill</a> 
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand custom-brand" href="#">Jobtill</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+            <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
 
-          <!-- if logged in -->
-            <li ng-show="authData" dropdown>
-              <a ng-show="authData" href="#" dropdown-toggle>{{userData.firstName}} <span class="caret"></span></a>
-              <ul class="dropdown-menu custom-menu" role="menu">
-                <div class="panel-body"><button  class="btn-custom btn btn-primary sharp" ng-click="logout();signupmsg=''">Logout</button></div> 
-              </ul>  
-            </li>
-           <!-- end if logged in --> 
+                <!-- if logged in -->
+                <li ng-show="authData" dropdown>
+                    <a ng-show="authData" href="#" dropdown-toggle>{{userData.firstName}} <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu custom-menu" role="menu">
+                        <div class="panel-body">
+                            <button style="margin-bottom: 10px" class="btn-custom btn btn-primary sharp" ng-click="logout();">Logout
+                            </button>
+                        </div>
+                    </ul>
+                </li>
+                <!-- end if logged in -->
 
-            <li class="dropdown" dropdown on-toggle="toggled(open)" is-open="status.isopen">
-              <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown">Sign in <span class="caret"></span></a>
-              <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData" ng-click="$event.stopPropagation();signupmsg=''">      
+                <li class="dropdown" dropdown on-toggle="toggled(open)" is-open="status.isopen">
+                    <a ng-click="signupbox=false" ng-show="!authData" href="#" class="dropdown-toggle" dropdown-toggle
+                       data-toggle="dropdown">Sign in <span class="caret"></span></a>
+                    <ul class="dropdown-menu custom-menu" role="menu" ng-show="!authData"
+                        ng-click="$event.stopPropagation();">
 
-                   <!--Start Crap Forms -->          
-               
-                  <form ng-show="signupbox" name="signupFormCont" class="panel-body">
-                  <span ng-bind="signmsg" class="signin-val"></span> 
-                    <div class="form-group" ng-hide="pendingSignup">
-                      <input type="text" ng-model="signupForm.firstName" class="form-control" placeholder="First Name" required>
-                    </div>
-                    <div class="form-group" ng-hide="pendingSignup">
-                      <input type="text" ng-model="signupForm.lastName" class="form-control" placeholder="Last Name" required>
-                    </div>
-                    <div class="form-group" ng-hide="pendingSignup">
-                      <input type="email" ng-model="signupForm.signupMail" class="form-control" id="signupEmail" placeholder="Enter E-mail" required>
-                    </div>
-                    <div class="form-group" ng-hide="pendingSignup">
-                      <input type="password" ng-model="signupForm.signupPass" class="form-control" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group" ng-hide="pendingSignup">
-                      <input type="password" ng-model="signupForm.signupPass2" class="form-control" placeholder="Confirm Password" required>
-                    </div>
+                        <!--Start Crap Forms -->
 
-                    <button  class="btn-custom btn btn-primary sharp" type="submit" ng-disabled="signupFormCont.$invalid" ng-click="signUp(signupForm)" ng-hide="pendingSignup">Sign up</button>
-                                       
-                  </form>
-               
-          
-                  <form class="panel-body" name="loginFormCont" ng-show="!signupbox">
-                    <span ng-bind="loginmsg" class="signin-val"></span>
-                    <div class="form-group">
-                      <input type="email" ng-model="loginForm.loginMail" class="form-control" placeholder="Enter E-mail">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" ng-model="loginForm.loginPass" class="form-control" placeholder="Enter Password">
-                    </div>
-                    <button class="btn-custom btn btn-primary sharp" ng-click="logIn(loginForm.loginMail,loginForm.loginPass)">Login</button>
+                        <form ng-show="signupbox" name="signupFormCont" class="panel-body">
+                            <span ng-bind="signmsg" class="signin-val"></span>
 
-                    <a href="#" class="signupLink" ng-click="signupbox=true;signupmsg=''">Click here to sign up</a>
-                  </form>
-               
-                <!--End Crap Forms -->
-                </ul>
+                            <div class="form-group" ng-hide="pendingSignup">
+                                <input type="text" ng-model="signupForm.firstName" class="form-control"
+                                       placeholder="First Name" required>
+                            </div>
+                            <div class="form-group" ng-hide="pendingSignup">
+                                <input type="text" ng-model="signupForm.lastName" class="form-control"
+                                       placeholder="Last Name" required>
+                            </div>
+                            <div class="form-group" ng-hide="pendingSignup">
+                                <input type="email" ng-model="signupForm.signupMail" class="form-control"
+                                       id="signupEmail" placeholder="Enter E-mail" required>
+                            </div>
+                            <div class="form-group" ng-hide="pendingSignup">
+                                <input type="password" ng-model="signupForm.signupPass" class="form-control"
+                                       placeholder="Enter Password" required>
+                            </div>
+                            <div class="form-group" ng-hide="pendingSignup">
+                                <input type="password" ng-model="signupForm.signupPass2" class="form-control"
+                                       placeholder="Confirm Password" required>
+                            </div>
 
-              </ul> </div>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+                            <button class="btn-custom btn btn-primary sharp" type="submit"
+                                    ng-disabled="signupFormCont.$invalid" ng-click="signUp(signupForm)"
+                                    ng-hide="pendingSignup">Sign up
+                            </button>
+
+                        </form>
+
+                        <form class="panel-body" name="loginFormCont" ng-show="!signupbox">
+                            <span ng-bind="loginmsg" class="signin-val"></span>
+
+                            <div class="form-group">
+                                <input type="email" ng-model="loginForm.loginMail" class="form-control"
+                                       placeholder="Enter E-mail">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" ng-model="loginForm.loginPass" class="form-control"
+                                       placeholder="Enter Password">
+                            </div>
+                            <button class="btn-custom btn btn-primary sharp"
+                                    ng-click="logIn(loginForm.loginMail,loginForm.loginPass)">Login
+                            </button>
+
+                            <a href="#" class="signupLink" ng-hide="pendingSignup" ng-click="signupbox=true;">Click here
+                                to sign
+                                up</a>
+                        </form>
+
+                        <!--End Crap Forms -->
+                    </ul>
+
+            </ul>
+        </div>
+    </div>
+    <!--/.nav-collapse -->
+</nav>
 
 <!-- START SCRAPE CONTROL -->
 <div class="container" ng-controller="ScrapeCtrl">
-  <div class="jumbotron">
-    <h1 >I want a job located in <input type="text" class="adlibloc" ng-model="search_loc" /> doing
-      <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
+    <!-- DUMMY PANEL FOR LOGIN VAR -->
+    <alert type="success">Dummy Panel... Is user logged in?!? ------------ loggedIn === {{loggedIn}}</alert>
+    <div class="jumbotron">
+        <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
+            <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
 
-    <p class="lead pull-details">Omg, we pulled {{updated.listings}} jobs from {{updated.sites}} companies at {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) : updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' == 'new'"></span></p>
-  </div>
-  <div id="city_skyline" ng-hide="search"></div>
-  <div class="row marketing">
-    <div class="col-lg-12">
-      <table class="table table-striped table-custom" ng-show="search">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Location</th>
-          <th>Company</th>
-          <th>Added</th>
-        </tr>
-      </thead>
-        <tbody>
-          <tr ng-repeat="entry in data | filter:{name: search,location:search_loc }" class="blah">
-            <td><a href="{{entry.url}}" target="_blank">{{entry.name}}</a> <span tooltip="Just Added" class="glyphicon glyphicon-exclamation-sign just-added" ng-if="entry.status == 'new'"></span></td>
-            <td>{{entry.location}}</td>
-            <td>{{entry.site}}</td>
-            <td>{{entry.created | date:"MM/dd/yy"}}</td>
-          </tr>
-        </tbody>
-      </table>
+        <p class="lead pull-details">Omg, we pulled {{updated.listings}} jobs from {{updated.sites}} companies at
+            {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) :
+            updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' === 'new'"></span></p>
     </div>
-  </div>
-  <footer class="footer">
-  </footer>
+    <div id="city_skyline" ng-hide="search"></div>
+    <div class="row marketing">
+        <div class="col-lg-12">
+            <table class="table table-striped table-custom" ng-show="search">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Company</th>
+                    <th>Added</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in data | filter:{name: search,location:search_loc }" class="blah">
+                    <td><a ng-href="{{entry.url}}" target="_blank">{{entry.name}}</a> <span tooltip="Just Added"
+                                                                                            class="glyphicon glyphicon-exclamation-sign just-added"
+                                                                                            ng-if="entry.status == 'new'"></span>
+                    </td>
+                    <td>{{entry.location}}</td>
+                    <td>{{entry.site}}</td>
+                    <td>{{entry.created | date:"MM/dd/yy"}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="footer">
+    </footer>
 </div>
 <!-- END SCRAPE CONTROL -->
 
