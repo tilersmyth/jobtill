@@ -15,7 +15,7 @@ app.run(function($rootScope) {
         $rootScope.bodyStyle = {
             overflow: "hidden"
         };
-    })
+    });
     //Firebase Link
 app.controller("ScrapeCtrl", function($scope, $rootScope, $firebase) {
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
@@ -39,7 +39,7 @@ app.controller("ScrapeCtrl", function($scope, $rootScope, $firebase) {
         var lastRun = new Date(vartopass);
 
         if ((today.getDate()) == lastRun.getDate())
-            return "today"
+            return "today";
 
         if ((today.getDate() - 1) == lastRun.getDate())
             return "yesterday"
@@ -58,7 +58,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
             var userSnap = userSnapshot.val();
             for (key in userSnap) {
                 setEmails.push(userSnap[key].email);
-            };
+            }
         });
 
 
@@ -67,7 +67,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
         if ($scope.authData !== null) {
             var userInfo = $firebase(usersRef.child($scope.authData.uid));
             $scope.userData = userInfo.$asObject();
-        };
+        }
         //clear validation text on dropdown close
         $scope.toggled = function(open) {
             if (!open) {
@@ -97,12 +97,12 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
             for (var i = 0; i < setEmails.length; i++) {
                 if (a.signupMail === setEmails[i]) {
                     emailsGood = false;
-                    $scope.signmsg = "The email address is already in use."
+                    $scope.signmsg = "The email address is already in use.";
                     break;
                 } else {
                     emailsGood = true;
-                };
-            };
+                }
+            }
             if (emailsGood) {
                 if (a.signupPass !== a.signupPass2) {
                     $scope.signmsg = "Passwords do not match!"
@@ -110,8 +110,8 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
                     $scope.signmsg = "Please check your email for the verification link!";
                     $scope.pendingSignup = true;
                     //postEmailForm.postEmail({email: a, password: b,firstName: c,lastName: d});
-                };
-            };
+                }
+            }
         };
         //Create account with email verification
         $scope.signUp2 = function(a, b, c, d) {
@@ -144,7 +144,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
                 });
             } else {
                 $scope.signupmsg = "Please enter username and password.";
-            };
+            }
         };
 
         //Log in	
@@ -164,7 +164,7 @@ app.controller("UserCtrl", ["$scope", "$firebaseAuth", "$firebase", "postEmailFo
                 });
             } else {
                 $scope.loginmsg = "Please enter username and password.";
-            };
+            }
         };
         //Log out
         $scope.logout = function() {
