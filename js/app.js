@@ -34,9 +34,9 @@ app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
         };
     };
     //date friendly view
-    $scope.timeFunction = function (vartopass) {
+    $scope.timeFunction = function (a) {
         var today = new Date();
-        var lastRun = new Date(vartopass);
+        var lastRun = new Date(a);
 
         if ((today.getDate()) == lastRun.getDate())
             return "today";
@@ -49,7 +49,7 @@ app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
 });
 
 app.controller("UserCtrl",
-    function ($scope, $firebaseAuth, $firebase, $rootScope, postEmailForm) {
+    function ($scope, $firebaseAuth, $firebase, $rootScope, postEmailForm,$location) {
         var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
         var usersRef = ref2.child("users");
         //Get validated emails
@@ -57,11 +57,10 @@ app.controller("UserCtrl",
         usersRef.once('value', function (userSnapshot) {
             var userSnap = userSnapshot.val();
             for (var key in userSnap) {
+                //noinspection JSUnfilteredForInLoop
                 setEmails.push(userSnap[key].email);
             }
         });
-
-
         $scope.authObj = $firebaseAuth(ref2);
         $scope.authData = $scope.authObj.$getAuth();
         if ($scope.authData !== null) {
@@ -108,24 +107,24 @@ app.controller("UserCtrl",
             }
         };
         //Create account with email verification
-        $scope.signUp2 = function (a, b, c, d) {
-            if (a !== undefined && b !== undefined) {
+        $scope.signUpValidate = function (a) {
                 $scope.authObj.$createUser({
-                    email: a,
-                    password: b
-                }).then(function (userData) {
+                    email: a.a,
+                    password: a.b
+                }).then(function () {
                     return $scope.authObj.$authWithPassword({
-                        email: a,
-                        password: b
+                        email: a.a,
+                        password: a.b
                     });
-                }).then(function (authData) {
+                }).then(function () {
+                    $rootScope.loggedIn = true;
                     $scope.authData = $scope.authObj.$getAuth();
                     var userInfo = $firebase(usersRef.child($scope.authData.uid));
                     $scope.userData = userInfo.$asObject();
                     var usertoPush = $scope.authObj.$getAuth();
                     usersRef.child(usertoPush.uid).set({
-                        firstName: c,
-                        lastName: d,
+                        firstName: a.c,
+                        lastName: a.d,
                         email: usertoPush.password.email,
                         provider: usertoPush.provider,
                         joined: new Date().getTime(),
@@ -136,18 +135,18 @@ app.controller("UserCtrl",
                 }).catch(function (error) {
                     console.error("Error: ", error);
                 });
-            } else {
-                $scope.signupmsg = "Please enter username and password.";
-            }
         };
-
+        //Check for email validation
+        //noinspection JSCheckFunctionSignatures
+        var eValidate = $location.search();
+        if (eValidate.a) {$scope.signUpValidate(eValidate);}
         //Log in	
         $scope.logIn = function (a, b) {
             if (a !== undefined && b !== undefined) {
                 $scope.authObj.$authWithPassword({
                     email: a,
                     password: b
-                }).then(function (authData) {
+                }).then(function () {
                     $scope.authData = $scope.authObj.$getAuth();
                     var userInfo = $firebase(usersRef.child($scope.authData.uid));
                     $scope.userData = userInfo.$asObject();
