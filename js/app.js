@@ -77,7 +77,6 @@ app.controller("UserCtrl",
 
         //Toggle Control
         $scope.$on('toggleSignup', function(event, a) {
-            console.log($scope.status.isopen);
             if (!$scope.status.isopen) {
                 $scope.status.isopen = !$scope.status.isopen;
             }
