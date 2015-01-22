@@ -124,7 +124,7 @@
     <div id="city_skyline" ng-hide="search"></div>
     <div class="row marketing">
         <div class="col-lg-12">
-            <alert type="warning" ng-if="loggedIn == false"><b>Welcome to Jobtill!</b> Sign up to see all job posts! <a href="#" ng-click="toggleDropdown($event)">Click here to sign up!</a> </alert>
+            <alert type="warning" ng-show="search" ng-if="loggedIn == false"><b>Welcome to Jobtill!</b> Sign up to see all job posts! <a href="#" ng-click="toggleDropdown($event)">Click here to sign up!</a> </alert>
             <table class="table table-striped table-custom" ng-show="search">
                 <thead>
                 <tr>
