@@ -1,44 +1,43 @@
 var app = angular.module("Scrape", ["firebase", "ui.bootstrap"]);
 //Email Verification
-app.factory('postEmailForm', function ($http) {
+app.factory('postEmailForm', function($http) {
     return {
-        postEmail: function (data) {
-            $http.post("http://168.235.70.242:3000/postEmail", data).success(function () {
+        postEmail: function(data) {
+            $http.post("http://168.235.70.242:3000/postEmail", data).success(function() {
                 console.log("Success")
             });
         }
     }
 });
-//Global for body style and logged in
-app.run(function ($rootScope) {
-    $rootScope.bodyStyle = {
-        overflow: "hidden"
-    };
 
-    $rootScope.loggedIn = false;
-    $rootScope.status = {isopen: false};
-    $rootScope.signupbox = false;
-
-});
-//Firebase Link
-app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
+app.controller("ScrapeCtrl", function($scope, $firebase) {
+    //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
     $scope.data = data.$asArray();
     var updated = $firebase(ref.child('LastScraped'));
     $scope.updated = updated.$asObject();
+    //Jumbotron Vars
     $scope.comingSoon = 'Adding more cities soon';
     $scope.search_loc = 'Boston';
-    //Set body style 
-    $scope.checkPut = function () {
-        $rootScope.bodyStyle = ($scope.search.length > 0) ? {
+    //Set body style
+    $scope.bodyStyle = {
+        overflow: "hidden"
+    };
+    $scope.checkPut = function() {
+        $scope.bodyStyle = ($scope.search.length > 0) ? {
             overflow: "auto"
         } : {
             overflow: "hidden"
         };
     };
+    //Check if user is logged in
+
+    $scope.$on('userOn', function(event, data) {
+        $scope.loggedIn = data;
+    });
     //date friendly view
-    $scope.timeFunction = function (a) {
+    $scope.timeFunction = function(a) {
         var today = new Date();
         var lastRun = new Date(a);
 
@@ -47,29 +46,21 @@ app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
 
         if ((today.getDate() - 1) == lastRun.getDate())
             return "yesterday"
-
     };
-
-    
-
-    $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $rootScope.status.isopen = !$scope.status.isopen;
-    $rootScope.signupbox = $scope.status.isopen;
-
-    console.log($rootScope.signupbox);
+    $scope.openSignup = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.$broadcast('toggleSignup', true);
     };
-
 });
 
 app.controller("UserCtrl",
-    function ($scope, $firebaseAuth, $firebase, $rootScope, postEmailForm,$location) {
+    function($scope, $firebaseAuth, $firebase, postEmailForm, $location) {
         var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
         var usersRef = ref2.child("users");
         //Get validated emails
         var setEmails = [];
-        usersRef.once('value', function (userSnapshot) {
+        usersRef.once('value', function(userSnapshot) {
             var userSnap = userSnapshot.val();
             for (var key in userSnap) {
                 //noinspection JSUnfilteredForInLoop
@@ -81,24 +72,40 @@ app.controller("UserCtrl",
         if ($scope.authData !== null) {
             var userInfo = $firebase(usersRef.child($scope.authData.uid));
             $scope.userData = userInfo.$asObject();
-            $rootScope.loggedIn = true;
+                $scope.$emit('userOn', true);
         }
 
-        $rootScope.status.isopen  = false;
+        //Toggle Control
+        $scope.$on('toggleSignup', function(event, a) {
+            console.log($scope.status.isopen);
+            if (!$scope.status.isopen) {
+                $scope.status.isopen = !$scope.status.isopen;
+            }
+            $scope.signupbox = a;
+        });
 
         //clear validation text on dropdown close
-        $scope.toggled = function (open) {
+        $scope.toggled = function(open) {
             if (!open) {
                 $scope.signmsg = "";
                 $scope.loginmsg = "";
-                $scope.loginForm = {loginMail: "", loginPass: ""};
+                $scope.loginForm = {
+                    loginMail: "",
+                    loginPass: ""
+                };
                 $scope.loginFormCont.$setPristine();
-                $scope.signupForm = {firstName: "", lastName: "", signupMail: "", signupPass: "", signupPass2: ""};
+                $scope.signupForm = {
+                    firstName: "",
+                    lastName: "",
+                    signupMail: "",
+                    signupPass: "",
+                    signupPass2: ""
+                };
                 $scope.signupFormCont.$setPristine();
             }
         };
         //Sign up
-        $scope.signUp = function (a) {
+        $scope.signUp = function(a) {
             var emailsGood;
             for (var i = 0; i < setEmails.length; i++) {
                 if (a.signupMail === setEmails[i]) {
@@ -125,51 +132,53 @@ app.controller("UserCtrl",
             }
         };
         //Create account with email verification
-        $scope.signUpValidate = function (a) {
-                $scope.authObj.$createUser({
+        $scope.signUpValidate = function(a) {
+            $scope.authObj.$createUser({
+                email: a.a,
+                password: a.b
+            }).then(function() {
+                return $scope.authObj.$authWithPassword({
                     email: a.a,
                     password: a.b
-                }).then(function () {
-                    return $scope.authObj.$authWithPassword({
-                        email: a.a,
-                        password: a.b
-                    });
-                }).then(function () {
-                    $rootScope.loggedIn = true;
-                    $scope.authData = $scope.authObj.$getAuth();
-                    var userInfo = $firebase(usersRef.child($scope.authData.uid));
-                    $scope.userData = userInfo.$asObject();
-                    var usertoPush = $scope.authObj.$getAuth();
-                    usersRef.child(usertoPush.uid).set({
-                        firstName: a.c,
-                        lastName: a.d,
-                        email: usertoPush.password.email,
-                        provider: usertoPush.provider,
-                        joined: new Date().getTime(),
-                        search_tokens: "0",
-                        search_terms: ""
-                    });
-                }).catch(function (error) {
-                    console.error("Error: ", error);
                 });
+            }).then(function() {
+                $scope.$emit('userOn', true);
+                $scope.authData = $scope.authObj.$getAuth();
+                var userInfo = $firebase(usersRef.child($scope.authData.uid));
+                $scope.userData = userInfo.$asObject();
+                var usertoPush = $scope.authObj.$getAuth();
+                usersRef.child(usertoPush.uid).set({
+                    firstName: a.c,
+                    lastName: a.d,
+                    email: usertoPush.password.email,
+                    provider: usertoPush.provider,
+                    joined: new Date().getTime(),
+                    search_tokens: "0",
+                    search_terms: ""
+                });
+            }).catch(function(error) {
+                console.error("Error: ", error);
+            });
         };
         //Check for email validation
         //noinspection JSCheckFunctionSignatures
         var eValidate = $location.search();
-        if (eValidate.a) {$scope.signUpValidate(eValidate);}
+        if (eValidate.a) {
+            $scope.signUpValidate(eValidate);
+        }
         //Log in	
-        $scope.logIn = function (a, b) {
+        $scope.logIn = function(a, b) {
             if (a !== undefined && b !== undefined) {
                 $scope.authObj.$authWithPassword({
                     email: a,
                     password: b
-                }).then(function () {
+                }).then(function() {
                     $scope.authData = $scope.authObj.$getAuth();
                     var userInfo = $firebase(usersRef.child($scope.authData.uid));
                     $scope.userData = userInfo.$asObject();
                     $scope.loginmsg = "Login Success!";
-                    $rootScope.loggedIn = true;
-                }).catch(function (error) {
+                    $scope.$emit('userOn', true);
+                }).catch(function(error) {
                     $scope.loginmsg = error.message;
                 });
             } else {
@@ -177,13 +186,10 @@ app.controller("UserCtrl",
             }
         };
         //Log out
-        $scope.logout = function () {
+        $scope.logout = function() {
             $scope.authObj.$unauth();
             $scope.authData = $scope.authObj.$getAuth();
-            $rootScope.loggedIn = false;
+            $scope.$emit('userOn', false);
         };
-
-       
-
         //Close Controller
     });

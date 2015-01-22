@@ -14,8 +14,8 @@
     <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 </head>
 
-<body ng-style="bodyStyle">
-<nav class="navbar navbar-default navbar-scrape navbar-fixed-top">
+<body ng-style="bodyStyle" ng-controller="ScrapeCtrl">
+<nav class="navbar navbar-default navbar-scrape navbar-fixed-top" ng-controller="UserCtrl">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -28,7 +28,7 @@
             <a class="navbar-brand custom-brand" href="#">Jobtill</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+            <ul class="nav navbar-nav navbar-right">
 
                 <!-- if logged in -->
                 <li ng-show="authData" dropdown>
@@ -112,7 +112,7 @@
 </nav>
 
 <!-- START SCRAPE CONTROL -->
-<div class="container" ng-controller="ScrapeCtrl">   
+<div class="container">
     <div class="jumbotron">
         <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
             <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
@@ -124,7 +124,7 @@
     <div id="city_skyline" ng-hide="search"></div>
     <div class="row marketing">
         <div class="col-lg-12">
-            <alert type="warning" ng-show="search;!loggedIn"><b>Welcome to Jobtill!</b> Sign up to see all job posts! <a href="#" ng-click="toggleDropdown($event)">Click here to sign up!</a> </alert>
+            <alert type="warning" ng-hide="!search;loggedIn"><b>Welcome to Jobtill!</b> Sign up to see all job posts! <a href="#" ng-click="openSignup($event)">Click here to sign up!</a> </alert>
             <table class="table table-striped table-custom" ng-show="search">
                 <thead>
                 <tr>
