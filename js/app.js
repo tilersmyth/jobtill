@@ -14,7 +14,11 @@ app.run(function ($rootScope) {
     $rootScope.bodyStyle = {
         overflow: "hidden"
     };
+
     $rootScope.loggedIn = false;
+    $rootScope.status = {isopen: false};
+    $rootScope.signupbox = false;
+
 });
 //Firebase Link
 app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
@@ -46,6 +50,17 @@ app.controller("ScrapeCtrl", function ($scope, $rootScope, $firebase) {
 
     };
 
+    
+
+    $scope.toggleDropdown = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $rootScope.status.isopen = !$scope.status.isopen;
+    $rootScope.signupbox = $scope.status.isopen;
+
+    console.log($rootScope.signupbox);
+    };
+
 });
 
 app.controller("UserCtrl",
@@ -68,6 +83,9 @@ app.controller("UserCtrl",
             $scope.userData = userInfo.$asObject();
             $rootScope.loggedIn = true;
         }
+
+        $rootScope.status.isopen  = false;
+
         //clear validation text on dropdown close
         $scope.toggled = function (open) {
             if (!open) {
@@ -131,7 +149,6 @@ app.controller("UserCtrl",
                         search_tokens: "0",
                         search_terms: ""
                     });
-                    $scope.status.isopen = !$scope.status.isopen;
                 }).catch(function (error) {
                     console.error("Error: ", error);
                 });
@@ -152,7 +169,6 @@ app.controller("UserCtrl",
                     $scope.userData = userInfo.$asObject();
                     $scope.loginmsg = "Login Success!";
                     $rootScope.loggedIn = true;
-                    $scope.status.isopen = !$scope.status.isopen;
                 }).catch(function (error) {
                     $scope.loginmsg = error.message;
                 });
@@ -166,5 +182,8 @@ app.controller("UserCtrl",
             $scope.authData = $scope.authObj.$getAuth();
             $rootScope.loggedIn = false;
         };
+
+       
+
         //Close Controller
     });
