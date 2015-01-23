@@ -9,14 +9,16 @@ app.factory('postEmailForm', function($http) {
         }
     }
 });
-app.filter('jobsFilter', function() {
+app.filter('jobsFilter', function($rootScope) {
     return function( items, a ) {
         var filtered = [];
+        var outC = 0;
         angular.forEach(items, function(item) {
             if( item.created >= a[0] && item.created <= a[1] ) {
                 filtered.push(item);
-            }
+            } else outC++;
         });
+        $rootScope.hiddenPosts = outC;
         return filtered;
     };
 });
