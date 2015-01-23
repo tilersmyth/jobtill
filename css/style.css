@@ -228,6 +228,7 @@ a.signupLink:hover{
   border:1px solid #11877f;
   color: #ffffff !important;
   font-size: 18px;
+  text-align: center;
 }
 
 .warning-custom a{
