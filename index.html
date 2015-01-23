@@ -117,7 +117,7 @@
         <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
             <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
 
-        <p class="lead pull-details">Omg, we found {{updated.listings}} jobs from {{updated.sites}} companies at
+        <p class="lead pull-details">Omg, we found {{updated.listings}} jobs ({{updated.newjobs}} just posted) from {{updated.sites}} companies at
             {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) :
             updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' === 'new'"></span></p>
     </div>
