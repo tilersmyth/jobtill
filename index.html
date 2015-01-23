@@ -97,7 +97,7 @@
                                     ng-click="logIn(loginForm.loginMail,loginForm.loginPass)">Login
                             </button>
 
-                            <a href="#" class="signupLink" ng-hide="pendingSignup" ng-click="signupbox=true;">Click here
+                            <a href="#" class="signupLink" ng-hide="pendingSignup" ng-click="signupbox=true; $event.preventDefault();">Click here
                                 to sign
                                 up</a>
                         </form>
