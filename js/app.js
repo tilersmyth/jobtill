@@ -108,6 +108,8 @@ app.controller("UserCtrl",
                 $scope.$emit('userOn', true);
         }
 
+        $scope.logoPopover = 'Welcome to Jobtill! We pull and compile the best jobs from high-growth companies.';
+
         //Toggle Control
         $scope.$on('toggleSignup', function(event, a) {
             if (!$scope.status.isopen) {
