@@ -9,17 +9,44 @@ app.factory('postEmailForm', function($http) {
         }
     }
 });
-
+app.filter('jobsFilter', function() {
+    return function( items, a ) {
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            if( item.created >= a[0] && item.created <= a[1] ) {
+                filtered.push(item);
+            }
+        });
+        return filtered;
+    };
+});
 app.controller("ScrapeCtrl", function($scope, $firebase) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
+    var snapdata = ref.child('listings');
     $scope.data = data.$asArray();
     var updated = $firebase(ref.child('LastScraped'));
     $scope.updated = updated.$asObject();
     //Jumbotron Vars
     $scope.comingSoon = 'Adding more cities soon';
     $scope.search_loc = 'Boston';
+    //Get oldest post
+    $scope.showJobs =[];
+    var oldestJob = new Date().getTime();
+    snapdata.once('value', function(dataSnapshot) {
+        var dataSnap = dataSnapshot.val();
+        for (var key in dataSnap) {
+            if (dataSnap[key].created < oldestJob) {
+            oldestJob = dataSnap[key].created;
+            }
+        }
+        if (!$scope.loggedIn) {
+            $scope.showJobs = [oldestJob,oldestJob+86400000];
+        } else {
+            $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
+        }
+    });
     //Set body style
     $scope.bodyStyle = {
         overflow: "hidden"
@@ -32,9 +59,13 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
         };
     };
     //Check if user is logged in
-
     $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data;
+        if (!data) {
+            $scope.showJobs = [oldestJob,oldestJob+86400000];
+        } else {
+            $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
+        }
     });
     //date friendly view
     $scope.timeFunction = function(a) {

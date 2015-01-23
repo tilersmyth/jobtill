@@ -135,7 +135,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="entry in data | filter:{name: search,location: search_loc }" class="blah">
+                <tr ng-repeat="entry in data | filter:{name: search,location: search_loc }| jobsFilter:showJobs" class="blah">
                     <td><a ng-href="{{entry.url}}" target="_blank">{{entry.name}}</a> <span tooltip="Just Added"
                                                                                             class="glyphicon glyphicon-exclamation-sign just-added"
                                                                                             ng-if="entry.status == 'new'"></span>
