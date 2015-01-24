@@ -156,6 +156,11 @@ body{
   text-shadow: none;
 }
 
+#contact_info{
+  color: #777;
+  font-size: 11px;
+  margin-top: -25px;
+}
 
 .adlib{
 	background: none !important;
