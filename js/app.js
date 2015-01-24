@@ -1,4 +1,4 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap"]);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics']);
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
