@@ -197,8 +197,9 @@ app.controller("UserCtrl",
         //Check for email validation
         //noinspection JSCheckFunctionSignatures
         var eValidate = $location.search();
-        if (eValidate.a) {
+        if (eValidate.process === "signup") {
             $scope.signUpValidate(eValidate);
+            $location.search("");
         }
         //Log in	
         $scope.logIn = function(a, b) {
