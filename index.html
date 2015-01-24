@@ -18,7 +18,7 @@
     <script src="js/ngtimeago.js"></script>
 </head>
 
-<body ng-style="bodyStyle" ng-controller="ScrapeCtrl">
+<body ng-controller="ScrapeCtrl">
 <nav class="navbar navbar-default navbar-scrape navbar-fixed-top" ng-controller="UserCtrl">
     <div class="container">
         <div class="navbar-header">
@@ -118,7 +118,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
-            <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
+            <input type="search" autofocus class="adlib" ng-model="search"/>.</h1>
 
         <p class="lead pull-details">
             <span ng-show="!updated.lastRun" class="loadytext">Loady</span>
@@ -126,7 +126,7 @@
         </p>
     </div>
     <div id="contact_info">info@jobtill.com</div>
-    <div id="city_skyline" ng-hide="search">
+    <div id="city_skyline" ng-style="skyHeight" ng-hide="search">
         <div id="cloud1"></div>
         <div id="cloud2"></div>
     </div>

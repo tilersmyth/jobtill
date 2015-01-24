@@ -22,7 +22,7 @@ app.filter('jobsFilter', function($rootScope) {
         return filtered;
     };
 });
-app.controller("ScrapeCtrl", function($scope, $firebase) {
+app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
@@ -49,17 +49,26 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
             $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
         }
     });
-    //Set body style
-    $scope.bodyStyle = {
-        overflow: "hidden"
-    };
-    $scope.checkPut = function() {
-        $scope.bodyStyle = ($scope.search.length > 0) ? {
-            overflow: "auto"
-        } : {
+    //Set sky height
+    var skyFL = 0;
+    $scope.onResize = function() {
+        var skyline = document.getElementById("city_skyline");
+        var skyset = skyline.offsetTop;
+        var h = window.innerHeight;
+        var ifL = (skyFL < 1) ? 20 : -1;
+        var newh = h - skyset + ifL;
+        skyFL++;
+        $timeout(function(){
+        $scope.skyHeight = {
+              height: newh,
             overflow: "hidden"
-        };
+            }
+        });
     };
+    $scope.onResize();
+    angular.element($window).bind('resize', function() {
+        $scope.onResize();
+    });
     //Check if user is logged in
     $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data;
