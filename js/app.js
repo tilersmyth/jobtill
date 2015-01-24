@@ -1,4 +1,4 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics']);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago']);
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
@@ -30,8 +30,8 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
     $scope.data = data.$asArray();
     var updated = $firebase(ref.child('LastScraped'));
     $scope.updated = updated.$asObject();
+
     //Jumbotron Vars
-    $scope.comingSoon = 'Adding more cities soon';
     $scope.search_loc = 'Boston';
     //Get oldest post
     $scope.showJobs =[];
@@ -69,17 +69,6 @@ app.controller("ScrapeCtrl", function($scope, $firebase) {
             $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
         }
     });
-    //date friendly view
-    $scope.timeFunction = function(a) {
-        var today = new Date();
-        var lastRun = new Date(a);
-
-        if ((today.getDate()) == lastRun.getDate())
-            return "today";
-
-        if ((today.getDate() - 1) == lastRun.getDate())
-            return "yesterday"
-    };
     $scope.openSignup = function($event) {
         $event.preventDefault();
         $event.stopPropagation();

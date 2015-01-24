@@ -148,8 +148,14 @@ body{
 	margin-top: 40px;
 	text-align: center;
   font-size: 16px !important;
-  text-shadow: 1px 1px 1px #ce6774
+  text-shadow: 1px 1px 1px #ce6774;
 }
+
+.loadytext{
+  color:#cf4858;
+  text-shadow: none;
+}
+
 
 .adlib{
 	background: none !important;
@@ -179,6 +185,7 @@ body{
   height: 500px;
   background: url("../img/city.png") no-repeat;
   background-size: 970px 467px;
+  position: relative;
 }
 
 .table-custom{
@@ -218,7 +225,6 @@ a.signupLink:hover{
   line-height: 1em;
 }
 
-
 .panel-body{
   padding-bottom: 0px !important;
 }
@@ -239,4 +245,54 @@ a.signupLink:hover{
 .popover-content{
   text-align: center;
 }
+
+#cloud1{
+  height: 59px;
+  width: 90px;
+  background: url("../img/cloud1.png") no-repeat;
+  right:200;
+  position: absolute;
+  -moz-animation: 5s ease 0s normal none infinite swing;
+    -moz-transform-origin: center top;
+    -webkit-animation:swing 5s infinite ease-in-out;
+    -webkit-transform-origin:top;
+}
+
+@-moz-keyframes swing{
+    from {-moz-transform:translate(0, 0px);}
+    65% {-moz-transform:translate(0, -5px);}
+    to {-moz-transform: translate(0, -0px);} 
+}
+@-webkit-keyframes swing{
+    from {-webkit-transform:translate(0, 0px);}
+    65% {-webkit-transform:translate(0, -5px);}
+    to {-webkit-transform: translate(0, -0px);}  
+}
+
+
+#cloud2 {
+  height: 39px;
+  width: 60px;
+  background: url("../img/cloud2.png") no-repeat;
+  left:170;
+  top: 100;
+  position: absolute;
+  -moz-animation: 7s ease 0s normal none infinite float;
+    -moz-transform-origin: center top;
+    -webkit-animation:float 7s infinite ease-in-out;
+    -webkit-transform-origin:top;
+}
+
+@-moz-keyframes float{
+    from {-moz-transform:translate(0, 0px);}
+    65% {-moz-transform:translate(0, 5px);}
+    to {-moz-transform: translate(0, -0px);} 
+}
+@-webkit-keyframes float{
+    from {-webkit-transform:translate(0, 0px);}
+    65% {-webkit-transform:translate(0, 5px);}
+    to {-webkit-transform: translate(0, -0px);}  
+}
+
+
 

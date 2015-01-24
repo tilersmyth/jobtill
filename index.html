@@ -14,6 +14,7 @@
     <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
     <script src="js/angulartics.js"></script>
     <script src="js/angulartics-ga.js"></script>
+    <script src="js/ngtimeago.js"></script>
 </head>
 
 <body ng-style="bodyStyle" ng-controller="ScrapeCtrl">
@@ -119,11 +120,16 @@
         <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
             <input type="search" autofocus class="adlib" ng-model="search" ng-keyup="checkPut()"/>.</h1>
 
-        <p class="lead pull-details">Omg, we found {{updated.listings}} jobs ({{updated.newjobs}} just posted) from {{updated.sites}} companies at
-            {{updated.lastRun | date:"h:mma"}} {{ timeFunction(updated.lastRun) ? timeFunction(updated.lastRun) :
-            updated.lastRun | date:" 'on' M/dd/yy"}} <span ng-if="todaysDate | date: 'MM/dd/yy' === 'new'"></span></p>
+        <p class="lead pull-details">
+            <span ng-show="!updated.lastRun" class="loadytext">Loady</span>
+             <span ng-show="updated.lastRun">Omg, we found {{updated.listings}} jobs ({{updated.newjobs}} just posted) from {{updated.sites}} companies {{updated.lastRun|timeago}}</span>
+            
+        </p>
     </div>
-    <div id="city_skyline" ng-hide="search"></div>
+    <div id="city_skyline" ng-hide="search">
+        <div id="cloud1"></div>
+        <div id="cloud2"></div>
+    </div>
     <div class="row marketing">
         <div class="col-lg-12">
             <alert type="warning warning-custom" ng-show="search && !loggedIn"><b ng-hide="hiddenPosts<1">You're missing out on {{hiddenPosts}} recently posted <span ng-bind="(hiddenPosts===1)? 'job' : 'jobs'"></span>!</b> <a href="#" ng-click="openSignup($event)">Click here to sign up and see all results</a> </alert>
