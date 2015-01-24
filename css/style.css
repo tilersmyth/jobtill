@@ -87,6 +87,8 @@ body{
   border: 0px !important;
 }
 
+
+
 .navbar-scrape a:hover, .nav>li>a:focus{
   color: #666 !important;
 }
@@ -94,6 +96,20 @@ body{
 .navbar-scrape .navbar-nav>.open>a{
   background-color:#4d505b !important;
   color:#cccccc !important;
+}
+
+.custom-glyphie{
+  color: #777777;
+  font-size: 22px;
+}
+
+.collapsed-custom{
+  border: none !important;
+  padding: 5px 10px
+}
+
+.collapsed-custom:focus, .collapsed-custom:hover{
+  background: none !important;
 }
 
 .custom-menu{

@@ -2,6 +2,7 @@
 <head>
     <title>Jobtill | High-growth Opportunities</title>
     <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -21,16 +22,15 @@
 <nav class="navbar navbar-default navbar-scrape navbar-fixed-top" ng-controller="UserCtrl">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed collapsed-custom" ng-init="navCollapsed = true"
+                    ng-click="navCollapsed = !navCollapsed">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="glyphicon glyphicon-log-in custom-glyphie" aria-hidden="true"></span>
             </button>
             <a class="navbar-brand custom-brand" popover-placement="bottom" popover="{{logoPopover}}" href="#">Jobtill</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+      
+        <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed">
             <ul class="nav navbar-nav navbar-right">
 
                 <!-- if logged in -->
