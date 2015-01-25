@@ -53,6 +53,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout, $mod
     var skyFL = 0;
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {
+        var macAttack = -30;
 
     }
     $scope.onResize = function() {
