@@ -77,7 +77,6 @@ body{
   position:relative;
 }
 
-
 .custom-brand{
   font-family: 'Fredoka One', cursive !important;
   font-size: 28px;
@@ -123,6 +122,15 @@ body{
   width: 100% !important;
 }
 
+.custom-menu a{
+  color: #ffffff !important;
+}
+
+.custom-menu li > a:hover{
+  background-color: #303239;
+  color: #ffffff !important;
+}
+
 .btn {
     padding: 14px 24px;
     border: 0 none;
@@ -151,6 +159,11 @@ body{
 
 .btn.sharp {
   border-radius:0;
+}
+
+.divider-custom{
+  background-color: #3e4049 !important;
+  margin-bottom: 0px !important; 
 }
 
 .jumbotron {
@@ -325,5 +338,87 @@ a.signupLink:hover{
     to {-webkit-transform: translate(0, -0px);}  
 }
 
+#pageslide-target-account-info{
+  padding-top: 20px;
+  background:#303239;
+  color:#ffffff;
+}
+
+#account-info h3{
+  color:#777;
+  text-align: center;
+}
+
+#account-info h3 a{
+  float:left;
+  cursor: pointer;
+  color: #16a79d;
+}
+
+#account-info h3 a:hover{
+  color: #19a8ac;
+}
+
+#account-info p{
+  background:#4d505b;
+  margin: 0 -20px 5px -20px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #303239;
+  padding: 3px 20px;
+  font-weight: bold;
+}
+
+#account-info ul{
+  padding:0px;
+  list-style: none;
+}
+
+#account-info ul li{
+  position: relative;
+  padding: 5px 40px 5px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#account-info ul li:hover{
+  cursor: default;
+}
+
+#account-info ul li:hover a{
+  color: #4d505b;
+}
+
+.alert-action{
+  position: absolute;
+  display: inline-block;
+  right: 0;
+}
+
+.alert-action a{
+  color: #303239;
+}
+
+.alert-action a:hover{
+  color: #16a79d !important;
+}
+
+.alert-action a:first-child{
+  margin-right: 3px;
+}
+
+#menu-slider-top{
+  height: 100%;
+  padding-bottom: 300px;
+}
+
+#menu-slider-btm{
+  margin-top: -300px;
+}
+
+#menu-slider-btm form{
+  margin-top: 30px;
+}
 
 

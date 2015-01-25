@@ -1,4 +1,4 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago']);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive']);
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
@@ -22,7 +22,7 @@ app.filter('jobsFilter', function($rootScope) {
         return filtered;
     };
 });
-app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
+app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout, $modal) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
@@ -53,7 +53,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     var skyFL = 0;
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {
-        var macAttack = -30;
+
     }
     $scope.onResize = function() {
         var skyline = document.getElementById("city_skyline");
@@ -90,7 +90,48 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
         $event.stopPropagation();
         $scope.$broadcast('toggleSignup', true);
     };
+
+    //Job Alert Modal
+    $scope.items = ['item1', 'item2', 'item3'];
+
+      $scope.open = function (size) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'newjobAlert.html',
+          controller: 'jobalertCtrl',
+          size: size,
+          resolve: {
+            items: function () {
+              return $scope.items;
+            }
+          }
+        });
+
+
+      };
+    
+
 });
+
+    //new Job alert controller
+app.controller('jobalertCtrl', function ($scope, $modalInstance, items) {
+
+      $scope.items = items;
+      $scope.selected = {
+        item: $scope.items[0]
+      };
+
+      $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+
+});//End new Job alert controller
+
+
 
 app.controller("UserCtrl",
     function($scope, $firebaseAuth, $firebase, postEmailForm, $location) {
