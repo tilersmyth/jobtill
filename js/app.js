@@ -51,6 +51,10 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     });
     //Set sky height
     var skyFL = 0;
+    var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    if (device !== null) {
+        skyFL++;
+    }
     $scope.onResize = function() {
         var skyline = document.getElementById("city_skyline");
         var skyset = skyline.offsetTop;
