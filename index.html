@@ -209,18 +209,23 @@
 <!-- ADD JOB MODAL-->
 <script type="text/ng-template" id="newjobAlert.html">
         <div class="modal-header">
-            <h3 class="modal-title">This is where job alert info will be..</h3>
+            <h3 class="modal-title">Add New Job Alert</h3>
         </div>
         <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a ng-click="selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
+            <form>
+            <div class="form-group">
+              <label for="key_terms" class="col-sm-12 control-label">Add key terms for us to alert you about <span>(if multiple, seperate with comma)</span>:</label>
+              <textarea class="form-control" id="key_terms" rows="2" placeholder="E.g. engineer, product manager, java"></textarea>  
+            </div>  
+            <div class="form-group">
+              <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
+              <input type="text" class="form-control" id="key_locations" value="Boston"> 
+            </div> 
+            <div>Alerts will be sent to tyler.smith.la@gmail.com (this can be changed in account settings)</div>
+            </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Save</button>
+            <button class="btn btn-primary" ng-click="ok()">Save Alert</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
 </script>

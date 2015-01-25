@@ -342,6 +342,7 @@ a.signupLink:hover{
   padding-top: 20px;
   background:#303239;
   color:#ffffff;
+  min-height: 550px !important;
 }
 
 #account-info h3{

@@ -100,6 +100,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout, $mod
         var modalInstance = $modal.open({
           templateUrl: 'newjobAlert.html',
           controller: 'jobalertCtrl',
+          backdrop: 'static',
           size: size,
           resolve: {
             items: function () {
