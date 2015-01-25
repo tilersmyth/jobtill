@@ -53,13 +53,16 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     var skyFL = 0;
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {
-        skyFL++;
+        var macAttack = -30;
     }
     $scope.onResize = function() {
         var skyline = document.getElementById("city_skyline");
         var skyset = skyline.offsetTop;
         var h = window.innerHeight;
-        var ifL = (skyFL < 1) ? 20 : -1;
+        var ifL;
+        if (macAttack < 0) {
+            ifL = macAttack;
+        } else  { ifL = (skyFL < 1) ? 20 : -1;}
         var newh = h - skyset + ifL;
         skyFL++;
         $timeout(function(){
