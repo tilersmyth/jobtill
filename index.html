@@ -2,7 +2,7 @@
 <head>
     <title>Jobtill | High-growth Opportunities</title>
     <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -35,8 +35,8 @@
 
                 <!-- if logged in -->
                 <li ng-show="authData" dropdown>
-                    <a ng-show="authData" href="#" dropdown-toggle>{{userData.firstName}} <span
-                            class="caret"></span></a>
+                    <a ng-show="authData" href="#" dropdown-toggle><span ng-show="userData.firstName">Hi, {{userData.firstName}} <span
+                            class="caret"></span></span></a>
                     <ul class="dropdown-menu custom-menu" role="menu">
                         <div class="panel-body">
                             <button style="margin-bottom: 10px" class="btn-custom btn btn-primary sharp" ng-click="logout();">Logout
