@@ -197,6 +197,10 @@ pageslideDirective.directive('pageslide', [
                     document.body.removeChild(slider);
                 });
 
+                $scope.$on('closedumbSlider', function() {
+                    psClose(slider,param);
+                });
+
                 var close_handler = (attrs.href) ? document.getElementById(attrs.href.substr(1) + '-close') : null;
                 if (el[0].addEventListener) {
                     el[0].addEventListener('click',function(e){

@@ -20,7 +20,8 @@
 </head>
 
 <body ng-controller="ScrapeCtrl">
-<nav class="navbar navbar-default navbar-scrape navbar-fixed-top" ng-controller="UserCtrl">
+<div ng-controller="UserCtrl">
+<nav class="navbar navbar-default navbar-scrape navbar-fixed-top" >
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed collapsed-custom" ng-init="navCollapsed = true"
@@ -41,11 +42,11 @@
                     <ul class="dropdown-menu custom-menu" role="menu">
 
                         <li><a href="#" ng-click="open()">Add Job Alert</a></li>
-                        <li><a href="#account-info" pageslide  ps-side="right" ps-speed="0.5">Account</a></li>
+                        <li><a href="#account-info" pageslide   ps-side="right" ps-speed="0.5">Account</a></li>
 
                         <li role="presentation" class="divider divider-custom"></li>
 
-                        <div class="panel-body"> 
+                        <div class="panel-body">
                             <button style="margin-bottom: 10px" class="btn-custom btn btn-primary sharp" ng-click="logout();">Logout
                             </button>
                         </div>
@@ -120,7 +121,45 @@
     </div>
     <!--/.nav-collapse -->
 </nav>
+<!-- ACCOUNT SLIDEOUT -->
+<div style="padding:20px" id="account-info" ng-controller="UserCtrl">
+    <div id="menu-slider-top">
+        <h3><a id="account-info-close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a> Your Account</h3>
+        <p>Job Alerts</p>
+        <ul>
+            <li ng-show="!userData.search_terms">
+                I'm a new user with<br> no search terms!
+            </li>
+            <li ng-show="userData.search_terms">
+                {{userData.search_terms}}
+                <div class="alert-action">
+                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                    <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                </div>
+            </li>
 
+        </ul>
+        <button class="btn-custom btn btn-primary sharp" ng-click="open()">Add Job Alert</button>
+    </div><!-- #menu-slider-top -->
+    <div id="menu-slider-btm">
+        <p>Change Account Password</p>
+        <span ng-bind="changepassMsg" class="signin-val"> </span>
+        <form name="changepassForm">
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.a" placeholder="Old Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.b" placeholder="New Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.c" placeholder="Confirm New Password" required>
+            </div>
+            <button class="btn-custom btn btn-primary sharp" ng-disabled="changepassForm.$invalid" ng-click="changePassword(changePass)">Save New Password</button>
+        </form>
+    </div><!-- #menu-slider-btm -->
+</div>
+<!-- ACCOUNT SLIDEOUT END -->
+</div>
 
 
 <!-- START SCRAPE CONTROL -->
@@ -169,43 +208,6 @@
 </div>
 <!-- END SCRAPE CONTROL -->
 
-
-<!-- ACCOUNT SLIDEOUT -->
-<div style="padding:20px" id="account-info">
-    <div id="menu-slider-top">
-        <h3><a id="account-info-close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a> Your Account</h3>
-        <p>Job Alerts</p>
-        <ul>
-            <li>front-end, frontend, software, disc jockey 
-                <div class="alert-action">
-                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                </div>
-            </li>
-            <li>engineer
-                <div class="alert-action">
-                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                </div>
-            </li>
-        </ul>   
-        <button class="btn-custom btn btn-primary sharp" ng-click="open()">Add Job Alert</button>
-    </div><!-- #menu-slider-top -->
-    <div id="menu-slider-btm">
-        <p>Change Account Password</p>   
-        <form>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="New Password">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm New Password">
-            </div>
-            <button class="btn-custom btn btn-primary sharp">Save New Password</button>
-        </form>  
-    </div><!-- #menu-slider-btm -->  
-</div>
-<!-- ACCOUNT SLIDEOUT END -->
-
 <!-- ADD JOB MODAL-->
 <script type="text/ng-template" id="newjobAlert.html">
         <div class="modal-header">
@@ -215,17 +217,17 @@
             <form>
             <div class="form-group">
               <label for="key_terms" class="col-sm-12 control-label">Add key terms for us to alert you about <span>(if multiple, seperate with comma)</span>:</label>
-              <textarea class="form-control" id="key_terms" rows="2" placeholder="E.g. engineer, product manager, java"></textarea>  
-            </div>  
+              <textarea class="form-control" id="key_terms" rows="2"  ng-model="jobSearch.term" placeholder="E.g. engineer, product manager, java"></textarea>
+            </div>
             <div class="form-group">
               <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
-              <input type="text" class="form-control" id="key_locations" value="Boston"> 
+              <input type="text" class="form-control" id="key_locations" ng-model="jobSearch.location" placeholder="Boston">
             </div> 
-            <div>Alerts will be sent to tyler.smith.la@gmail.com (this can be changed in account settings)</div>
+            <div>Alerts will be sent to {{userInfo.email}} (this can be changed in account settings)</div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Save Alert</button>
+            <button class="btn btn-primary" ng-click="ok(jobSearch)">Save Alert</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
 </script>

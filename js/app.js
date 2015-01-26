@@ -22,7 +22,7 @@ app.filter('jobsFilter', function($rootScope) {
         return filtered;
     };
 });
-app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout, $modal) {
+app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
@@ -91,40 +91,19 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout, $mod
         $event.stopPropagation();
         $scope.$broadcast('toggleSignup', true);
     };
-
-    //Job Alert Modal
-    $scope.items = ['item1', 'item2', 'item3'];
-
-      $scope.open = function (size) {
-
-        var modalInstance = $modal.open({
-          templateUrl: 'newjobAlert.html',
-          controller: 'jobalertCtrl',
-          backdrop: 'static',
-          size: size,
-          resolve: {
-            items: function () {
-              return $scope.items;
-            }
-          }
-        });
-
-
-      };
-    
-
 });
 
     //new Job alert controller
-app.controller('jobalertCtrl', function ($scope, $modalInstance, items) {
+app.controller('jobalertCtrl', function ($scope, $modalInstance, items, $rootScope) {
 
-      $scope.items = items;
-      $scope.selected = {
-        item: $scope.items[0]
-      };
-
-      $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
+      $scope.userInfo = items;
+    $scope.jobSearch = {
+        term: items.search_terms,
+        location: items.search_location
+    };
+      $scope.ok = function (a) {
+        $modalInstance.dismiss('cancel');
+          $rootScope.$broadcast('save_search_data', a);
       };
 
       $scope.cancel = function () {
@@ -136,7 +115,7 @@ app.controller('jobalertCtrl', function ($scope, $modalInstance, items) {
 
 
 app.controller("UserCtrl",
-    function($scope, $firebaseAuth, $firebase, postEmailForm, $location) {
+    function($scope, $firebaseAuth, $firebase, postEmailForm, $location, $modal) {
         var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
         var usersRef = ref2.child("users");
         //Get validated emails
@@ -260,6 +239,7 @@ app.controller("UserCtrl",
                     var userInfo = $firebase(usersRef.child($scope.authData.uid));
                     $scope.userData = userInfo.$asObject();
                     $scope.loginmsg = "Login Success!";
+
                     $scope.$emit('userOn', true);
                 }).catch(function(error) {
                     $scope.loginmsg = error.message;
@@ -270,9 +250,51 @@ app.controller("UserCtrl",
         };
         //Log out
         $scope.logout = function() {
+            $scope.$broadcast('closedumbSlider');
             $scope.authObj.$unauth();
             $scope.authData = $scope.authObj.$getAuth();
             $scope.$emit('userOn', false);
         };
+        //Change Password
+        $scope.changepassMsg = " ";
+        $scope.changePassword = function(a) {
+            if (a.b !== a.c) {
+              $scope.changepassMsg = "New passwords do not match."
+            } else {
+                $scope.authObj.$changePassword({
+                    email: $scope.userData.email,
+                    oldPassword: a.a,
+                    newPassword: a.c
+            }).then(function() {
+                $scope.changepassMsg = "Password changed successfully!";
+                    $scope.changePass = "";
+            }).catch(function(error) {
+                $scope.changepassMsg = error.message;
+                    $scope.changePass = "";
+            });
+            }
+        };
+        //Modal
+        $scope.open = function (size) {
+            $modal.open({
+                templateUrl: 'newjobAlert.html',
+                controller: 'jobalertCtrl',
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return $scope.userData;
+                    }
+                }
+            });
+
+
+        };
+        //Save search data
+        $scope.$on('save_search_data', function(event, a) {
+            var usertoPush = $scope.authObj.$getAuth();
+            usersRef.child(usertoPush.uid).update({ search_terms: a.term,search_location: a.location})
+        });
+
         //Close Controller
     });
