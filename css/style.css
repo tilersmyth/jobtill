@@ -422,4 +422,7 @@ a.signupLink:hover{
   margin-top: 30px;
 }
 
+.form-control {
+    display: inline !important;
+}
 
