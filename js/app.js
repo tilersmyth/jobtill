@@ -50,11 +50,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
         }
     });
     //Set sky height
-    var skyFL = 0;
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {
         var macAttack = -30;
-
     }
     $scope.onResize = function() {
         var skyline = document.getElementById("city_skyline");
@@ -63,9 +61,8 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
         var ifL;
         if (macAttack < 0) {
             ifL = macAttack;
-        } else  { ifL = (skyFL < 1) ? 20 : -1;}
+        } else  { ifL = -1;}
         var newh = h - skyset + ifL;
-        skyFL++;
         $timeout(function(){
         $scope.skyHeight = {
               height: newh,
@@ -73,7 +70,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
             }
         });
     };
-    $scope.onResize();
+    $timeout(function(){$scope.onResize()});
     angular.element($window).bind('resize', function() {
         $scope.onResize();
     });
@@ -105,7 +102,6 @@ app.controller('jobalertCtrl', function ($scope, $modalInstance, items, $rootSco
         $modalInstance.dismiss('cancel');
           $rootScope.$broadcast('save_search_data', a);
       };
-
       $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
       };
@@ -287,14 +283,11 @@ app.controller("UserCtrl",
                     }
                 }
             });
-
-
         };
         //Save search data
         $scope.$on('save_search_data', function(event, a) {
             var usertoPush = $scope.authObj.$getAuth();
             usersRef.child(usertoPush.uid).update({ search_terms: a.term,search_location: a.location})
         });
-
         //Close Controller
     });
