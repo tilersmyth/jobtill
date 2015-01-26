@@ -376,37 +376,11 @@ a.signupLink:hover{
 }
 
 #account-info ul li{
-  position: relative;
-  padding: 5px 40px 5px 0px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
 }
 
 #account-info ul li:hover{
   cursor: default;
-}
-
-#account-info ul li:hover a{
-  color: #4d505b;
-}
-
-.alert-action{
-  position: absolute;
-  display: inline-block;
-  right: 0;
-}
-
-.alert-action a{
-  color: #303239;
-}
-
-.alert-action a:hover{
-  color: #16a79d !important;
-}
-
-.alert-action a:first-child{
-  margin-right: 3px;
 }
 
 #menu-slider-top{

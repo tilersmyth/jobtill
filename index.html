@@ -41,7 +41,10 @@
                             class="caret"></span></span></a>
                     <ul class="dropdown-menu custom-menu" role="menu">
 
-                        <li><a href="#" ng-click="open()">Add Job Alert</a></li>
+                        <li><a href="#" ng-click="open()">
+                        <span ng-show="!userData.search_terms">Add Job Alert</span>
+                        <span ng-show="userData.search_terms">Edit Job Alerts</span>
+                        </a></li>
                         <li><a href="#account-info" pageslide   ps-side="right" ps-speed="0.5">Account</a></li>
 
                         <li role="presentation" class="divider divider-custom"></li>
@@ -127,19 +130,18 @@
         <h3><a id="account-info-close"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a> Your Account</h3>
         <p>Job Alerts</p>
         <ul>
-            <li ng-show="!userData.search_terms">
-                I'm a new user with<br> no search terms!
+            <li ng-show="!userData.search_terms" style="text-align:center; padding:5px 0px">
+                You currently have no alerts setup!
             </li>
             <li ng-show="userData.search_terms">
                 {{userData.search_terms}}
-                <div class="alert-action">
-                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                </div>
             </li>
 
         </ul>
-        <button class="btn-custom btn btn-primary sharp" ng-click="open()">Add Job Alert</button>
+        <button class="btn-custom btn btn-primary sharp" ng-click="open()">
+            <span ng-show="!userData.search_terms">Add Job Alert</span>
+            <span ng-show="userData.search_terms">Edit Job Alerts</span>
+        </button>
     </div><!-- #menu-slider-top -->
     <div id="menu-slider-btm">
         <p>Change Account Password</p>
@@ -223,7 +225,7 @@
               <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
               <input type="text" class="form-control" id="key_locations" ng-model="jobSearch.location" placeholder="Boston">
             </div> 
-            <div>Alerts will be sent to {{userInfo.email}} (this can be changed in account settings)</div>
+            <div>Alerts will be sent to {{userInfo.email}}</div>
             </form>
         </div>
         <div class="modal-footer">
