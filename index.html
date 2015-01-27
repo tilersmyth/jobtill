@@ -200,7 +200,7 @@
                 </thead>
                 <tbody>
 
-                <tr ng-repeat="entry in data | filter:{status: 'new' }" ng-hide="search">
+                <tr ng-if="!search" ng-repeat="entry in data | filter:{status: 'new' }">
                     <td><a ng-href="#" target="_blank">{{entry.name}}</a> 
                     </td>
                     <td>{{entry.location}}</td>
@@ -208,9 +208,8 @@
                     <td><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                         <timer countdown="86400 - ((currentTime  - entry.created) / 1000) | floor" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                     </td>
-                </tr>    
 
-                <tr ng-repeat="entry in data | filter:{name: search,location: search_loc, status: '!new' }| jobsFilter:showJobs" ng-hide="!search">
+                <tr ng-if="search" ng-repeat="entry in data | filter:{name: search,location: search_loc } | jobsFilter:showJobs">
                     <td><a ng-href="{{entry.url}}" target="_blank">{{entry.name}}</a> 
                     </td>
                     <td>{{entry.location}}</td>

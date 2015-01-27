@@ -29,7 +29,6 @@ app.filter('floor', function(){
     };
 });
 
-
 app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
@@ -48,7 +47,6 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //timer countdown
     $scope.timerRunning = true;
     $scope.currentTime = oldestJob;
-
 
     snapdata.once('value', function(dataSnapshot) {
         var dataSnap = dataSnapshot.val();
@@ -146,6 +144,7 @@ app.controller("UserCtrl",
         }
 
         $scope.logoPopover = 'Welcome to Jobtill! We pull and compile the best jobs from high-growth companies.';
+
 
         //Toggle Control
         $scope.$on('toggleSignup', function(event, a) {
