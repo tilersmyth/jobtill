@@ -11,11 +11,15 @@ app.factory('postEmailForm', function($http) {
 });
 app.filter('jobsFilter', function($rootScope) {
     return function( items, a ) {
+        var splitter = Math.round(items.length * a);
+        splitter = (splitter < 40)? splitter:40;
         var filtered = [];
         var outC = 0;
+        var inC = 0;
         angular.forEach(items, function(item) {
-            if( item.created >= a[0] && item.created <= a[1] ) {
+            if(inC < splitter ) {
                 filtered.push(item);
+                inC++;
             } else outC++;
         });
         $rootScope.hiddenPosts = outC;
@@ -40,27 +44,11 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
 
     //Jumbotron Vars
     $scope.search_loc = 'Boston';
-    //Get oldest post
-    $scope.showJobs =[];
-    var oldestJob = new Date().getTime();
 
     //timer countdown
     $scope.timerRunning = true;
-    $scope.currentTime = oldestJob;
+    $scope.currentTime = new Date().getTime();
 
-    snapdata.once('value', function(dataSnapshot) {
-        var dataSnap = dataSnapshot.val();
-        for (var key in dataSnap) {
-            if (dataSnap[key].created < oldestJob) {
-            oldestJob = dataSnap[key].created;
-            }
-        }
-        if (!$scope.loggedIn) {
-            $scope.showJobs = [oldestJob,oldestJob+86400000];
-        } else {
-            $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
-        }
-    });
     //Set sky height
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {
@@ -90,9 +78,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data;
         if (!data) {
-            $scope.showJobs = [oldestJob,oldestJob+86400000];
+            $scope.showJobs = .4;
         } else {
-            $scope.showJobs = [oldestJob,oldestJob+3.1536e+10];
+            $scope.showJobs = 1;
         }
     });
     $scope.openSignup = function($event) {
@@ -141,7 +129,7 @@ app.controller("UserCtrl",
             var userInfo = $firebase(usersRef.child($scope.authData.uid));
             $scope.userData = userInfo.$asObject();
                 $scope.$emit('userOn', true);
-        }
+        } else $scope.$emit('userOn', false);
 
         $scope.logoPopover = 'Welcome to Jobtill! We pull and compile the best jobs from high-growth companies.';
 
