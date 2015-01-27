@@ -1,4 +1,4 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive']);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive','timer']);
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
@@ -22,6 +22,14 @@ app.filter('jobsFilter', function($rootScope) {
         return filtered;
     };
 });
+
+app.filter('floor', function(){
+    return function(n){
+        return Math.floor(n);
+    };
+});
+
+
 app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
@@ -36,6 +44,12 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Get oldest post
     $scope.showJobs =[];
     var oldestJob = new Date().getTime();
+
+    //timer countdown
+    $scope.timerRunning = true;
+    $scope.currentTime = oldestJob;
+
+
     snapdata.once('value', function(dataSnapshot) {
         var dataSnap = dataSnapshot.val();
         for (var key in dataSnap) {
