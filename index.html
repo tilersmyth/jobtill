@@ -193,7 +193,7 @@
                     <th>Location</th>
                     <th>Company</th>
                     <th>
-                        <span ng-hide="search">Locked</span>
+                        <span ng-hide="search">Time Remaining</span>
                         <span ng-show="search">Added</span>
                     </th>
                 </tr>
@@ -201,12 +201,12 @@
                 <tbody>
 
                 <tr ng-if="!search" ng-repeat="entry in data | filter:{status: 'new' }">
-                    <td><a ng-href="#" target="_blank">{{entry.name}}</a> 
+                    <td><a ng-href="#">{{entry.name}}</a> 
                     </td>
                     <td>{{entry.location}}</td>
-                    <td class="hidden-text">Hidden Company</td>
-                    <td><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-                        <timer countdown="86400 - ((currentTime  - entry.created) / 1000) | floor" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                    <td><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Locked</td>
+                    <td>
+                    <timer countdown="86400 - ((currentTime  - entry.created) / 1000) | floor" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                     </td>
 
                 <tr ng-if="search" ng-repeat="entry in data | filter:{name: search,location: search_loc } | jobsFilter:showJobs">
