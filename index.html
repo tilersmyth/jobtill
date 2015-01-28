@@ -193,8 +193,8 @@
                     <th>Location</th>
                     <th>Company</th>
                     <th>
-                        <span ng-hide="search">Time Remaining</span>
-                        <span ng-show="search">Added</span>
+                        <div ng-hide="search" class="countdown">Time Remaining</div>
+                        <div ng-show="search">Added</div>
                     </th>
                 </tr>
                 </thead>
@@ -205,7 +205,7 @@
                     </td>
                     <td>{{entry.location}}</td>
                     <td><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Locked</td>
-                    <td>
+                    <td class="countdown">
                     <timer countdown="86400 - ((currentTime  - entry.created) / 1000) | floor" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                     </td>
 
