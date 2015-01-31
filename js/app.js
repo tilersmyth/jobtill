@@ -146,6 +146,22 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$moda
     };
 });
 
+
+//How it works modal
+app.controller('HiwModal', function ($scope, $modalInstance, items, $rootScope) {
+
+    $scope.userInfo = items.user;
+    $scope.jobSearch = {
+        term: items.user.search_terms,
+        location: items.user.search_location
+    };
+      $scope.ok = function (a) {
+        $modalInstance.dismiss('cancel');
+          $rootScope.$broadcast('save_search_data', a);
+      };
+
+});//End How it works modal
+
     //new Job alert controller
 app.controller('AlertsModal', function ($scope, $modalInstance, items, $rootScope) {
 
@@ -184,8 +200,6 @@ app.controller("UserCtrl",
             $scope.userData = userInfo.$asObject();
                 $scope.$emit('userOn', $scope.userData);
         } else $scope.$emit('userOn', false);
-
-        $scope.logoPopover = 'Welcome to Jobtill! We pull and compile the best jobs from high-growth companies.';
 
 
         //Toggle Control

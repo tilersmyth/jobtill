@@ -21,6 +21,9 @@
   border-bottom: 1px solid #ffffff;
   }
 
+  .custom-brand small, .custom-brand span{
+    display: none !important;
+  }
 
 }
 
@@ -41,6 +44,8 @@
   height:70px;
   border-bottom: 3px solid #ffffff;
   }
+
+
 
 }
 @media(min-width:992px){
@@ -80,6 +85,12 @@ body{
 .custom-brand{
   font-family: 'Fredoka One', cursive !important;
   font-size: 28px;
+}
+
+.custom-brand small{
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .navbar-scrape{
@@ -404,3 +415,28 @@ a.signupLink:hover{
     display: inline !important;
 }
 
+.hiw-title{
+  font-family: 'Fredoka One', cursive !important; 
+  color:#3e4049;
+  text-align: center;
+}
+
+.hiw-body h4{
+  color:#777;
+  margin: 0px 0px 5px 0;
+}
+
+.hiw-body p{
+  margin: 
+}
+
+h3.just-posted-title{
+  color: #cf4858;
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+
+h3.just-posted-title a{
+  color: #cf4858;
+  text-decoration: underline; 
+}
