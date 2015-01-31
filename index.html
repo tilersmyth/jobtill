@@ -12,7 +12,7 @@
     <script src="js/app.js"></script>
     <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
     <script src="js/modules.js"></script>
-    <script src="https://js.stripe.com/v2/"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
     <script src="js/angulartics.js"></script>
 </head>
 
@@ -38,7 +38,7 @@
                             class="caret"></span></span></a>
                     <ul class="dropdown-menu custom-menu" role="menu">
 
-                        <li><a href="#" ng-click="open()">
+                        <li><a href="#" ng-click="open('AlertsModal')">
                         <span ng-show="!userData.search_terms">Add Job Alert</span>
                         <span ng-show="userData.search_terms">Edit Job Alerts</span>
                         </a></li>
@@ -139,9 +139,6 @@
             <span ng-show="!userData.search_terms">Add Job Alert</span>
             <span ng-show="userData.search_terms">Edit Job Alerts</span>
         </button>
-        <button style="margin-top: 5px" class="btn-custom btn btn-primary sharp" ng-click="open('StripeModal')">
-        <span>Add Payment Method</span>
-        </button>
     </div><!-- #menu-slider-top -->
     <div id="menu-slider-btm">
         <p>Change Account Password</p>
@@ -201,7 +198,8 @@
 
                 <tr ng-if="!search" ng-repeat="entry in data | filter:{status: 'new' } | unlockedFilter:jobKeys">
                     <td>
-                        <a ng-if="!entry.unlocked" tooltip-placement="left" tooltip="Unlock for ${{entry.price}}" ng-click="unlockJob(entry.jobId)" ng-href="#">{{entry.name}}</a>
+                        <a ng-if="!entry.unlocked" tooltip-placement="left" tooltip="Unlock for {{unlockprice = (entry.price===0)?'Free':'$'+ entry.price}}" ng-click="unlockJob(entry.jobId,entry.name,entry.price)" ng-href="#">{{entry.name}}</a>
+                    </button>
                         <a ng-if="entry.unlocked" target="_blank" ng-href="{{entry.url}}">{{entry.name}}</a>
                     </td>
                     <td>{{entry.location}}</td>
@@ -234,5 +232,6 @@
     })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-58872463-1', 'auto');
 </script>
+
 </body>
 </html>

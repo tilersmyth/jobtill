@@ -1,7 +1,4 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive','timer','stripe']);
-app.config(function() {
-        Stripe.setPublishableKey('pk_test_FVqkH8oMczqQ159VfBnrexb8');
-    });
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive','timer']);
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
@@ -46,18 +43,21 @@ app.filter('unlockedFilter', function() {
                 var diff = Math.round(((time - item.created)/3.6e+6));
                 var remaining = (48-diff)*3600;
                 var price = "1.30";
-                console.log(remaining);
                 if (diff < 25 && diff > 12){
                     price="1.00";
                 } else if (diff < 37 && diff > 24){
                     price=".90";
                 }else if (diff > 36){
-                    price=".40";
+                    price=".50";
                 }
+                price = !keys?0:price;
                 item.price = price;
                 item.timeleft = remaining;
             }
-                filtered.push(item);
+            if (remaining<=0) {
+                item.status = "old";
+            }
+            filtered.push(item);
         });
         return filtered;
     };
@@ -125,21 +125,24 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$moda
         $scope.$broadcast('toggleSignup', true);
     };
     //Unlock job
-    $scope.unlockJob = function(id) {
-        $modal.open({
-            templateUrl: "StripeModal",
-            controller: "StripeModal",
-            backdrop: 'static',
-            resolve: {
-                items: function () {
-                    return {
-                       user: $scope.loggedIn,
-                        job: id
-                }
-                }
+    var handler = StripeCheckout.configure({
+        key: 'pk_test_FVqkH8oMczqQ159VfBnrexb8',
+        token: function(token) {
+        var data = $scope.loggedIn;
+            $scope.$broadcast('unlock_job', $scope.jobToken,data.$id,data.unlocked);
+        }
+    });
+    $scope.unlockJob = function(id,name,price) {
+        price*=100;
+        var msg = (price===0)?"First one is free!":"Unlock Job For";
+            handler.open({
+                name: "Job Description",
+                description: name,
+                amount: price,
+                panelLabel: msg
+            });
+        $scope.jobToken = id;
 
-            }
-        });
     };
 });
 
@@ -160,21 +163,6 @@ app.controller('AlertsModal', function ($scope, $modalInstance, items, $rootScop
       };
 
 });//End new Job alert controller
-//new Job alert controller
-app.controller('StripeModal', function ($scope, $modalInstance, items, $rootScope) {
-
-    $scope.userInfo = items.user;
-    $scope.job = items.job;
-    $scope.save = function (a,b,c) {
-        $modalInstance.dismiss('cancel');
-        $rootScope.$broadcast('unlock_job', a,b,c);
-    };
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-
-});//End new Job alert controller
-
 
 app.controller("UserCtrl",
     function($scope, $firebaseAuth, $firebase, postEmailForm, $location, $modal) {
