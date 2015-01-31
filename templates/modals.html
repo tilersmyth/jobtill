@@ -1,0 +1,47 @@
+<!-- ADD STRIPE MODAL-->
+<script type="text/ng-template" id="StripeModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Payment Method</h3>
+    </div>
+    <div class="modal-body">
+        <span ng-show="!userInfo.unlocked">First one is on us!</span>
+        <form stripe:form="saveCustomer">
+            <fieldset>
+                <input type="text" class="form-control" data-stripe="number" placeholder="Card number"/>
+                <input type="text" class="form-control" data-stripe="cvc" placeholder="cvc"/>
+                <input type="text" class="form-control" data-stripe="exp-month" placeholder="exp month"/>
+                <input type="text" class="form-control" data-stripe="exp-year" placeholder="exp year"/>
+            </fieldset>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save(job,userInfo.$id,userInfo.unlocked)">Save</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<!-- END ADD STRIPE MODAL-->
+<!-- ADD JOB MODAL-->
+<script type="text/ng-template" id="AlertsModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Add New Job Alert</h3>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="key_terms" class="col-sm-12 control-label">Add key terms for us to alert you about <span>(if multiple, seperate with comma)</span>:</label>
+                <textarea class="form-control" id="key_terms" rows="2"  ng-model="jobSearch.term" placeholder="E.g. engineer, product manager, java"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
+                <input type="text" class="form-control" id="key_locations" ng-model="jobSearch.location" placeholder="Boston">
+            </div>
+            <div>Alerts will be sent to {{userInfo.email}}</div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok(jobSearch)">Save Alert</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<!-- END ADD JOB MODAL-->

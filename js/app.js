@@ -1,4 +1,7 @@
-var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive','timer']);
+var app = angular.module("Scrape", ["firebase", "ui.bootstrap",'angulartics', 'angulartics.google.analytics', 'ngtimeago', 'pageslide-directive','timer','stripe']);
+app.config(function() {
+        Stripe.setPublishableKey('pk_test_FVqkH8oMczqQ159VfBnrexb8');
+    });
 //Email Verification
 app.factory('postEmailForm', function($http) {
     return {
@@ -12,7 +15,9 @@ app.factory('postEmailForm', function($http) {
 app.filter('jobsFilter', function($rootScope) {
     return function( items, a ) {
         var splitter = Math.round(items.length * a);
-        splitter = (splitter < 40)? splitter:40;
+        if (a !== 1) {
+            splitter = (splitter < 40) ? splitter : 40;
+        }
         var filtered = [];
         var outC = 0;
         var inC = 0;
@@ -26,14 +31,39 @@ app.filter('jobsFilter', function($rootScope) {
         return filtered;
     };
 });
-
-app.filter('floor', function(){
-    return function(n){
-        return Math.floor(n);
+app.filter('unlockedFilter', function() {
+    return function( items, a) {
+        var keys = a.unlocked;
+        var time = new Date().getTime();
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            if (keys) {
+                var keymatch = keys.match(item.jobId);
+            }
+            if (keymatch) {
+                item.unlocked = true;
+            } else {
+                var diff = Math.round(((time - item.created)/3.6e+6));
+                var remaining = (48-diff)*3600;
+                var price = "1.30";
+                console.log(remaining);
+                if (diff < 25 && diff > 12){
+                    price="1.00";
+                } else if (diff < 37 && diff > 24){
+                    price=".90";
+                }else if (diff > 36){
+                    price=".40";
+                }
+                item.price = price;
+                item.timeleft = remaining;
+            }
+                filtered.push(item);
+        });
+        return filtered;
     };
 });
 
-app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
+app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$modal) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
@@ -77,26 +107,49 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout) {
     //Check if user is logged in
     $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data;
+        $scope.jobKeys = data;
         if (!data) {
             $scope.showJobs = .4;
         } else {
             $scope.showJobs = 1;
         }
+
+    });
+    //Get unlock codes
+    $scope.$on('unlock_keys', function(event, data) {
+        $scope.jobKeys = data;
     });
     $scope.openSignup = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.$broadcast('toggleSignup', true);
     };
+    //Unlock job
+    $scope.unlockJob = function(id) {
+        $modal.open({
+            templateUrl: "StripeModal",
+            controller: "StripeModal",
+            backdrop: 'static',
+            resolve: {
+                items: function () {
+                    return {
+                       user: $scope.loggedIn,
+                        job: id
+                }
+                }
+
+            }
+        });
+    };
 });
 
     //new Job alert controller
-app.controller('jobalertCtrl', function ($scope, $modalInstance, items, $rootScope) {
+app.controller('AlertsModal', function ($scope, $modalInstance, items, $rootScope) {
 
-      $scope.userInfo = items;
+    $scope.userInfo = items.user;
     $scope.jobSearch = {
-        term: items.search_terms,
-        location: items.search_location
+        term: items.user.search_terms,
+        location: items.user.search_location
     };
       $scope.ok = function (a) {
         $modalInstance.dismiss('cancel');
@@ -107,7 +160,20 @@ app.controller('jobalertCtrl', function ($scope, $modalInstance, items, $rootSco
       };
 
 });//End new Job alert controller
+//new Job alert controller
+app.controller('StripeModal', function ($scope, $modalInstance, items, $rootScope) {
 
+    $scope.userInfo = items.user;
+    $scope.job = items.job;
+    $scope.save = function (a,b,c) {
+        $modalInstance.dismiss('cancel');
+        $rootScope.$broadcast('unlock_job', a,b,c);
+    };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+});//End new Job alert controller
 
 
 app.controller("UserCtrl",
@@ -128,7 +194,7 @@ app.controller("UserCtrl",
         if ($scope.authData !== null) {
             var userInfo = $firebase(usersRef.child($scope.authData.uid));
             $scope.userData = userInfo.$asObject();
-                $scope.$emit('userOn', true);
+                $scope.$emit('userOn', $scope.userData);
         } else $scope.$emit('userOn', false);
 
         $scope.logoPopover = 'Welcome to Jobtill! We pull and compile the best jobs from high-growth companies.';
@@ -200,7 +266,7 @@ app.controller("UserCtrl",
                     password: a.b
                 });
             }).then(function() {
-                $scope.$emit('userOn', true);
+
                 $scope.authData = $scope.authObj.$getAuth();
                 var userInfo = $firebase(usersRef.child($scope.authData.uid));
                 $scope.userData = userInfo.$asObject();
@@ -214,6 +280,7 @@ app.controller("UserCtrl",
                     search_tokens: "0",
                     search_terms: ""
                 });
+                $scope.$emit('userOn', $scope.userData);
             }).catch(function(error) {
                 console.error("Error: ", error);
             });
@@ -237,7 +304,7 @@ app.controller("UserCtrl",
                     $scope.userData = userInfo.$asObject();
                     $scope.loginmsg = "Login Success!";
 
-                    $scope.$emit('userOn', true);
+                    $scope.$emit('userOn', $scope.userData);
                 }).catch(function(error) {
                     $scope.loginmsg = error.message;
                 });
@@ -272,19 +339,28 @@ app.controller("UserCtrl",
             }
         };
         //Modal
-        $scope.open = function (size) {
+        $scope.open = function (modal) {
             $modal.open({
-                templateUrl: 'newjobAlert.html',
-                controller: 'jobalertCtrl',
+                templateUrl: modal,
+                controller: modal,
                 backdrop: 'static',
-                size: size,
                 resolve: {
                     items: function () {
-                        return $scope.userData;
+                        return {
+                            user: $scope.loggedIn,
+                            job: ""
+                        }
                     }
                 }
             });
+
         };
+        //Unlock job
+        $scope.$on('unlock_job', function(event, a,b,c) {
+          var unlocked = !c? a:c +","+a;
+            usersRef.child(b).update({ unlocked: unlocked});
+          //  $scope.$emit('unlock_Keys', unlocked);
+        });
         //Save search data
         $scope.$on('save_search_data', function(event, a) {
             var usertoPush = $scope.authObj.$getAuth();

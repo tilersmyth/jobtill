@@ -3,21 +3,17 @@
     <title>Jobtill | High-growth Opportunities</title>
     <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
-
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/0.9.1/angularfire.min.js"></script>
-    <script src="js/angular-pageslide-directive.js"></script>
     <script src="js/app.js"></script>
     <script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="js/modules.js"></script>
+    <script src="https://js.stripe.com/v2/"></script>
     <script src="js/angulartics.js"></script>
-    <script src="js/angulartics-ga.js"></script>
-    <script src="js/ngtimeago.js"></script>
-    <script src="js/angular-timer.min.js"></script>
 </head>
 
 <body ng-controller="ScrapeCtrl">
@@ -32,7 +28,7 @@
             </button>
             <a class="navbar-brand custom-brand" popover-placement="bottom" popover="{{logoPopover}}" href="#">Jobtill</a>
         </div>
-      
+
         <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed">
             <ul class="nav navbar-nav navbar-right">
 
@@ -46,7 +42,7 @@
                         <span ng-show="!userData.search_terms">Add Job Alert</span>
                         <span ng-show="userData.search_terms">Edit Job Alerts</span>
                         </a></li>
-                        <li><a href="#account-info" pageslide   ps-side="right" ps-speed="0.5">Account</a></li>
+                        <li><a href="#account-info" pageslide ps-side="right" ps-speed="0.5">Account</a></li>
 
                         <li role="presentation" class="divider divider-custom"></li>
 
@@ -139,9 +135,12 @@
             </li>
 
         </ul>
-        <button class="btn-custom btn btn-primary sharp" ng-click="open()">
+        <button class="btn-custom btn btn-primary sharp" ng-click="open('AlertsModal')">
             <span ng-show="!userData.search_terms">Add Job Alert</span>
             <span ng-show="userData.search_terms">Edit Job Alerts</span>
+        </button>
+        <button style="margin-top: 5px" class="btn-custom btn btn-primary sharp" ng-click="open('StripeModal')">
+        <span>Add Payment Method</span>
         </button>
     </div><!-- #menu-slider-top -->
     <div id="menu-slider-btm">
@@ -173,7 +172,7 @@
 
         <p class="lead pull-details">
             <span ng-show="!updated.lastRun" class="loadytext">Loady</span>
-             <span ng-show="updated.lastRun">Omg, we found {{updated.listings}} jobs ({{updated.newjobs}} new in last 24hrs) from {{updated.sites}} companies {{updated.lastRun|timeago}}</span>   
+             <span ng-show="updated.lastRun">Omg, we found {{updated.listings}} jobs ({{updated.newjobs}} new in last 48hrs) from {{updated.sites}} companies {{updated.lastRun|timeago}}</span>
         </p> 
    
     </div>
@@ -200,13 +199,16 @@
                 </thead>
                 <tbody>
 
-                <tr ng-if="!search" ng-repeat="entry in data | filter:{status: 'new' }">
-                    <td><a ng-href="#">{{entry.name}}</a> 
+                <tr ng-if="!search" ng-repeat="entry in data | filter:{status: 'new' } | unlockedFilter:jobKeys">
+                    <td>
+                        <a ng-if="!entry.unlocked" tooltip-placement="left" tooltip="Unlock for ${{entry.price}}" ng-click="unlockJob(entry.jobId)" ng-href="#">{{entry.name}}</a>
+                        <a ng-if="entry.unlocked" target="_blank" ng-href="{{entry.url}}">{{entry.name}}</a>
                     </td>
                     <td>{{entry.location}}</td>
-                    <td><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Locked</td>
-                    <td class="countdown">
-                    <timer countdown="86400 - ((currentTime  - entry.created) / 1000) | floor" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                    <td><span ng-hide="entry.unlocked" class="glyphicon glyphicon-lock" aria-hidden="true"></span> <span ng-bind="!entry.unlocked?'Locked':entry.site"></span></td>
+                    <td class="countdown" >
+                    <timer ng-if="!entry.unlocked" max-time-unit="'hour'" countdown="entry.timeleft" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                        <span ng-if="entry.unlocked">Unlocked!</span>
                     </td>
 
                 <tr ng-if="search" ng-repeat="entry in data | filter:{name: search,location: search_loc } | jobsFilter:showJobs">
@@ -224,32 +226,7 @@
     </footer>
 </div>
 <!-- END SCRAPE CONTROL -->
-
-<!-- ADD JOB MODAL-->
-<script type="text/ng-template" id="newjobAlert.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Add New Job Alert</h3>
-        </div>
-        <div class="modal-body">
-            <form>
-            <div class="form-group">
-              <label for="key_terms" class="col-sm-12 control-label">Add key terms for us to alert you about <span>(if multiple, seperate with comma)</span>:</label>
-              <textarea class="form-control" id="key_terms" rows="2"  ng-model="jobSearch.term" placeholder="E.g. engineer, product manager, java"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
-              <input type="text" class="form-control" id="key_locations" ng-model="jobSearch.location" placeholder="Boston">
-            </div> 
-            <div>Alerts will be sent to {{userInfo.email}}</div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok(jobSearch)">Save Alert</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-</script>
-
-<!-- END ADD JOB MODAL-->
+<div ng-include="'templates/modals.html'"></div>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
