@@ -201,7 +201,7 @@
 
                 <tr ng-repeat="entry in (filteredNew = (data | filter:{status: 'new',location: search_loc, name: search } | unlockedFilter:jobKeys))">
                     <td>
-                        <a ng-if="!entry.unlocked" tooltip-placement="left" tooltip="Unlock for {{unlockprice = (entry.price===0)?'Free':'$'+ entry.price}}" ng-click="unlockJob(entry.jobId,entry.name,entry.price)" ng-href="#">{{entry.name}}</a>
+                        <a ng-if="!entry.unlocked" popover-trigger="mouseenter" popover-placement="left" popover="Unlock for {{unlockprice = (entry.price===0)?'Free':'$'+ entry.price}}" ng-click="unlockJob(entry.jobId,entry.name,entry.price)" ng-href="#">{{entry.name}}</a>
                         <a ng-if="entry.unlocked" target="_blank" ng-href="{{entry.url}}">{{entry.name}}</a>
                     </td>
                     <td><span ng-hide="entry.unlocked" class="glyphicon glyphicon-lock glyphicon-custom" aria-hidden="true"></span> <span ng-bind="!entry.unlocked?'Locked':entry.site"></span></td>
