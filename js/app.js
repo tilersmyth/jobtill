@@ -75,6 +75,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
     //Jumbotron Vars
     $scope.search_loc = 'Boston';
 
+    //initialize search var
+    $scope.search = '';
+
     //timer countdown
     $scope.timerRunning = true;
     $scope.currentTime = new Date().getTime();

@@ -170,9 +170,9 @@
             <input type="search" autofocus class="adlib" ng-model="search"/>.</h1>
 
         <p class="lead pull-details">
-            <span ng-show="!updated.lastRun" class="loadytext">Loady</span>
-            <span ng-show="updated.lastRun" ng-hide="search">Omg, we found <b>{{filteredNew.length}}</b> job opportunities in {{search_loc}} that have opened up in the last 2 days!</span>
-            <span ng-show="search">Omg, we found {{updated.listings}} jobs from {{updated.sites}} companies {{updated.lastRun|timeago}}</span>
+            <span ng-show="!filteredNew.length" class="loadytext">Loady</span>
+            <span ng-if="!search" ng-show="filteredNew.length || !search">Below, we have <b>{{filteredNew.length}}</b> job opportunities in {{search_loc}} that have opened up in the last 2 days!</span>
+            <span ng-show="search">Below, we have <b>{{filteredAll.length}} ({{filteredNew.length}} new)</b> job opportunities that match your search criteria!</span>
         </p> 
    
     </div>
@@ -184,7 +184,7 @@
     <div class="row marketing">
         <div class="col-lg-12">
             <alert type="warning warning-custom" ng-show="search && !loggedIn"><b ng-hide="hiddenPosts<1">You're missing out on {{hiddenPosts}} recently posted <span ng-bind="(hiddenPosts===1)? 'job' : 'jobs'"></span>!</b> <a href="#" ng-click="openSignup($event)">Click here to sign up and see all results</a> </alert>
-            <h3 class="just-posted-title" ng-show="updated.newjobs && loggedIn"><span ng-hide="search">Here are the new job opportunities located in {{search_loc}}!</span></h3>
+
             <table class="table table-striped table-custom" ng-show="search || updated.newjobs && loggedIn">
                 <thead>
                 <tr>
@@ -199,20 +199,19 @@
                 </thead>
                 <tbody>
 
-                <tr ng-if="!search" ng-repeat="entry in (filteredNew = (data | filter:{status: 'new',location: search_loc } | unlockedFilter:jobKeys))">
+                <tr ng-repeat="entry in (filteredNew = (data | filter:{status: 'new',location: search_loc, name: search } | unlockedFilter:jobKeys))">
                     <td>
                         <a ng-if="!entry.unlocked" tooltip-placement="left" tooltip="Unlock for {{unlockprice = (entry.price===0)?'Free':'$'+ entry.price}}" ng-click="unlockJob(entry.jobId,entry.name,entry.price)" ng-href="#">{{entry.name}}</a>
-                    </button>
                         <a ng-if="entry.unlocked" target="_blank" ng-href="{{entry.url}}">{{entry.name}}</a>
                     </td>
-                    <td><span ng-hide="entry.unlocked" class="glyphicon glyphicon-lock" aria-hidden="true"></span> <span ng-bind="!entry.unlocked?'Locked':entry.site"></span></td>
+                    <td><span ng-hide="entry.unlocked" class="glyphicon glyphicon-lock glyphicon-custom" aria-hidden="true"></span> <span ng-bind="!entry.unlocked?'Locked':entry.site"></span></td>
                     <td>{{entry.location}}</td>
                     <td class="countdown" >
                     <timer ng-if="!entry.unlocked" max-time-unit="'hour'" countdown="entry.timeleft" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                         <span ng-if="entry.unlocked">Unlocked!</span>
                     </td>
-
-                <tr ng-if="search" ng-repeat="entry in data | filter:{name: search,location: search_loc } | jobsFilter:showJobs">
+                </tr>
+                <tr ng-if="search" ng-repeat="entry in (filteredAll = (data | filter:{name: search,location: search_loc } | jobsFilter:showJobs))">
                     <td><a ng-href="{{entry.url}}" target="_blank">{{entry.name}}</a> 
                     </td>
                     <td>{{entry.site}}</td>

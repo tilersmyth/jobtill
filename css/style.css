@@ -192,9 +192,17 @@ body{
   text-shadow: 1px 1px 1px #ce6774;
 }
 
+.pull-details b{
+  font-size: 24px;
+}
+
 .loadytext{
   color:#cf4858;
   text-shadow: none;
+}
+
+.glyphicon-custom{
+  color:#cf4858 !important;
 }
 
 #contact_info{
