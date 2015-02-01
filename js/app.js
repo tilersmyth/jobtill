@@ -163,15 +163,8 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
 
 //How it works modal
 app.controller('HiwModal', function ($scope, $modalInstance, items, $rootScope) {
-
-    $scope.userInfo = items.user;
-    $scope.jobSearch = {
-        term: items.user.search_terms,
-        location: items.user.search_location
-    };
-      $scope.ok = function (a) {
+      $scope.ok = function () {
         $modalInstance.dismiss('cancel');
-          $rootScope.$broadcast('save_search_data', a);
       };
 
 });//End How it works modal
