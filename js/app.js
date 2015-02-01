@@ -63,7 +63,7 @@ app.filter('unlockedFilter', function() {
     };
 });
 
-app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$modal) {
+app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http) {
     //Firebase Link
     var ref = new Firebase("https://glowing-inferno-8009.firebaseio.com");
     var data = $firebase(ref.child('listings'));
@@ -128,8 +128,21 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$moda
     var handler = StripeCheckout.configure({
         key: 'pk_test_FVqkH8oMczqQ159VfBnrexb8',
         token: function(token) {
-        var data = $scope.loggedIn;
-            $scope.$broadcast('unlock_job', $scope.jobToken,data.$id,data.unlocked);
+            var postData = {
+                token: token,
+                price: $scope.jobprice
+            };
+            var data = $scope.loggedIn;
+       if ($scope.jobprice === 0) {
+           $scope.$broadcast('unlock_job', $scope.jobToken,data.$id,data.unlocked);
+           console.log("free job");
+       }else {
+           $http.post("http://168.235.70.242:3000/unlock_job", postData).success(function(a) {
+               console.log(a);
+               $scope.$broadcast('unlock_job', $scope.jobToken,data.$id,data.unlocked);
+           });
+       }
+
         }
     });
     $scope.unlockJob = function(id,name,price) {
@@ -142,6 +155,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$moda
                 panelLabel: msg
             });
         $scope.jobToken = id;
+        $scope.jobprice = price;
 
     };
 });
