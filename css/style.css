@@ -196,6 +196,11 @@ body{
   font-size: 24px;
 }
 
+.pull-details a{
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .loadytext{
   color:#cf4858;
   text-shadow: none;
@@ -305,6 +310,17 @@ a.signupLink:hover{
 
 .warning-custom a{
   color: #ffffff !important;
+  text-decoration: underline;
+}
+
+.no-alert-alert{
+  color: #16a79d !important;
+  margin-bottom: -10px;
+  text-align: center;
+}
+
+.no-alert-alert a{
+  color: #16a79d !important;
   text-decoration: underline;
 }
 
