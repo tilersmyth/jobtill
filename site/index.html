@@ -177,7 +177,7 @@
             <span ng-show="search && loggedIn">Below, we have <span class="text_emphasize">{{filteredAll.length}} ({{filteredNew.length}} new) job opportunities</span> that match your search criteria!</span>
             <span ng-show="updated.listings && !loggedIn"><a ng-click="openSignup($event)" href="#">Sign up</a> to see {{updated.listings}} recently posted jobs, {{updated.newjobs}} posted in the last 2 days!</span>
         </p> 
-        <a href="#" ng-show="filteredNew.length && loggedIn" class="why_locked" popover-placement="bottom" popover="Jobtill locks new positions that have been posted in the last 48 hours. We do this to give &quot;front-of-the-line&quot; access to those really interested in the role while momentarily blocking it from the sights of those that use the shot-gun approach to sending out their resume."><span ng-show="!search">Why are these locked?</span><span ng-show="search">Why are some results locked?</span></a>
+        <a href="#" ng-show="filteredNew.length && loggedIn" class="why_locked" popover-placement="bottom" popover="Jobtill locks new positions that have been posted in the last 48 hours. This is intended to give &quot;front-of-the-line&quot; access to those really interested in the role while momentarily blocking it from the sights of those that use the shot-gun approach to sending out their resume."><span ng-show="!search">Why are these locked?</span><span ng-show="search">Why are some results locked?</span></a>
     </div>
     <div id="contact_info">info@jobtill.com</div>
     <div id="city_skyline" ng-style="skyHeight" ng-hide="search || updated.newjobs && loggedIn">
@@ -202,7 +202,7 @@
                 </thead>
                 <tbody>
 
-                <tr ng-if="loggedIn" ng-repeat="entry in (filteredNew = (data | filter:{status: 'new',location: search_loc, name: search } | unlockedFilter:jobKeys))">
+                <tr ng-if="loggedIn" ng-repeat="entry in (filteredNew = (data | filter:{status: 'new',location: search_loc, name: search } | unlockedFilter:jobKeys)) | orderBy:'timeleft':true">
                     <td>
                         <a ng-if="!entry.unlocked" popover-trigger="mouseenter" popover-placement="left" popover="Unlock for {{unlockprice = (entry.price===0)?'Free':'$'+ entry.price}}" ng-click="unlockJob(entry.jobId,entry.name,entry.price)" ng-href="#">{{entry.name}}</a>
                         <a ng-if="entry.unlocked" target="_blank" ng-href="{{entry.url}}">{{entry.name}}</a>
