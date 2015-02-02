@@ -1,0 +1,198 @@
+<html ng-app="editor">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
+<script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+<script src="js/app.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+<script src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+<style>
+    body {
+        background: url("img/fabric_of_squares_gray.png");
+    }
+.loginpanel  {
+	width: 300px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 20px #7A7A7A;
+}
+    .list-group-item-info {
+        background-color: #f1f1f2;
+        color: #000000;
+    }
+    .searchby:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body ng-controller="EditCtrl">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Jobtill Admin</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-if="loggedIn"><a ng-click="getCont('editjob')" href="#">Edit Job Listings</a></li>
+                <li ng-if="loggedIn"><a ng-click="getCont('editcomp')" href="#">Edit Company Data</a></li>
+                <li ng-if="loggedIn"><a ng-click="getCont('addcomp')" href="#">Add New Company</a></li>
+                <li ng-if="loggedIn"><a ng-click="getCont('stats')" href="#">Stats</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-if="loggedIn"><a ng-click="logout()" href="#">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div ng-if="!loggedIn" class="loginpanel panel panel-default">
+    <div class="panel-body">
+        <form name="loginForm">
+            <span ng-bind="loginmsg"></span>
+            <div class="form-group">
+                <input type="email" class="form-control" ng-model="loginData.a" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="loginData.b" placeholder="Password" required>
+            </div>
+            <button class="btn-custom btn btn-default sharp" ng-disabled="loginForm.$invalid" ng-click="logIn(loginData)">Sign In</button>
+        </form>
+    </div>
+</div>
+    <div class="container">
+        <div class="editjobs" ng-if="loaded == 'editjob'">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit Job Listings</h3>
+                </div>
+                <div class="panel-body">
+                    Search by: <a ng-click="searchVar = 'site';jobsearch = ''" class="searchby">Site</a> - <a ng-click="searchVar = 'name';jobsearch = ''" class="searchby">Name</a> - <a  ng-click="searchVar = 'status';jobsearch = ''" class="searchby">Status</a> - <a ng-click="searchVar = 'all';jobsearch = ''" class="searchby">All</a>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>Search Jobs (by {{searchVar}})</label>
+                            <input type="text" class="form-control" ng-model="jobsearch" ng-keyup="searchbyJob(searchVar,jobsearch)">
+                        </div>
+
+                    </form>
+                    <ul class="list-group" ng-repeat="item in items | filter: searchingBy | limitTo: 50" ng-show="jobsearch">
+                        <li class="list-group-item list-group-item-info">{{item.site}}</li>
+                        <li class="list-group-item form-inline">Job Title: <input class="form-control" ng-model="item.name" /></li>
+                        <li class="list-group-item form-inline">Time created: <input class="form-control" ng-model="item.created" /></li>
+                        <li class="list-group-item form-inline">Status: <input class="form-control" ng-model="item.status" /></li>
+                        <li class="list-group-item form-inline">Location: <input class="form-control" ng-model="item.location" /></li>
+                        <li class="list-group-item form-inline"><button class="btn btn-default" ng-click="items.$save(item)">Save</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="editcomp" ng-if="loaded == 'editcomp'">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit Company Data</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>Search by company name</label>
+                            <input type="text" class="form-control" ng-model="sitesearch">
+                        </div>
+                        </form>
+                    <ul class="list-group" ng-repeat="site in getsites | filter: {site:sitesearch}" >
+                        <li class="list-group-item list-group-item-info">{{site.site}}</li>
+                        <li class="list-group-item form-inline">Site name: <input class="form-control" ng-model="site.site" /></li>
+                        <li class="list-group-item form-inline">Job URL: <input class="form-control" ng-model="site.siteurl" /></li>
+                        <li class="list-group-item form-inline">sVar: <input class="form-control" ng-model="site.sVar" /></li>
+                        <li class="list-group-item form-inline">Site Vars:<input class="form-control" ng-model="site.sitevars" /></li>
+                        <li class="list-group-item form-inline">Multi: <input class="form-control" ng-model="site.multi" /></li>
+                        <li class="list-group-item form-inline">Multi Var: <input class="form-control" ng-model="site.msVar" /></li>
+                        <li class="list-group-item form-inline">Multi Lead: <input class="form-control" ng-model="site.msLead" /></li>
+                        <li class="list-group-item">
+                            <button class="btn btn-default" ng-click="getsites.$save(site)">Save</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="addcomp" ng-if="loaded == 'addcomp'">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Company</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-show="addcompMSG" class="alert alert-success" role="alert" ng-bind="addcompMSG"></div>
+                    <form name="AddCompany">
+                    <ul class="list-group">
+                    <li class="list-group-item form-inline"> Company Name: <input ng-model="addcomp.site" class="form-control" placeholder="Abc Co" required/></li>
+                    <li class="list-group-item form-inline"> Company Job Link: <input ng-model="addcomp.siteurl" class="form-control" placeholder="comp.com/jobs" required/></li>
+                    <li class="list-group-item form-inline"> Selector Var (for each loop): <input ng-model="addcomp.svar" class="form-control" placeholder='$("a.job")' required/></li>
+                    <li class="list-group-item form-inline"> Selector For Job Name: <input ng-model="addcomp.name" class="form-control" placeholder="var name = $(this).text();" required/></li>
+                    <li class="list-group-item form-inline"> Selector For Job Location: <input ng-model="addcomp.location" class="form-control" placeholder="var location = $(this).prev().text();" required/></li>
+                    <li class="list-group-item form-inline"> Selector For Job URL: <input ng-model="addcomp.url" class="form-control" placeholder='var url = $(this).attr("href");' required/></li>
+                    <li class="list-group-item form-inline"> Multi-page? (true or false): <input ng-model="addcomp.mp" class="form-control" placeholder="false" required/></li>
+                    <li class="list-group-item form-inline">  Multi Selector Var?(pagination): <input ng-model="addcomp.mpvar" class="form-control" placeholder="none" required/></li>
+                    <li class="list-group-item form-inline"> Multi-page Lead URL (if needed default none): <input class="form-control" ng-model="addcomp.mplead" placeholder="none" required/></li>
+                    </ul>
+                    </form>
+                    <button type="button" class="btn-custom btn btn-default sharp" ng-disabled="AddCompany.$invalid" ng-click="addnewComp(addcomp,AddCompany)">Save Company</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats" ng-if="loaded == 'stats'">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Jobtill Stats</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6"><h3>Site Stats</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <b>Scraped:</b> {{lastrun.lastRun| date:'medium'}}
+                                </li>
+                                <li class="list-group-item">
+                                    Total Jobs <span class="badge">{{lastrun.listings}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    Total Sites <span class="badge">{{lastrun.sites}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    Total New Jobs <span class="badge">{{lastrun.newjobs}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6"><h3>User Stats</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Total Users <span class="badge">{{userCount}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    Total Jobs Unlocked <span class="badge">{{totalUnlocked}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    Total Users That Unlocked Jobs <span class="badge">{{usersUnlocked}}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>All Terms:</b> {{userTerms}}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>All Locations:</b> {{userLoc}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
