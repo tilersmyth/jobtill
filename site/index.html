@@ -214,7 +214,7 @@
                         <span ng-if="entry.unlocked">Unlocked!</span>
                     </td>
                 </tr>
-                <tr ng-if="search" ng-repeat="entry in (filteredAll = (data | filter:{name: search,location: search_loc } | jobsFilter:showJobs))">
+                <tr ng-if="search" ng-repeat="entry in (filteredAll = (data | filter:{name: search,location: search_loc, status: 'old' } | jobsFilter:showJobs))">
                     <td><a ng-href="{{entry.url}}" target="_blank">{{entry.name}}</a> 
                     </td>
                     <td>{{entry.site}}</td>
