@@ -106,7 +106,7 @@ app.controller("EditCtrl", function($scope, $firebase, $firebaseAuth, $timeout) 
             $scope.loggedIn = true;
             connectFirebase();
 			$scope.loaded = "stats";
-        }
+        } else {$scope.authObj.$unauth();}
     }
     $scope.logIn = function(a) {
         $scope.authObj.$authWithPassword({
