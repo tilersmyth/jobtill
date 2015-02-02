@@ -105,6 +105,7 @@ app.controller("EditCtrl", function($scope, $firebase, $firebaseAuth, $timeout) 
         if ($scope.authData.uid === "simplelogin:79" || $scope.authData.uid === "simplelogin:80") {
             $scope.loggedIn = true;
             connectFirebase();
+			$scope.loaded = "stats";
         }
     }
     $scope.logIn = function(a) {
@@ -117,7 +118,8 @@ app.controller("EditCtrl", function($scope, $firebase, $firebaseAuth, $timeout) 
                 $scope.loginmsg = "";
                 $scope.loggedIn = true;
                 connectFirebase();
-            } else {$scope.loginmsg = "Login Failed";}
+				$scope.loaded = "stats";
+            } else {$scope.loginmsg = "Login Failed"; $scope.authObj.$unauth();}
         }).catch(function(error) {
             $scope.loginmsg = error.message;
         });
