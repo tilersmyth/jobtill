@@ -26,8 +26,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 <span class="glyphicon glyphicon-log-in custom-glyphie" aria-hidden="true"></span>
             </button>
-            <a class="navbar-brand custom-brand" href="#" ng-click="open('HiwModal')">Jobtill <span>|</span> <small>Recently posted startup job opportunities</small></a>
-            
+            <a class="navbar-brand custom-brand" href="#" ng-click="open('HiwModal')">Jobtill <span>|</span> <small>Recently posted startup job opportunities</small></a>         
         </div>
 
         <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed">
@@ -186,7 +185,7 @@
     <div class="row marketing">
         <div class="col-lg-12">
             <alert type="warning warning-custom" ng-show="search && !loggedIn"><b ng-hide="hiddenPosts<1">You're missing out on {{hiddenPosts}} recently posted <span ng-bind="(hiddenPosts===1)? 'job' : 'jobs'"></span>!</b> <a href="#" ng-click="openSignup($event)">Click here to sign up and see all results</a> </alert>
-
+            <h3 class="just-posted-title" ng-show="updated.newjobs && loggedIn"><span ng-hide="search">Here are the new job opportunities located in {{search_loc}}!</span></h3>
             <table class="table table-striped table-custom" ng-show="search || updated.newjobs && loggedIn">
                 <thead>
                 <tr>
