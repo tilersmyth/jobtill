@@ -332,6 +332,11 @@ a.signupLink:hover{
   text-decoration: underline;
 }
 
+.listen-here{
+  color:#fff;
+  font-weight: bold;
+}
+
 .no-alert-alert{
   color: #16a79d !important;
   margin-bottom: -10px;

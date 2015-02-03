@@ -82,6 +82,12 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
     $scope.timerRunning = true;
     $scope.currentTime = new Date().getTime();
 
+    $scope.locWarn = function (event) {
+        if (event.keyCode === 8) {
+            $scope.loc_warn = true;
+        }
+    };
+
     //Set sky height
     var device = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     if (device !== null) {

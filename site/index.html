@@ -165,21 +165,20 @@
 
 <!-- START SCRAPE CONTROL -->
 <div class="container">
-
    <p class="no-alert-alert" ng-show="!loggedIn.search_terms && loggedIn.firstName">{{loggedIn.firstName}}, you currently have no job alerts setup!  <a href="#account-info" pageslide ps-side="right" ps-speed="0.5">Click here to setup alerts so you can stay up-to-date on your favorite job openings.</a></p>
     <div class="jumbotron">
-        <h1>I want a job located in <input type="text" class="adlibloc" ng-model="search_loc"/> doing
+        <h1>I want a job located in <input type="text" class="adlibloc" ng-keydown="locWarn($event)" ng-model="search_loc"/> doing
             <input type="search" autofocus class="adlib" ng-model="search"/>.</h1>
 
         <p class="lead pull-details">
             <span ng-show="!filteredNew.length" class="loadytext">Loady</span>
             <span ng-show="filteredNew.length && !search && loggedIn">Below, we have <span class="text_emphasize">{{filteredNew.length}} job opportunities</span>  in {{search_loc}} that have opened up in the last 2 days!</span>
             <span ng-show="search && loggedIn">Below, we have <span class="text_emphasize">{{filteredAll.length}} ({{filteredNew.length}} new) job opportunities</span> that match your search criteria!</span>
-            <span ng-show="updated.listings && !loggedIn"><a ng-click="openSignup($event)" href="#">Sign up</a> to see {{updated.listings}} recently posted jobs, {{updated.newjobs}} posted in the last 2 days!</span>
+            <span ng-show="updated.listings && !loggedIn"><a ng-click="openSignup($event)" href="#">Sign up</a> to see <span class="text_emphasize">{{updated.listings}}</span> recently posted jobs, <span class="text_emphasize">{{updated.newjobs}}</span> posted in the last 2 days!</span>
         </p> 
         <a href="#" ng-show="filteredNew.length && loggedIn" class="why_locked" popover-placement="bottom" popover="Jobtill locks new positions that have been posted in the last 48 hours. This is intended to give &quot;front-of-the-line&quot; access to those really interested in the role while momentarily blocking it from the sights of those that use the shot-gun approach to sending out their resume."><span ng-show="!search">Why are these locked?</span><span ng-show="search">Why are some results locked?</span></a>
     </div>
-    <div id="contact_info">info@jobtill.com</div>
+    <div id="contact_info"><span ng-class="{'listen-here': loc_warn}">Limited results outside Boston.</span> Let us know what else you would like to see - info@jobtill.com</div>
     <div id="city_skyline" ng-style="skyHeight" ng-hide="search || updated.newjobs && loggedIn">
         <div id="cloud1"></div>
         <div id="cloud2"></div>
