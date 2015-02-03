@@ -135,7 +135,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
     };
     //Unlock job
     var handler = StripeCheckout.configure({
-        key: 'pk_test_FVqkH8oMczqQ159VfBnrexb8',
+        key: 'pk_live_hcLnoSaVl36UrTy7JwYQegFM',
         token: function(token) {
             var postData = {
                 token: token,
