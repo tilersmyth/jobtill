@@ -166,7 +166,7 @@
 <div class="container">
    <p class="no-alert-alert" ng-show="!loggedIn.search_terms && loggedIn.firstName">{{loggedIn.firstName}}, you currently have no job alerts setup!  <a href="#account-info" pageslide ps-side="right" ps-speed="0.5">Click here to setup alerts so you can stay up-to-date on your favorite job openings.</a></p>
     <div class="jumbotron">
-        <h1>I want a job located in <input type="text" class="adlibloc" ng-keydown="locWarn($event)" ng-model="search_loc"/> doing
+        <h1>I want a job located in <input type="text" class="adlibloc" ng-keyup="locWarn()" ng-model="search_loc"/> doing
             <input type="search" autofocus class="adlib" ng-model="search"/>.</h1>
 
         <p class="lead pull-details">

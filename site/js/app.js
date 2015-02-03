@@ -53,6 +53,7 @@ app.filter('unlockedFilter', function() {
                 price = !keys?0:price;
                 item.price = price;
                 item.timeleft = remaining;
+                item.unlocked = false;
             }
             if (remaining<=0) {
                 item.status = "old";
@@ -82,10 +83,9 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
     $scope.timerRunning = true;
     $scope.currentTime = new Date().getTime();
 
-    $scope.locWarn = function (event) {
-        if (event.keyCode === 8) {
-            $scope.loc_warn = true;
-        }
+    $scope.locWarn = function () {
+        var a = this.search_loc.toLowerCase();
+            $scope.loc_warn = (a !== "boston");
     };
 
     //Set sky height
@@ -125,6 +125,7 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
 
     });
     //Get unlock codes
+    $scope.jobKeys = "";
     $scope.$on('unlock_keys', function(event, data) {
         $scope.jobKeys = data;
     });
@@ -155,17 +156,21 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
         }
     });
     $scope.unlockJob = function(id,name,price) {
-        price*=100;
-        var msg = (price===0)?"First one is free!":"Unlock Job For";
+        var data = $scope.loggedIn;
+        if (data.admin) {
+            $scope.$broadcast('unlock_job', id,data.$id,data.unlocked);
+        } else {
+            price *= 100;
+            var msg = (price === 0) ? "First one is free!" : "Unlock Job For";
             handler.open({
                 name: "Job Description",
                 description: name,
                 amount: price,
                 panelLabel: msg
             });
-        $scope.jobToken = id;
-        $scope.jobprice = price;
-
+            $scope.jobToken = id;
+            $scope.jobprice = price;
+        }
     };
 });
 
