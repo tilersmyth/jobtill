@@ -225,8 +225,9 @@ a.why_locked{
   text-shadow: none;
 }
 
-.glyphicon-custom{
+.glyphicon-custom:before{
   color:#cf4858 !important;
+  margin-right: 3px;
 }
 
 #contact_info{
