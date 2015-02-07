@@ -228,6 +228,11 @@ a.why_locked{
 .glyphicon-custom:before{
   color:#cf4858 !important;
   margin-right: 3px;
+  font-family: 'Glyphicons Halflings' !important; 
+}
+
+.glyphicon-custom{
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
 }
 
 #contact_info{
