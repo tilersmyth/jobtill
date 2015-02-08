@@ -12,3 +12,4 @@
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/codeStyleSettings.xml
 .DS_Store
+extras/node/node_modules
