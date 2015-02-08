@@ -26,6 +26,13 @@
         text-decoration: none;
         cursor: pointer;
     }
+    .form-control {
+        width: 70% !important;
+    }
+    .form-add-span {
+        display: inline-block;
+        width: 29% !important;
+    }
 </style>
 </head>
 
@@ -84,7 +91,11 @@
                         <li class="list-group-item form-inline">Time created: <input class="form-control" ng-model="item.created" /></li>
                         <li class="list-group-item form-inline">Status: <input class="form-control" ng-model="item.status" /></li>
                         <li class="list-group-item form-inline">Location: <input class="form-control" ng-model="item.location" /></li>
-                        <li class="list-group-item form-inline"><button class="btn btn-default" ng-click="items.$save(item)">Save</button></li>
+                        <li class="list-group-item form-inline">URL: <input class="form-control" ng-model="item.url" /></li>
+                        <li class="list-group-item form-inline"><button class="btn btn-default" ng-click="items.$save(item)">Save</button>
+                            <button class="btn btn-link" ng-click="enable=true">Enable Delete</button>
+                            <button ng-disabled='!enable' class="btn btn-danger" ng-click="items.$remove(item)" >Delete</button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -111,8 +122,10 @@
                         <li class="list-group-item form-inline">Multi: <input class="form-control" ng-model="site.multi" /></li>
                         <li class="list-group-item form-inline">Multi Var: <input class="form-control" ng-model="site.msVar" /></li>
                         <li class="list-group-item form-inline">Multi Lead: <input class="form-control" ng-model="site.msLead" /></li>
-                        <li class="list-group-item">
+                        <li class="list-group-item form-inline">
                             <button class="btn btn-default" ng-click="getsites.$save(site)">Save</button>
+                            <button class="btn btn-link" ng-click="enable=true">Enable Delete</button>
+                            <button ng-disabled='!enable' class="btn btn-danger" ng-click="getsites.$remove(site)" >Delete</button>
                         </li>
                     </ul>
                 </div>
@@ -128,15 +141,15 @@
                     <div ng-show="addcompMSG" class="alert alert-success" role="alert" ng-bind="addcompMSG"></div>
                     <form name="AddCompany">
                     <ul class="list-group">
-                    <li class="list-group-item form-inline"> Company Name: <input ng-model="addcomp.site" class="form-control" placeholder="Abc Co" required/></li>
-                    <li class="list-group-item form-inline"> Company Job Link: <input ng-model="addcomp.siteurl" class="form-control" placeholder="comp.com/jobs" required/></li>
-                    <li class="list-group-item form-inline"> Selector Var (for each loop): <input ng-model="addcomp.svar" class="form-control" placeholder='$("a.job")' required/></li>
-                    <li class="list-group-item form-inline"> Selector For Job Name: <input ng-model="addcomp.name" class="form-control" placeholder="var name = $(this).text();" required/></li>
-                    <li class="list-group-item form-inline"> Selector For Job Location: <input ng-model="addcomp.location" class="form-control" placeholder="var location = $(this).prev().text();" required/></li>
-                    <li class="list-group-item form-inline"> Selector For Job URL: <input ng-model="addcomp.url" class="form-control" placeholder='var url = $(this).attr("href");' required/></li>
-                    <li class="list-group-item form-inline"> Multi-page? (true or false): <input ng-model="addcomp.mp" class="form-control" placeholder="false" required/></li>
-                    <li class="list-group-item form-inline">  Multi Selector Var?(pagination): <input ng-model="addcomp.mpvar" class="form-control" placeholder="none" required/></li>
-                    <li class="list-group-item form-inline"> Multi-page Lead URL (if needed default none): <input class="form-control" ng-model="addcomp.mplead" placeholder="none" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Company Name:</span> <input ng-model="addcomp.site" class="form-control" placeholder="Abc Co" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Company Job Link:</span> <input ng-model="addcomp.siteurl" class="form-control" placeholder="comp.com/jobs" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Selector Var (for each loop):</span> <input ng-model="addcomp.svar" class="form-control" placeholder='$("a.job")' required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Selector For Job Name:</span> <input ng-model="addcomp.name" class="form-control" placeholder="var name = $(this).text();" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Selector For Job Location:</span> <input ng-model="addcomp.location" class="form-control" placeholder="var location = $(this).prev().text();" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Selector For Job URL:</span> <input ng-model="addcomp.url" class="form-control" placeholder='var url = $(this).attr("href");' required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Multi-page? (true or false):</span> <input ng-model="addcomp.mp" class="form-control" placeholder="false" required/></li>
+                    <li class="list-group-item form-inline">  <span class="form-add-span">Multi Selector Var?(pagination):</span> <input ng-model="addcomp.mpvar" class="form-control" placeholder="none" required/></li>
+                    <li class="list-group-item form-inline"> <span class="form-add-span">Multi-page Lead URL (if needed default none):</span> <input class="form-control" ng-model="addcomp.mplead" placeholder="none" required/></li>
                     </ul>
                     </form>
                     <button type="button" class="btn-custom btn btn-default sharp" ng-disabled="AddCompany.$invalid" ng-click="addnewComp(addcomp,AddCompany)">Save Company</button>
