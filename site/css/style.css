@@ -127,14 +127,16 @@ body{
   background-color: #4d505b !important;
   border:0 !important;
   min-width: 240px;
+  padding:0px;
 }
 
 .btn-custom{
   width: 100% !important;
 }
 
-.custom-menu a{
+.custom-menu li > a{
   color: #ffffff !important;
+  line-height: 50px;
 }
 
 .custom-menu li > a:hover{
@@ -168,13 +170,28 @@ body{
     box-shadow: none;
 }
 
+.btn-logout {
+    background: #303239;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.btn-logout:hover, .btn-logout:focus, .btn-logout:active, .btn-logout.active, .open > .dropdown-toggle.btn-logout {
+    background: #cf4858;
+    color: #ffffff;
+}
+ 
+.btn-logout:active, .btn-logout.active {
+    background: #cf4858;
+    box-shadow: none;
+}
+
 .btn.sharp {
   border-radius:0;
 }
 
-.divider-custom{
-  background-color: #3e4049 !important;
-  margin-bottom: 0px !important; 
+.login-form-control{
+  border-radius: 0 !important;
 }
 
 .jumbotron {
@@ -233,6 +250,7 @@ a.why_locked{
 
 .glyphicon-custom{
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+
 }
 
 #contact_info{

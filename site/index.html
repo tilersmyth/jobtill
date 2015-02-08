@@ -45,10 +45,8 @@
                         </a></li>
                         <li><a href="#account-info" pageslide ps-side="right" ps-speed="0.5">Account</a></li>
 
-                        <li role="presentation" class="divider divider-custom"></li>
-
                         <div class="panel-body">
-                            <button style="margin-bottom: 10px" class="btn-custom btn btn-primary sharp" ng-click="logout();">Logout
+                            <button style="margin-bottom: 10px" class="btn-custom btn btn-logout sharp" ng-click="logout();">Logout
                             </button>
                         </div>
                     </ul>
@@ -67,23 +65,23 @@
                             <span ng-bind="signmsg" class="signin-val"></span>
 
                             <div class="form-group" ng-hide="pendingSignup">
-                                <input type="text" ng-model="signupForm.firstName" class="form-control"
+                                <input type="text" ng-model="signupForm.firstName" class="form-control login-form-control"
                                        placeholder="First Name" required>
                             </div>
                             <div class="form-group" ng-hide="pendingSignup">
-                                <input type="text" ng-model="signupForm.lastName" class="form-control"
+                                <input type="text" ng-model="signupForm.lastName" class="form-control login-form-control"
                                        placeholder="Last Name" required>
                             </div>
                             <div class="form-group" ng-hide="pendingSignup">
-                                <input type="email" ng-model="signupForm.signupMail" class="form-control"
+                                <input type="email" ng-model="signupForm.signupMail" class="form-control login-form-control"
                                        id="signupEmail" placeholder="Enter E-mail" required>
                             </div>
                             <div class="form-group" ng-hide="pendingSignup">
-                                <input type="password" ng-model="signupForm.signupPass" class="form-control"
+                                <input type="password" ng-model="signupForm.signupPass" class="form-control login-form-control"
                                        placeholder="Enter Password" required>
                             </div>
                             <div class="form-group" ng-hide="pendingSignup">
-                                <input type="password" ng-model="signupForm.signupPass2" class="form-control"
+                                <input type="password" ng-model="signupForm.signupPass2" class="form-control login-form-control"
                                        placeholder="Confirm Password" required>
                             </div>
 
@@ -98,11 +96,11 @@
                             <span ng-bind="loginmsg" class="signin-val"></span>
 
                             <div class="form-group">
-                                <input type="email" ng-model="loginForm.loginMail" class="form-control"
+                                <input type="email" ng-model="loginForm.loginMail" class="form-control login-form-control"
                                        placeholder="Enter E-mail">
                             </div>
                             <div class="form-group">
-                                <input type="password" ng-model="loginForm.loginPass" class="form-control"
+                                <input type="password" ng-model="loginForm.loginPass" class="form-control login-form-control"
                                        placeholder="Enter Password">
                             </div>
                             <button class="btn-custom btn btn-primary sharp"
