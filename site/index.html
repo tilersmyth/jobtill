@@ -168,8 +168,8 @@
             <input type="search" autofocus class="adlib" ng-model="search"/>.</h1>
 
         <p class="lead pull-details">
-            <span ng-show="!filteredNew.length" class="loadytext">Loady</span>
-            <span ng-show="filteredNew.length && !search && loggedIn">Below, we have <span class="text_emphasize">{{filteredNew.length}} job opportunities</span>  in {{search_loc}} that have opened up in the last 2 days!</span>
+            <span ng-show="!updated.listings" class="loadytext">Loady</span>
+            <span ng-show="updated.listings && !search && loggedIn">Below, we have <span class="text_emphasize">{{filteredNew.length}} job opportunities</span>  in {{search_loc}} that have opened up in the last 2 days!</span>
             <span ng-show="search && loggedIn">Below, we have <span class="text_emphasize">{{filteredAll.length}} ({{filteredNew.length}} new) job opportunities</span> that match your search criteria!</span>
             <span ng-show="updated.listings && !loggedIn"><a ng-click="openSignup($event)" href="#">Sign up</a> to see <span class="text_emphasize">{{updated.listings}}</span> jobs, <span class="text_emphasize">{{updated.newjobs}}</span> posted in the last 2 days!</span>
         </p> 

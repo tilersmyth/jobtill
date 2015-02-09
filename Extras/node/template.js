@@ -2,19 +2,19 @@ var request = require('request');
 var cheerio = require('cheerio');
 
 
-request('https://otelic.com/quanttus/jobs', function (error, response, html) {
+request('http://www.digitallumens.com/company/careers/', function (error, response, html) {
     if (!error && response.statusCode == 200) {
         var $ = cheerio.load(html);
         var listCount = 0;
-        $(".job-title a").each(function (i, element) {
+        $(".career").each(function (i, element) {
             listCount++;
 
-           var a = $(this).parent().prev().text().trim();
+           var a = $(this).children().children().attr('href');
 		   
  
-            var name = $(this).text();
-            var location = $(this).children('.jobTeaser').children('strong').text().split("-")[1]?$(this).children('.jobTeaser').children('strong').text().split("-")[1].trim():"Boston, MA";		
-            var url = $(this).children('.jobBtn').children('a').attr('href');
+            var name = $(this).children().children().children('strong').text();
+            var location = "Boston, MA";		
+            var url = $(this).children().children().attr('href');
 
 
 			console.log(a);
