@@ -114,6 +114,21 @@ body{
   font-size: 22px;
 }
 
+.glyphicon-bell-custom{
+  font-size: 20px;
+}
+
+.notif-btn{
+  position: relative;
+}
+
+.label-custom{
+  position: absolute;
+  top:10px;
+  left:50%;
+  background-color: #cf4858 !important;
+}
+
 .collapsed-custom{
   border: none !important;
   padding: 5px 10px
@@ -123,23 +138,52 @@ body{
   background: none !important;
 }
 
-.custom-menu{
+.custom-menu, .custom-menu-notif{
   background-color: #4d505b !important;
   border:0 !important;
   min-width: 240px;
   padding:0px;
 }
 
+.custom-menu-notif{
+  min-width:300px;
+}
+
+.notification_title{
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 0px;
+  font-weight: bold;
+}
+
+.custom-menu-notif li{
+  border-bottom: 1px solid #464953;
+  position: relative;
+}
+
+.custom-menu-notif li:last-child{
+  border-bottom: none !important;
+}
+
+.custom-menu-notif a small{
+  position: absolute;
+  right:10;
+  bottom: -10;
+  color: #999999 !important;
+  font-size:80%;
+}
+
 .btn-custom{
   width: 100% !important;
 }
 
-.custom-menu li > a{
+.custom-menu li > a, .custom-menu-notif li > a{
   color: #ffffff !important;
   line-height: 50px;
 }
 
-.custom-menu li > a:hover{
+.custom-menu li > a:hover, .custom-menu-notif li > a:hover{
   background-color: #303239;
   color: #ffffff !important;
 }

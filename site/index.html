@@ -1,6 +1,6 @@
 <html ng-app="Scrape">
 <head>
-    <title>Jobtill | Recently posted startup job opportunities</title>
+    <title>Jobtill | Fresh Startup Opportunities</title>
     <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -31,9 +31,25 @@
 
         <div id="navbar" class="navbar-collapse collapse" collapse="navCollapsed">
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"  ng-click="open('HiwModal')">How It Works</a></li>
+
+                <!-- start job notification -->
+                <li ng-show="authData" dropdown>
+                    <a ng-show="authData" href="#" dropdown-toggle class="notif-btn">
+                       <span class="glyphicon glyphicon-bell glyphicon-bell-custom" aria-hidden="true"></span> 
+                       <span class="label label-custom">3</span>
+                    </a>
+                    <ul class="dropdown-menu custom-menu-notif" role="menu">
+                        <li class="notification_title">3 new jobs since your last visit!</li>
+                        <li><a href="#">Front-End Developer <small>43 min ago</small></a></li>
+                        <li><a href="#">Senior Java Developer <small>43 min ago</small></a></li>
+                        <li><a href="#">Professional Douchebag <small>2 hours ago</small></a></li>
+                    </ul>
+                </li>
+                <!-- end job notification -->
+
 
                 <!-- if logged in -->
-                <li><a href="#"  ng-click="open('HiwModal')">How It Works</a></li>
                 <li ng-show="authData" dropdown>
                     <a ng-show="authData" href="#" dropdown-toggle><span ng-show="userData.firstName">Hi, {{userData.firstName}} <span
                             class="caret"></span></span></a>
@@ -114,7 +130,7 @@
 
                         <!--End Crap Forms -->
                     </ul>
-
+                </li>
             </ul>
         </div>
     </div>
