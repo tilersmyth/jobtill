@@ -37,7 +37,7 @@
                 <li ng-show="authData" dropdown>
                     <a ng-show="authData" href="#" dropdown-toggle class="notif-btn">
                        <span class="glyphicon glyphicon-bell glyphicon-bell-custom" aria-hidden="true"></span> 
-                       <span class="label label-custom">{{notification_count}}</span>
+                       <span class="label label-custom" ng-show="notification_count">{{notification_count}}</span>
                     </a>
                     <ul class="dropdown-menu custom-menu-notif" role="menu">
                         <li class="notification_title"> {{notification_count}} new jobs since your last visit!</li>
@@ -187,7 +187,7 @@
         <p class="lead pull-details">
             <span ng-show="!updated.listings" class="loadytext">Loady</span>
             <span ng-show="updated.listings && !search && loggedIn">Below, we have <span class="text_emphasize">{{filteredNew.length}} job opportunities</span>  in {{search_loc}} that have opened up in the last 2 days!</span>
-            <span ng-show="search && loggedIn">Below, we have <span class="text_emphasize">{{filteredAll.length}} ({{filteredNew.length}} new) job opportunities</span> that match your search criteria!</span>
+            <span ng-show="search && loggedIn">Below, we have <span class="text_emphasize">{{filteredAll.length + filteredNew.length}} ({{filteredNew.length}} new) job opportunities</span> that match your search criteria!</span>
             <span ng-show="updated.listings && !loggedIn"><a ng-click="openSignup($event)" href="#">Sign up</a> to see <span class="text_emphasize">{{updated.listings}}</span> jobs, <span class="text_emphasize">{{updated.newjobs}}</span> posted in the last 2 days!</span>
         </p> 
         <a href="#" ng-show="filteredNew.length && loggedIn" class="why_locked" popover-placement="bottom" popover="Jobtill locks new positions that have been posted in the last 48 hours. This is intended to give &quot;front-of-the-line&quot; access to those really interested in the role while momentarily blocking it from the sights of those that use the shot-gun approach to sending out their resume."><span ng-show="!search">Why are these locked?</span><span ng-show="search">Why are some results locked?</span></a>
