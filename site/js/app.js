@@ -63,6 +63,28 @@ app.filter('unlockedFilter', function() {
         return filtered;
     };
 });
+app.filter('notifications', function($rootScope) {
+    return function( items, a) {
+        var count = 0;
+        var keys = a;
+        var filtered = [];
+        //Default to Boston
+        var loc = 'Boston';
+        angular.forEach(items, function(item) {
+            if (keys) {
+                var keymatch = keys.match(item.jobId);
+            }
+            if (!keymatch) {
+                if (item.status === 'new' && item.location.indexOf(loc) > -1) {
+                    filtered.push(item);
+                    count++;
+                }
+            }
+        });
+        $rootScope.notification_count = count;
+        return filtered;
+    };
+});
 
 app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http) {
     //Firebase Link
@@ -121,6 +143,8 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
             $scope.showJobs = .4;
         } else {
             $scope.showJobs = 1;
+            //Send post data to userctrl
+            $scope.$broadcast('user_notifs', $scope.data);
         }
 
     });
@@ -128,6 +152,10 @@ app.controller("ScrapeCtrl", function($scope, $firebase, $window, $timeout,$http
     $scope.jobKeys = "";
     $scope.$on('unlock_keys', function(event, data) {
         $scope.jobKeys = data;
+    });
+    //Get notif search
+    $scope.$on('notif_search', function(event, a) {
+        $scope.search = a;
     });
     $scope.openSignup = function($event) {
         $event.preventDefault();
@@ -205,6 +233,7 @@ app.controller("UserCtrl",
     function($scope, $firebaseAuth, $firebase, postEmailForm, $location, $modal) {
         var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
         var usersRef = ref2.child("users");
+        var userData = $firebase(usersRef);
         //Get validated emails
         var setEmails = [];
         usersRef.once('value', function(userSnapshot) {
@@ -222,6 +251,26 @@ app.controller("UserCtrl",
                 $scope.$emit('userOn', $scope.userData);
         } else $scope.$emit('userOn', false);
 
+        //Receive post data on login
+        $scope.$on('user_notifs', function(event, a) {
+            $scope.notifData = a;
+            $scope.userData.$loaded().then(function() {
+                $scope.n_cleared = $scope.userData.notifs_cleared?$scope.userData.notifs_cleared:false;
+            });
+        });
+        //Clear Notification
+        $scope.clear_notification = function(a) {
+            var id = $scope.userData.$id;
+            var cleared = $scope.userData.notifs_cleared;
+            cleared = !cleared? a:cleared +","+a;
+            userData.$update( id, {notifs_cleared: cleared}).then(function(){
+                $scope.n_cleared = $scope.userData.notifs_cleared;
+            });
+        };
+        //Search from notifications
+        $scope.notifSearch = function(a) {
+            $scope.$emit("notif_search", a);
+        };
 
         //Toggle Control
         $scope.$on('toggleSignup', function(event, a) {
@@ -289,7 +338,6 @@ app.controller("UserCtrl",
                     password: a.b
                 });
             }).then(function() {
-
                 $scope.authData = $scope.authObj.$getAuth();
                 var userInfo = $firebase(usersRef.child($scope.authData.uid));
                 $scope.userData = userInfo.$asObject();

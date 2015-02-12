@@ -149,6 +149,15 @@ body{
   min-width:300px;
 }
 
+.notif-rmv {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #4d505b;
+}
+.notif-rmv:hover {
+   color: #cf4858;
+}
 .notification_title{
   font-size: 10px;
   text-transform: uppercase;
