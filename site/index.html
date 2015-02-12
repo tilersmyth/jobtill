@@ -34,8 +34,8 @@
                 <li><a href="#"  ng-click="open('HiwModal')">How It Works</a></li>
 
                 <!-- start job notification -->
-                <li ng-show="authData" dropdown>
-                    <a ng-show="authData" href="#" dropdown-toggle class="notif-btn">
+                <li ng-if="authData" dropdown>
+                    <a href="#" dropdown-toggle class="notif-btn">
                        <span class="glyphicon glyphicon-bell glyphicon-bell-custom" aria-hidden="true"></span> 
                        <span class="label label-custom" ng-show="notification_count">{{notification_count}}</span>
                     </a>
