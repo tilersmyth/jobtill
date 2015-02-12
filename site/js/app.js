@@ -65,24 +65,26 @@ app.filter('unlockedFilter', function() {
 });
 app.filter('notifications', function($rootScope) {
     return function( items, a) {
-        var count = 0;
-        var keys = a;
-        var filtered = [];
-        //Default to Boston
-        var loc = 'Boston';
-        angular.forEach(items, function(item) {
-            if (keys) {
-                var keymatch = keys.match(item.jobId);
-            }
-            if (!keymatch) {
-                if (item.status === 'new' && item.location.indexOf(loc) > -1) {
-                    filtered.push(item);
-                    count++;
+        if (a) {
+            var count = 0;
+            var keys = a;
+            var filtered = [];
+            //Default to Boston
+            var loc = 'Boston';
+            angular.forEach(items, function (item) {
+                if (keys) {
+                    var keymatch = keys.match(item.jobId);
                 }
-            }
-        });
-        $rootScope.notification_count = count;
-        return filtered;
+                if (!keymatch) {
+                    if (item.status === 'new' && item.location.indexOf(loc) > -1) {
+                        filtered.push(item);
+                        count++;
+                    }
+                }
+            });
+            $rootScope.notification_count = count;
+            return filtered;
+        }
     };
 });
 
