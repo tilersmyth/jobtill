@@ -1,8 +1,10 @@
 <html ng-app="Scrape">
 <head>
-    <title>Jobtill | Fresh Startup Opportunities</title>
+    <title ng-if="notification_count" ng-bind-template="({{notification_count}}) Jobtill | Fresh Startup Opportunities"></title>
+    <title ng-if="!notification_count">Jobtill | Fresh Startup Opportunities</title>
     <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <meta name="description" content="Jobtill pulls open positions from the best local startups in nearly real-time to present great opportunities and the best chance of landing a high-growth job, no questions asked.">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
