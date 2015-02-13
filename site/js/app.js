@@ -65,7 +65,6 @@ app.filter('unlockedFilter', function() {
 });
 app.filter('notifications', function($rootScope) {
     return function( items, a) {
-        if (a) {
             var count = 0;
             var keys = a;
             var filtered = [];
@@ -82,9 +81,9 @@ app.filter('notifications', function($rootScope) {
                     }
                 }
             });
-            $rootScope.notification_count = count;
+            if (a !== 'loading') {$rootScope.notification_count = count;}
             return filtered;
-        }
+
     };
 });
 
@@ -236,6 +235,7 @@ app.controller("UserCtrl",
         var ref2 = new Firebase("https://glowing-inferno-8009.firebaseio.com");
         var usersRef = ref2.child("users");
         var userData = $firebase(usersRef);
+        var userDataArray = $firebase(usersRef).$asArray();
         //Get validated emails
         var setEmails = [];
         usersRef.once('value', function(userSnapshot) {
@@ -254,6 +254,7 @@ app.controller("UserCtrl",
         } else $scope.$emit('userOn', false);
 
         //Receive post data on login
+        $scope.n_cleared = "loading";
         $scope.$on('user_notifs', function(event, a) {
             $scope.notifData = a;
             $scope.userData.$loaded().then(function() {
@@ -385,6 +386,29 @@ app.controller("UserCtrl",
                 $scope.loginmsg = "Please enter username and password.";
             }
         };
+        //Facebook Log in
+        $scope.logInFB = function() {
+            $scope.authObj.$authWithOAuthPopup("facebook").then(function(authData) {
+                 if (userDataArray.$indexFor(authData.uid) < 0) {
+                     usersRef.child(authData.uid).set({
+                         firstName: authData.facebook.cachedUserProfile.first_name,
+                         lastName: authData.facebook.cachedUserProfile.last_name,
+                         email: false,
+                         provider: authData.provider,
+                         joined: new Date().getTime(),
+                         search_tokens: "0",
+                         search_terms: ""
+                     });
+                 }
+                     $scope.authData = $scope.authObj.$getAuth();
+                     var userInfo = $firebase(usersRef.child($scope.authData.uid));
+                     $scope.userData = userInfo.$asObject();
+                     $scope.$emit('userOn', $scope.userData);
+
+            }).catch(function(error) {
+                console.error("Authentication failed:", error);
+            });
+        };
         //Log out
         $scope.logout = function() {
             $scope.$broadcast('closedumbSlider');
@@ -436,6 +460,8 @@ app.controller("UserCtrl",
         });
         //Save search data
         $scope.$on('save_search_data', function(event, a) {
+            a.term = a.term? a.term:"";
+            a.location = a.location? a.location:"";
             var usertoPush = $scope.authObj.$getAuth();
             usersRef.child(usertoPush.uid).update({ search_terms: a.term,search_location: a.location})
         });
