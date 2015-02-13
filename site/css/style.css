@@ -565,3 +565,11 @@ h3.just-posted-title a{
   color: #cf4858;
   text-decoration: underline; 
 }
+
+.signup_or{
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
