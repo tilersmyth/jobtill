@@ -66,7 +66,8 @@ app.filter('unlockedFilter', function() {
 app.filter('notifications', function($rootScope) {
     return function( items, a) {
             var count = 0;
-            var keys = a;
+            var keys = a[0];
+            var viewed = a[1];
             var filtered = [];
             //Default to Boston
             var loc = 'Boston';
@@ -76,12 +77,14 @@ app.filter('notifications', function($rootScope) {
                 }
                 if (!keymatch) {
                     if (item.status === 'new' && item.location.indexOf(loc) > -1) {
+                        var was_viewed = viewed?viewed.match(item.jobId):false;
                         filtered.push(item);
-                        count++;
+                        count = was_viewed?count:count+=1;
+                        item.never_seen = was_viewed?false:true;
                     }
                 }
             });
-            if (a !== 'loading') {$rootScope.notification_count = count;}
+            if (a[0] !== 'loading') {$rootScope.notification_count = count; $rootScope.notifs_data = filtered;}
             return filtered;
 
     };
@@ -259,6 +262,7 @@ app.controller("UserCtrl",
             $scope.notifData = a;
             $scope.userData.$loaded().then(function() {
                 $scope.n_cleared = $scope.userData.notifs_cleared?$scope.userData.notifs_cleared:false;
+                $scope.n_soft_cleared = $scope.userData.notifs_soft_cleared?$scope.userData.notifs_soft_cleared:false;
             });
         });
         //Clear Notification
@@ -268,6 +272,17 @@ app.controller("UserCtrl",
             cleared = !cleared? a:cleared +","+a;
             userData.$update( id, {notifs_cleared: cleared}).then(function(){
                 $scope.n_cleared = $scope.userData.notifs_cleared;
+            });
+        };
+        //Clear Notif Count
+        $scope.soft_clear_notif = function(a) {
+            var soft_clear = "";
+            for (var key in a) {
+                soft_clear = soft_clear?soft_clear+","+a[key].jobId:a[key].jobId;
+            }
+            var id = $scope.userData.$id;
+            userData.$update( id, {notifs_soft_cleared: soft_clear}).then(function(){
+                $scope.n_soft_cleared = $scope.userData.notifs_soft_cleared;
             });
         };
         //Search from notifications

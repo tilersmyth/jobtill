@@ -36,14 +36,14 @@
                 <li><a href="#"  ng-click="open('HiwModal')">How It Works</a></li>
 
                 <!-- start job notification -->
-                <li ng-if="authData" dropdown>
-                    <a href="#" dropdown-toggle class="notif-btn">
+                <li ng-if="authData"  dropdown>
+                    <a ng-click="soft_clear_notif(notifs_data)" href="#" dropdown-toggle class="notif-btn">
                        <span class="glyphicon glyphicon-bell glyphicon-bell-custom" aria-hidden="true"></span> 
                        <span class="label label-custom" ng-show="notification_count">{{notification_count}}</span>
                     </a>
                     <ul class="dropdown-menu custom-menu-notif" role="menu">
                         <li class="notification_title"> {{notification_count}} new jobs since your last visit!</li>
-                        <li ng-repeat="note in notifData  | notifications: n_cleared | orderBy:note.created ">
+                        <li ng-model="yak" ng-repeat="note in notifData  | notifications: [n_cleared,n_soft_cleared] | orderBy:note.created ">
                             <a ng-href="#" ng-click="clear_notification(note.jobId);notifSearch(note.name)">{{note.name}}<small>{{note.created |timeago}}</small></a>
                             <span class="glyphicon glyphicon-remove notif-rmv" ng-click="$event.stopPropagation();clear_notification(note.jobId)" aria-hidden="true"></span>
                         </li>
