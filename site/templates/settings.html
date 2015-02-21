@@ -1,0 +1,49 @@
+<div style="padding:20px" id="account-info">
+    <div >
+        <h3>Your Account</h3>
+        <p>Job Alerts</p>
+        <ul>
+            <li ng-show="!testData.search_terms" style="text-align:center; padding:5px 0px">
+                You currently have no alerts setup!
+            </li>
+            <li ng-show="testData.search_terms">
+                {{testData.search_terms}}
+            </li>
+
+        </ul>
+
+
+
+
+
+    </div><!-- #menu-slider-top -->
+
+    <form>
+        <div class="fix-me">
+            <label for="key_terms" class="col-sm-12 control-label">Add key terms for us to alert you about <span>(if multiple, seperate with comma)</span>:</label>
+            <textarea class="form-control" id="key_terms" rows="2"  ng-model="testData.search_terms" placeholder="E.g. engineer, product manager, java"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="key_locations" class="col-sm-12 control-label">Add location(s) to be alerted about:</label>
+            <input type="text" class="form-control" id="key_locations" ng-model="testData.search_location" placeholder="Boston">
+        </div>
+        <div>Alerts will be sent to {{userInfo.email}}</div>
+    </form>
+
+    <div id="fix-me">
+        <p>Change Account Password</p>
+        <span ng-bind="changepassMsg" class="signin-val"> </span>
+        <form name="changepassForm">
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.a" placeholder="Old Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.b" placeholder="New Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" ng-model="changePass.c" placeholder="Confirm New Password" required>
+            </div>
+            <button class="btn-custom btn btn-primary sharp" ng-disabled="changepassForm.$invalid" ng-click="changePassword(changePass)">Save New Password</button>
+        </form>
+    </div><!-- #menu-slider-btm -->
+</div>

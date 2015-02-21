@@ -548,7 +548,7 @@ a.signupLink:hover{
 
 .hiw-body h4{
   color:#777;
-  margin: 0px 0px 5px 0;
+  margin: 0 0 5px 0;
 }
 
 .hiw-body p{
@@ -572,4 +572,13 @@ h3.just-posted-title a{
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
+}
+#jobtill-loading {
+    position: absolute;
+    display: block;
+    width: 120px;
+    height: 120px;
+    top: calc(50% - 60px);
+    left: calc(50% - 60px);
+    background: url('../img/squares.svg');
 }
